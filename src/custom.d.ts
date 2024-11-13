@@ -1,5 +1,3 @@
-declare module 'ui-kit-cars/style'
-
 declare module '*.svg' {
     import React = require('react');
   
