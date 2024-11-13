@@ -1,0 +1,9 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SMainLayout {
+    width: 100%;
+    min-height: 100vh;
+    max-width: 1440px;
+    margin: 0 auto;
+}
