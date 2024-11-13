@@ -1,0 +1,15 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SUsersWrapper {
+    width: 100%;
+
+    .SUsers {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: space-between;
+        justify-items: center;
+        column-gap: 20px;
+        row-gap: 50px;
+    }
+}
