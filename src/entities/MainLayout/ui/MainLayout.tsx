@@ -14,13 +14,13 @@ export const MainLayout: FC<IMainLayout> = (
     }
 ) => {
     return (
-        <main className={styles.SMainLayout}>
+        <ScrollWrapper>
+            <main className={styles.SMainLayout}>
             <Header
                 paths={CPaths}
             />
-            <ScrollWrapper>
-                {children}
-            </ScrollWrapper>
-        </main>
+            {children}
+            </main>
+        </ScrollWrapper>
     )
 }
