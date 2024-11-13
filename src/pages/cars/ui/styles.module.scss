@@ -1,0 +1,30 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SCarsWrapper {
+    margin: 0 auto;
+    display: grid;
+    justify-items: center;
+
+    .SCars {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: space-between;
+        justify-items: center;
+        justify-self: center;
+        row-gap: 100px;
+        flex-wrap: wrap;
+
+        
+        @media screen and (max-width: variables.$large) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media screen and (max-width: variables.$xs-medium) {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}

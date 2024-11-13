@@ -1,0 +1,23 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SCar {
+    width: 345px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+
+    .SCarImage {
+        width: 345px;
+        height: 244px;
+
+        object-fit: cover;
+    }
+
+    .SCarName {
+        width: 100%;
+        @include mixins.font-montserrat-m-medium;
+        text-align: center;
+    }
+}

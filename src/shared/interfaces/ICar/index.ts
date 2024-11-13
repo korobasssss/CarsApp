@@ -1,0 +1,1 @@
+export type {ICar, ICarBrand} from './ICar'
