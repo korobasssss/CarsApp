@@ -3,7 +3,7 @@ import { MainLayout } from "@/entities/MainLayout"
 export const MainModel = () => {
     return (
         <MainLayout>
-            child
+            Это стартовая страница дизайн придумаю позже
         </MainLayout>
     )
 }
