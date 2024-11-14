@@ -1,6 +1,5 @@
 export interface ICar {
     carId: number,
-    carName: string,
     brand: ICarBrand,
     color: string,
     image: string

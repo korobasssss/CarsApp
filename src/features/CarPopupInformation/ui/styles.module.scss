@@ -1,0 +1,38 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SCarPopup {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: max-content auto;
+    column-gap: 60px;
+
+    .SCarPopupImage {
+        width: 280px;
+        height: 159px;
+
+        object-fit: cover;
+        border-radius: variables.$RADIUS-S;
+    }
+
+    .SCarData {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .SCarOneData {
+            display: flex;
+            justify-content: space-between;
+
+            .SDataTitle {
+                @include mixins.font-montserrat-s-bold;
+                color: variables.$TEXT_DESCRIPTION;
+            }
+
+            .SData {
+                @include mixins.font-montserrat-s-bold;
+                color: variables.$TEXT_MAIN;
+            }
+        }
+    }
+}

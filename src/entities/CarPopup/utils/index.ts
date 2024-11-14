@@ -1,0 +1,1 @@
+export {validationCar} from './validation'
