@@ -1,4 +1,4 @@
-import { User } from "@/entities/User"
+import { User } from "@/features/User"
 import { IUser } from "@/shared/interfaces"
 import { FC } from "react"
 import styles from './styles.module.scss'

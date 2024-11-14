@@ -5,6 +5,7 @@
     margin: 0 auto;
     display: grid;
     justify-items: center;
+    row-gap: 20px;
 
     .SCars {
         width: 100%;
@@ -26,5 +27,9 @@
             display: grid;
             grid-template-columns: repeat(1, 1fr);
         }
+    }
+
+    .SButton {
+        width: max-content;
     }
 }
