@@ -10,17 +10,33 @@
 
     display: grid;
     grid-template-columns: min-content auto max-content;
+    column-gap: 10px;
     align-items: center;
     justify-self: center;
-    justify-content: space-between;
 
-    @media screen and (max-width: variables.$xxx-medium) {
+    background-color: variables.$BGC_MAIN;
+
+    @media screen and (max-width: variables.$x-large) {
         padding: 0 10px;
     }
 
     .SNav {
         display: flex;
-        gap: 50px;
+        justify-content: space-around;
+
+        @media screen and (max-width: variables.$small) {
+            display: none;
+        }
+    }
+
+    .SNavIconMobile {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+
+        @media screen and (min-width: (variables.$small + 1)) {
+            display: none;
+        }
     }
 
     .SAuthWrapper {
@@ -30,4 +46,10 @@
 
         @include mixins.font-montserrat-s-medium;
     }
+}
+
+.SNavMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

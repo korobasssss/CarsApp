@@ -11,5 +11,9 @@
         justify-items: center;
         column-gap: 20px;
         row-gap: 50px;
+
+        @media screen and (max-width: variables.$xxxx-medium) {
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 }
