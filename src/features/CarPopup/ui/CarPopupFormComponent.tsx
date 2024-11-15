@@ -5,15 +5,16 @@ import { Button, ButtonIcon, FileLoader, Input, Message, Select } from 'ui-kit-c
 import { validationCar } from '../utils';
 import { FC, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
+import cx from 'classnames'
 
 interface ICarForm {
-    model: number
+    model: number | undefined
     color: string
     image: File | null
 }
 
 interface ICarPopupFormComponent {
-    brandId: number
+    brandId: number | undefined
     color: string
     image: string | null
     submit: (brandId: number, color?: string, image?: File) => void
@@ -44,10 +45,20 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
     }, [])
 
     const handleSubmit = (values: ICarForm) => {
-        if (values.image) {
+        if (values.image && values.model) {
             submit(values.model, values.color, values.image)
         }
     }
+
+    const stylesFooter = useMemo(() => {
+        return cx(
+            {
+                [styles['SPFooter1Action']]: !handleDelete,
+                [styles['SPFooter2Actions']]: handleDelete
+
+            }
+        )
+    }, [handleDelete])
 
     return (
         <Formik
@@ -126,7 +137,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
                                 type='error'
                             />
                         )}
-                        <footer className={styles.SPFooter}>
+                        <footer className={stylesFooter}>
                             {buttonSubmitTitle && (
                                 <Button
                                     theme='primary'

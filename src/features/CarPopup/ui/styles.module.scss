@@ -21,9 +21,13 @@
         }
     }
 
-    .SPFooter {
+    .SPFooter2Actions {
         display: grid;
         grid-template-columns: 1.5fr 1fr;
         column-gap: 15px;
+    }
+
+    .SPFooter1Action {
+        display: grid;
     }
 }

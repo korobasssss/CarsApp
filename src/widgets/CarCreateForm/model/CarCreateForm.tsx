@@ -8,10 +8,6 @@ export const CarCreateForm = () => {
         console.log(brandId, color, image)
     }
 
-    const handleDelete = () => {
-
-    }
-
     return (
         <CarPopupFormComponent
             brandId={undefined}
@@ -19,7 +15,6 @@ export const CarCreateForm = () => {
             image={null}
             submit={handleSubmit}
             buttonSubmitTitle="Создать"
-            handleDelete={handleDelete}
             errorCommon={errorCommon}
         />
     )    
