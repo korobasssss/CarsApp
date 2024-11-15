@@ -1,0 +1,33 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SCarPopup {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    .SUserImageWrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        align-items: center;
+
+        .SUserImage {
+            width: 340px;
+            height: 200px;
+        
+            object-fit: cover;
+        }
+    }
+
+    .SPFooter2Actions {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        column-gap: 15px;
+    }
+
+    .SPFooter1Action {
+        display: grid;
+    }
+}

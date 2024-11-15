@@ -1,0 +1,9 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SUserPopupRole {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

@@ -1,0 +1,38 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SUser {
+    width: 524px;
+    display: flex;
+    gap: 20px;
+
+    .SUserImg {
+        width: 119px;
+        height: 116px;
+
+        object-fit: cover;
+    }
+
+    .SUserData {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        justify-content: end;
+        align-items: end;
+
+        .SUserName {
+            @include mixins.font-montserrat-m-bold;
+            text-align: end;
+        }
+
+        .SUserDate {
+            color: variables.$SECONDARY_DATA;
+            @include mixins.font-montserrat-m-medium;
+        }
+    }
+
+    @media screen and (max-width: variables.$small) {
+        padding: 0 10px;
+        width: 100%;
+    }
+}

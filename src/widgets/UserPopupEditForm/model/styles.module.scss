@@ -1,0 +1,33 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SEditWrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .SNav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+
+        * {
+            @include mixins.font-montserrat-xm-medium;
+        }
+
+        &_selected {
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: -5px;
+                width: 100%;
+                height: 2px;
+                background-color: black;
+            }
+        }
+    }
+}

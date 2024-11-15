@@ -1,0 +1,1 @@
+export type {IClassNames} from './IClassNames'

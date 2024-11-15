@@ -1,0 +1,11 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.scroll_wrapper {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: variables.$SCROLLBAR variables.$BGC_MAIN;
+  }

@@ -1,0 +1,14 @@
+export { ReactComponent as LoginIcon } from './Login.svg';
+export { ReactComponent as LogoIcon } from './Logo.svg';
+export { ReactComponent as LogoutIcon } from './Logout.svg';
+export { ReactComponent as EditIcon } from './Edit.svg';
+export { ReactComponent as MenuIcon } from './Menu.svg';
+export { ReactComponent as DeleteIcon } from './Delete.svg';
+export { default as TempIcon } from './temp.svg';
+export { default as UserImg } from './UserImg.svg';
+export { default as Start1Img } from './start1.svg';
+export { default as Start2Img } from './start2.svg';
+export { default as Start3Img } from './start3.svg';
+export { default as Start1MobileImg } from './start1mobile.svg';
+export { default as Start2MobileImg } from './start2mobile.svg';
+export { default as Start3MobileImg } from './start3mobile.svg';

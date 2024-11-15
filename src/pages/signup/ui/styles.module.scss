@@ -1,0 +1,35 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SSignUpWrapper {
+    height: calc(60vh);
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+
+    .SSignUp {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        width: 100%;
+        max-width: 480px;
+        
+        .SSignUpTitle {
+            @include mixins.font-montserrat-xl-bold;
+            text-align: center;
+        }
+
+        .SSignUpForm {
+            display: grid;
+            gap: 10px;
+        }
+
+        .SSignUpLink {
+            display: grid;
+            justify-self: center;
+            width: min-content;
+        }
+    }
+}
