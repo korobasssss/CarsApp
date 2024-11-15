@@ -9,7 +9,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -18,7 +18,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -27,7 +27,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -36,7 +36,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -45,7 +45,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -54,7 +54,7 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
     {
@@ -63,11 +63,10 @@ const users: IUser[] = [
         surname: 'Тачковый',
         patronymic: 'Танчиковист',
         email: 'tanchik@gmaim.com',
-        birthDate: '13.02.2004',
+        birthDate: '2004-02-13',
         role: 'user'
     },
 ]
-
 
 export const UsersModel = () => {
     return (

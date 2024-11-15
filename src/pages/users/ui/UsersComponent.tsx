@@ -1,7 +1,7 @@
-import { User } from "@/features/User"
 import { IUser } from "@/shared/interfaces"
 import { FC } from "react"
 import styles from './styles.module.scss'
+import { UserModel } from "@/widgets/User/model/UserModel"
 
 interface IUsersComponent {
     users: IUser[]
@@ -17,7 +17,7 @@ export const UsersComponent: FC<IUsersComponent> = (
           <ul className={styles.SUsers}>
             {users.map(user => {
                   return (
-                      <User user={user}/>
+                      <UserModel user={user}/>
                   )
               })}
           </ul>

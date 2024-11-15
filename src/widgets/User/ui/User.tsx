@@ -1,19 +1,27 @@
 import { EditIcon, UserImg } from "@/shared/assets"
 import { IUser } from "@/shared/interfaces"
-import { FC } from "react"
+import { FC, SetStateAction, useMemo } from "react"
 import styles from './styles.module.scss'
 import { ButtonIcon } from "ui-kit-cars/main"
+import { formattedDate } from "../utils"
 
 interface IUserFC {
     user: IUser
+    setIsEditOpen: React.Dispatch<SetStateAction<boolean>>
 }
 
 export const User: FC<IUserFC> = (
     {
-        user
+        user,
+        setIsEditOpen
     }
 ) => {
+
     const {id, name, surname, patronymic, birthDate} = user
+
+    const formattedBirth = useMemo(() => {
+        return formattedDate(birthDate)
+    }, [birthDate])
 
     return (
         <div
@@ -29,10 +37,13 @@ export const User: FC<IUserFC> = (
                     {`${surname} ${name} ${patronymic}`}
                 </span>
                 <span className={styles.SUserDate}>
-                    {birthDate}
+                    {formattedBirth}
                 </span>
             </div>
-            <ButtonIcon alt="edit button"> {/* todo только админу видно*/}
+            <ButtonIcon  /* todo только админу видно*/
+                alt="edit button"
+                onClick={() => setIsEditOpen(true)}
+            >
                 <EditIcon/>
             </ButtonIcon>
         </div>
