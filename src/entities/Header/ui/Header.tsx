@@ -69,9 +69,6 @@ export const Header: FC<IHeader> = (
                 </div>
             </DrawerPopup>
             <div className={styles.SAuthWrapper}> {/* todo проверка авторизации */}
-                <span>
-                    Тачковая А.В.
-                </span>
                 <Link 
                     url={EPaths.SIGN_IN}
                 >
