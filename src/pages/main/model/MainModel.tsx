@@ -1,9 +1,10 @@
 import { MainLayout } from "@/entities/MainLayout"
+import { MainComponent } from "../ui/MainComponent"
 
 export const MainModel = () => {
     return (
         <MainLayout>
-            Это стартовая страница дизайн придумаю позже
+            <MainComponent/>
         </MainLayout>
     )
 }
