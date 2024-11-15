@@ -72,13 +72,13 @@ export const Header: FC<IHeader> = (
                 <span>
                     Тачковая А.В.
                 </span>
-                <ButtonIcon
-                    alt='sign in icon'
+                <Link 
+                    url={EPaths.SIGN_IN}
                 >
                     <LoginIcon/>
-                </ButtonIcon>
+                </Link>                
                 <ButtonIcon
-                    alt='sign up icon'
+                    alt='logout icon'
                 >
                     <LogoutIcon/>
                 </ButtonIcon>
