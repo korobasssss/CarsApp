@@ -2,7 +2,7 @@ import { Field, FieldProps, Formik } from 'formik';
 import styles from './styles.module.scss'
 import { Form } from 'react-router-dom';
 import { Button, ButtonIcon, FileLoader, Input, Message, Select } from 'ui-kit-cars/main';
-import { validationCar } from '../utils';
+import { validationCarCreate, validationCarEdit } from '../utils';
 import { FC, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
 import cx from 'classnames'
@@ -63,7 +63,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
     return (
         <Formik
             initialValues={initialValues}
-            validationSchema={validationCar}
+            validationSchema={handleDelete ? validationCarEdit : validationCarCreate}
             onSubmit={handleSubmit}
             validateOnChange={false}
             validateOnBlur={false}
