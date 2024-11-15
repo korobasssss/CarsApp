@@ -17,10 +17,6 @@
 
     background-color: variables.$BGC_MAIN;
 
-    @media screen and (max-width: variables.$x-large) {
-        padding: 0 10px;
-    }
-
     .SNav {
         display: flex;
         justify-content: space-around;

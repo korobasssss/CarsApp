@@ -19,7 +19,9 @@ export const MainLayout: FC<IMainLayout> = (
             <Header
                 paths={CPaths}
             />
-            {children}
+                <section className={styles.SChildren}>
+                    {children}
+                </section>
             </main>
         </ScrollWrapper>
     )
