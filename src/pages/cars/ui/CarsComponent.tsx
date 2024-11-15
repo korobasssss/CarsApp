@@ -1,9 +1,9 @@
 import { ICar } from '@/shared/interfaces'
 import styles from './styles.module.scss'
 import { FC, useState } from 'react'
-import { CarModel } from '@/features/Car/model/CarModel'
+import { CarModel } from '@/widgets/Car'
 import { Button, Popup } from 'ui-kit-cars/main'
-import { CarCreateForm } from '@/features/CarCreateForm'
+import { CarCreateForm } from '@/widgets/CarCreateForm'
 
 interface ICarsComponent {
   cars: ICar[]

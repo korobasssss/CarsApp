@@ -3,17 +3,17 @@ import styles from './styles.module.scss'
 import { Form } from 'react-router-dom';
 import { Button, ButtonIcon, FileLoader, Input, Message, Select } from 'ui-kit-cars/main';
 import { validationCar } from '../utils';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
 
 interface ICarForm {
     model: number
     color: string
-    image: File
+    image: File | null
 }
 
 interface ICarPopupFormComponent {
-    brandId: number | undefined
+    brandId: number
     color: string
     image: string | null
     submit: (brandId: number, color?: string, image?: File) => void
@@ -35,28 +35,18 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
 ) => {
     const [canShowImage, setCanShoeImage] = useState(true)
 
-    useEffect(() => {
-        // Этот код выполнится только при первом монтировании компонента
-        console.log('Компонент смонтирован');
-
-        // Очистка (если необходимо)
-        return () => {
-            console.log('Компонент размонтирован');
-        };
-    }, []); // Пустой массив зависимостей
-
-    console.log(canShowImage)
-
     const initialValues: ICarForm = useMemo(() => {
         return {
             model: brandId,
-            color: color,
+            color,
             image: null
         }
     }, [])
 
     const handleSubmit = (values: ICarForm) => {
-        submit(values.model, values.color, values.image)
+        if (values.image) {
+            submit(values.model, values.color, values.image)
+        }
     }
 
     return (
@@ -68,7 +58,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
             validateOnBlur={false}
             enableReinitialize
         >
-            {({ values, isValid, dirty, resetForm, setFieldValue }) => (
+            {({ values, isValid, dirty, setFieldValue }) => (
                 <Form>
                     <div className={styles.SCarPopup}>
                         <Field

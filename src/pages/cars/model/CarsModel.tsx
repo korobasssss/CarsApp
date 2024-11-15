@@ -6,7 +6,6 @@ import { ICar } from "@/shared/interfaces"
 const cars: ICar[] = [
     {
         carId: 0,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -17,7 +16,6 @@ const cars: ICar[] = [
     },
     {
         carId: 1,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -28,7 +26,6 @@ const cars: ICar[] = [
     },    
     {
         carId: 2,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -39,7 +36,6 @@ const cars: ICar[] = [
     },    
     {
         carId: 3,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -50,7 +46,6 @@ const cars: ICar[] = [
     },    
     {
         carId: 4,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -61,7 +56,6 @@ const cars: ICar[] = [
     },    
     {
         carId: 5,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -72,7 +66,6 @@ const cars: ICar[] = [
     },    
     {
         carId: 6,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",
@@ -83,7 +76,6 @@ const cars: ICar[] = [
     },   
     {
         carId: 7,
-        carName: 'Какоето имя',
         brand: {
           carModelId: 0,
           brand: "Какойто бренд",

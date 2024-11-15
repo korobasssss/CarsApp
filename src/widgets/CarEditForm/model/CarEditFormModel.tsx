@@ -1,5 +1,5 @@
 import { ICar } from "@/shared/interfaces"
-import { CarPopupFormComponent } from "../../../entities/CarPopup"
+import { CarPopupFormComponent } from "../../../features/CarPopup"
 import { FC, useState } from "react"
 
 interface ICarEditFormModel {

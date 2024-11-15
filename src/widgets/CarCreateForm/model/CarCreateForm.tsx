@@ -1,4 +1,4 @@
-import { CarPopupFormComponent } from "@/entities/CarPopup"
+import { CarPopupFormComponent } from "@/features/CarPopup"
 import { useState } from "react"
 
 export const CarCreateForm = () => {
