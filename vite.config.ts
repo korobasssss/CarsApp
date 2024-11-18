@@ -12,7 +12,10 @@ export default defineConfig({
   },
   define: {
     'process.env': {
-      'SERVER_URL': 'http://localhost:8080'
+      'SERVER_URL': 'http://localhost:10000/api'
     }
   },
+  server: {
+    port: 3000
+  }
 })

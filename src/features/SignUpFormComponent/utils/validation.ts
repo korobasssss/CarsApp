@@ -2,7 +2,8 @@ import * as Yup from 'yup'
 
 export const validationSignUp = Yup.object().shape({
     email: Yup.string()
-      .required('Введите логин')
+      .required('Введите email')
+      .email('Неверный email')
       .trim(),
     password: Yup.string()
       .required('Введите пароль')

@@ -47,9 +47,8 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationSignUp}
             onSubmit={handleSubmit}
-            validateOnChange={false}
-            validateOnBlur={false}
             enableReinitialize
+            validateOnBlur={false}
         >
             {({ isValid, dirty}) => (
                 <Form>

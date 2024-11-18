@@ -1,37 +1,36 @@
-import { Field, FieldProps, Formik } from "formik"
-import { FC, useMemo } from "react"
-import { Form } from "react-router-dom"
+import { Field, FieldProps, Formik, Form, FormikHelpers } from "formik"
+import React, { FC, SetStateAction, useEffect, useMemo, useState } from "react"
 import styles from './styles.module.scss'
 import { Button, Input, Message } from "ui-kit-cars/main"
 import { validationSignIn } from "../utils"
-
-interface IUserFormData {
-    email: string
-    password: string
-}
+import { ISignInForm } from "@/shared/interfaces"
 
 interface ISignInFormComponent {
-    submit: (email: string, password: string) => void
-    errorCommon: string
+    submit: (email: string, password: string, setErrorCommon: React.Dispatch<SetStateAction<string>>) => void
     buttonSubmitTitle: string
 }
 
 export const SignInFormComponent: FC<ISignInFormComponent> = (
     {
         submit,
-        errorCommon,
         buttonSubmitTitle
     }
 ) => {
-    const initialValues: IUserFormData = useMemo(() => {
+    const [errorCommon, setErrorCommon] = useState('')
+
+    const initialValues: ISignInForm = useMemo(() => {
         return {
             email: '',
             password: ''
         }
     }, [])
 
-    const handleSubmit = (values: IUserFormData) => {
-        submit(values.email, values.password)
+    const handleSubmit = async (values: ISignInForm, { setErrors, setStatus }: FormikHelpers<ISignInForm>) => {
+        setErrorCommon('')
+        setErrors({})
+        setStatus(undefined)
+
+        submit(values.email, values.password, setErrorCommon)
     }
 
     return (
@@ -39,17 +38,17 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationSignIn}
             onSubmit={handleSubmit}
-            validateOnChange={false}
-            validateOnBlur={false}
             enableReinitialize
+            validateOnBlur={false}
         >
-            {({ isValid, dirty}) => (
+            {({ isValid, values}) => (
                 <Form>
                     <div className={styles.SSignIn}>
                         <Field
                             name='email'
                         >
                             {({ field, form }: FieldProps) => {
+                                setErrorCommon('')
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
                                 return (
@@ -66,6 +65,7 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                             name="password"
                         >
                             {({ field, form }: FieldProps) => {
+                                setErrorCommon('')
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
                                 return (
@@ -89,7 +89,7 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={!isValid || (!values.email || !values.password)}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>
