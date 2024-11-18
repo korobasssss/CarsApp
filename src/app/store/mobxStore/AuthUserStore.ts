@@ -36,6 +36,7 @@ class AuthUserStore extends BaseStore {
     }
 
     public get isAuth() {
+        this.getAuthUserData
         return this.authUserData.accessToken && this.authUserData.role
     }
 
@@ -47,6 +48,7 @@ class AuthUserStore extends BaseStore {
     }
 
     public get isAdmin() {
+        this.getAuthUserData
         return this.authUserData.role !== ERole.User
     }
 }
