@@ -1,12 +1,12 @@
 import { authUserStore } from "@/app/store/mobxStore"
-import { IAuthUserData, ISignInForm } from "../interfaces"
-import { ELocalStorageItems } from "../enums"
+import { ISignInForm } from "../interfaces"
+import { ERole } from "../enums"
 import { instance } from "./base"
 import axios from "axios";
 
 interface IResponse {
     accessToken: string;
-    userInfo: IAuthUserData;
+    userInfo: {role: ERole};
 }
 
 const axiosPostSignIn = async (data: ISignInForm): Promise<IResponse> => {
@@ -28,13 +28,16 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
             typeof response.userInfo.role === 'string'
         ) {
             authUserStore.setReady();
+            authUserStore.setAuthUserData({
+                accessToken: response.accessToken,
+                role: response.userInfo.role
+            });
             
-            localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken);
-            localStorage.setItem(ELocalStorageItems.role, response.userInfo.role);
+            
         } else {
             throw new Error('Неверный формат ответа');
         }
-    } catch (error) {
+    } catch (error: unknown) {
         authUserStore.setError();
         if (axios.isAxiosError(error)) {
             switch (error.status) {
@@ -43,7 +46,7 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
                 }
             }
         } else {
-            throw new Error(`Произошла ошибка, попробуйте еще раз`, )
+            throw new Error(`Произошла ошибка, попробуйте еще раз`)
         }
     }
 }

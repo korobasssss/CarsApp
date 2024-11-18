@@ -15,7 +15,7 @@ export const SignInFormModel = observer(() => {
             if (authUserStore.isReady) {
                 navigate(EPaths.MAIN)
             }
-        } catch (error) {
+        } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorCommon(error.message);
             } else {

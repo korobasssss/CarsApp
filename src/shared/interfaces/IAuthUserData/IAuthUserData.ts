@@ -1,5 +1,6 @@
 import { ERole } from "@/shared/enums";
 
 export interface IAuthUserData {
-    role : ERole
+    accessToken: string | null
+    role : ERole | null
 }
