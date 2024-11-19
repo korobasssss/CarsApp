@@ -28,10 +28,7 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
             typeof response.userInfo.role === 'string'
         ) {
             authUserStore.setReady();
-            authUserStore.setAuthUserData({
-                accessToken: response.accessToken,
-                role: response.userInfo.role
-            });
+            authUserStore.setAuthUserData(response.userInfo.role);
             
             
         } else {

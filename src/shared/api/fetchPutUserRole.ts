@@ -1,13 +1,9 @@
-import { authUserStore, usersStore } from "@/app/store/mobxStore";
-import { instance } from "./base";
+import { usersStore } from "@/app/store/mobxStore";
+import { instanceToken } from "./base";
 import axios from "axios";
 
 const axiosPutUserRole = async (id: string, role: string): Promise<void> => {
-    const response = await instance.patch<void>(`Users/${id}/role`, role, {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.patch<void>(`Users/${id}/role`, role)
     return response.data;
 }
 

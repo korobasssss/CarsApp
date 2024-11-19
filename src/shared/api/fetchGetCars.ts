@@ -1,14 +1,10 @@
-import { authUserStore, carStore } from "@/app/store/mobxStore";
+import { carStore } from "@/app/store/mobxStore";
 import { ICar } from "../interfaces";
-import { instance } from "./base";
+import { instanceToken } from "./base";
 
 
 const axiosGetCars = async (): Promise<ICar[]> => {
-    const response = await instance.get<ICar[]>('Cars', {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.get<ICar[]>('Cars')
     return response.data;
 }
 

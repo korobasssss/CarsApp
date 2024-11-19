@@ -1,11 +1,9 @@
-import { IAuthUserData } from "@/shared/interfaces";
 import { BaseStore } from "../base";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ELocalStorageItems, ERole } from "@/shared/enums";
 
 class AuthUserStore extends BaseStore {
-    authUserData: IAuthUserData = {
-        accessToken: '',
+    authUserData: {role: string| null} = {
         role: null
     }
 
@@ -21,35 +19,28 @@ class AuthUserStore extends BaseStore {
     }
 
     public get getAuthUserData() {
-        this.authUserData.accessToken = localStorage.getItem('accessToken')
         this.authUserData.role = localStorage.getItem('role') as ERole
         return this.authUserData
     }
 
-    public setAuthUserData(data: IAuthUserData) {
-        if (data.accessToken && data.role) {
-            localStorage.setItem(ELocalStorageItems.accessToken, data.accessToken);
-            localStorage.setItem(ELocalStorageItems.role, data.role);
-            this.authUserData.accessToken = data.accessToken
-            this.authUserData.role = data.role
-        }
+    public setAuthUserData(role: string | null) {
+        this.authUserData.role = role
     }
 
     public get isAuth() {
         this.getAuthUserData
-        return this.authUserData.accessToken && this.authUserData.role
+        return localStorage.getItem(ELocalStorageItems.accessToken) !== undefined && this.authUserData.role !== null
     }
 
     public setLogout() {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('role')
-        this.authUserData.accessToken = null
         this.authUserData.role = null
     }
 
     public get isAdmin() {
         this.getAuthUserData
-        return this.authUserData.role !== ERole.User
+        return this.isAuth && (this.authUserData.role !== ERole.User)
     }
 }
 

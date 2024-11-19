@@ -1,13 +1,9 @@
-import { authUserStore, carStore } from "@/app/store/mobxStore";
+import { carStore } from "@/app/store/mobxStore";
 import { ICarBrand } from "../interfaces";
-import { instance } from "./base";
+import { instanceToken } from "./base";
 
 const axiosGetCarCategories = async (): Promise<ICarBrand[]> => {
-    const response = await instance.get<ICarBrand[]>('Cars/brandModels', {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.get<ICarBrand[]>('Cars/brandModels')
     return response.data;
 }
 

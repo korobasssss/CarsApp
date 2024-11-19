@@ -1,4 +1,4 @@
-import { authUserStore, carStore } from "@/app/store/mobxStore";
+import { carStore } from "@/app/store/mobxStore";
 import { instanceFile } from "./base";
 import { ICarForm } from "../interfaces";
 import axios from "axios";
@@ -6,11 +6,7 @@ import axios from "axios";
 const axiosPutCar = async (newCar: ICarForm, id: number): Promise<number> => {
     const response = await instanceFile.put<number>(`Cars/${id}?CarModelId=${newCar.model}${newCar.color ? `&Color=${newCar.color}` : ''}`, {
         Image : newCar.image
-    }, {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    })
     return response.data;
 }
 

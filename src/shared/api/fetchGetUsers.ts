@@ -1,14 +1,10 @@
-import { authUserStore, usersStore } from "@/app/store/mobxStore";
+import { usersStore } from "@/app/store/mobxStore";
 import { IUser } from "../interfaces";
-import { instance } from "./base";
+import { instanceToken } from "./base";
 
 
 const axiosGetUsers = async (): Promise<IUser[]> => {
-    const response = await instance.get<IUser[]>('Users', {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.get<IUser[]>('Users')
     return response.data;
 }
 

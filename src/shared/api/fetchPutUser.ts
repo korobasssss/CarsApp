@@ -1,14 +1,10 @@
-import { authUserStore, usersStore } from "@/app/store/mobxStore";
-import { instance } from "./base";
+import { usersStore } from "@/app/store/mobxStore";
+import { instanceToken } from "./base";
 import { IUserFormData } from "../interfaces";
 import axios from "axios";
 
 const axiosPutUser = async (newData: IUserFormData, id: string): Promise<number> => {
-    const response = await instance.put<number>(`Users/${id}`, newData, {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.put<number>(`Users/${id}`, newData)
     return response.data;
 }
 

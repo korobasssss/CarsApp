@@ -1,8 +1,8 @@
 import { authUserStore } from "@/app/store/mobxStore"
-import { instance } from "./base"
+import { instanceToken } from "./base"
 
 const axiosPostLogout = async (): Promise<void> => {
-    const response = await instance.post<void>('Identity/logout')
+    const response = await instanceToken.post<void>('Identity/logout')
     return response.data;
 }
 

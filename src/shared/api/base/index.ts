@@ -1,1 +1,1 @@
-export { instance, instanceFile} from './base'
+export { instance, instanceToken, instanceFile} from './base'

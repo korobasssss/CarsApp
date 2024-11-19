@@ -1,13 +1,9 @@
-import { authUserStore, carStore } from "@/app/store/mobxStore";
-import { instance } from "./base";
+import { carStore } from "@/app/store/mobxStore";
+import { instanceToken } from "./base";
 
 
 const axiosDeleteCar = async (id: number): Promise<void> => {
-    const response = await instance.delete<void>(`Cars/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authUserStore.getAuthUserData.accessToken}`,
-        },
-      })
+    const response = await instanceToken.delete<void>(`Cars/${id}`)
     return response.data;
 }
 

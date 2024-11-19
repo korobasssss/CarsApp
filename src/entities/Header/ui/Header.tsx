@@ -24,8 +24,8 @@ export const Header: FC<IHeader> = observer((
     const visiblePaths = useMemo(() => {
         if (authUserStore.isAuth) {
             return paths.map((path, index) => {
-                if (path.url !== EPaths.MAIN && path.url !== EPaths.SIGN_IN && path.url !== EPaths.SIGN_UP) {
-                    if (path.url === EPaths.USERS && authUserStore.isAdmin) {
+                if (path.url === EPaths.USERS) {
+                    if (authUserStore.isAdmin) {
                         return (
                             <Link 
                                 key={index}
@@ -35,6 +35,7 @@ export const Header: FC<IHeader> = observer((
                             </Link>
                         )
                     }
+                } else {
                     return (
                         <Link 
                             key={index}
