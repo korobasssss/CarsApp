@@ -1,6 +1,6 @@
 import { authUserStore } from "@/app/store/mobxStore"
 import { ISignInForm } from "../interfaces"
-import { ERole } from "../enums"
+import { ELocalStorageItems, ERole } from "../enums"
 import { instance } from "./base"
 import axios from "axios";
 
@@ -28,6 +28,8 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
             typeof response.userInfo.role === 'string'
         ) {
             authUserStore.setReady();
+            localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken)
+            localStorage.setItem(ELocalStorageItems.role, response.userInfo.role)
             authUserStore.setAuthUserData(response.userInfo.role);
             
             
