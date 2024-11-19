@@ -25,7 +25,7 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
                     image
                 }, car.carId)
                 handleClose(false)
-                await fetchGetCars()
+                await fetchGetCars(1, 12)
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorCommon(error.message)
@@ -42,7 +42,7 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
         try {
             await fetchDeleteCar(car.carId)
             handleClose(false)
-            await fetchGetCars()
+            await fetchGetCars(1, 12)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorCommon(error.message)

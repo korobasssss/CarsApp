@@ -11,13 +11,13 @@ const axiosGetCars = async (pageNumber: number, pageSize: number): Promise<Axios
 }
 
 export const fetchGetCars = async (pageNumber: number | null, pageSize: number) => {
-    if (pageSize > 1) {
+    if (pageNumber && pageNumber > 1) {
         carStore.setStatus(ERequestStatus.Pending)
     } else {
         carStore.setPending()
     }
     try {
-        if (pageSize > 1) {
+        if (pageNumber && pageNumber > 1) {
             carStore.setStatus(ERequestStatus.Loading)
         } else {
             carStore.setLoading()
@@ -33,7 +33,7 @@ export const fetchGetCars = async (pageNumber: number | null, pageSize: number) 
             carStore.setPages(TotalPages)
             carStore.setCars(result.data)
 
-            if (pageSize > 1) {
+            if (pageNumber && pageNumber > 1) {
                 carStore.setStatus(ERequestStatus.Ready)
             } else {
                 carStore.setReady()
