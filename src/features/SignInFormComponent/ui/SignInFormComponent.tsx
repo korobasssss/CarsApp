@@ -1,22 +1,24 @@
 import { Field, FieldProps, Formik, Form, FormikHelpers } from "formik"
-import React, { FC, SetStateAction, useMemo, useState } from "react"
+import { FC, useMemo } from "react"
 import styles from './styles.module.scss'
 import { Button, Input, Message } from "ui-kit-cars/main"
 import { validationSignIn } from "../utils"
 import { ISignInForm } from "@/shared/interfaces"
 
 interface ISignInFormComponent {
-    submit: (email: string, password: string, setErrorCommon: React.Dispatch<SetStateAction<string>>) => void
+    submit: (email: string, password: string) => void
     buttonSubmitTitle: string
+    errorCommon: string
 }
 
 export const SignInFormComponent: FC<ISignInFormComponent> = (
     {
         submit,
-        buttonSubmitTitle
+        buttonSubmitTitle,
+        errorCommon
+
     }
 ) => {
-    const [errorCommon, setErrorCommon] = useState('')
 
     const initialValues: ISignInForm = useMemo(() => {
         return {
@@ -26,11 +28,10 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
     }, [])
 
     const handleSubmit = async (values: ISignInForm, { setErrors, setStatus }: FormikHelpers<ISignInForm>) => {
-        setErrorCommon('')
         setErrors({})
         setStatus(undefined)
 
-        submit(values.email, values.password, setErrorCommon)
+        submit(values.email, values.password)
     }
 
     return (
@@ -48,7 +49,6 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                             name='email'
                         >
                             {({ field, form }: FieldProps) => {
-                                setErrorCommon('')
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
                                 return (
@@ -65,7 +65,6 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                             name="password"
                         >
                             {({ field, form }: FieldProps) => {
-                                setErrorCommon('')
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
                                 return (

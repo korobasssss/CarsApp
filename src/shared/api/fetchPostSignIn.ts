@@ -40,11 +40,7 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
     } catch (error: unknown) {
         authUserStore.setError();
         if (axios.isAxiosError(error)) {
-            switch (error.status) {
-                case 401: {
-                    throw new Error(error.response?.data.title)
-                }
-            }
+            throw new Error(error.response?.data[0])
         } else {
             throw new Error(`Произошла ошибка, попробуйте еще раз`)
         }

@@ -1,4 +1,5 @@
 export {fetchPostSignIn} from './fetchPostSignIn'
+export {fetchPostSignUp} from './fetchPostSignUp'
 export {fetchLogout} from './fetchLogout'
 export {fetchGetCars} from './fetchGetCars'
 export {fetchCarCategories} from './fetchCarCategories'

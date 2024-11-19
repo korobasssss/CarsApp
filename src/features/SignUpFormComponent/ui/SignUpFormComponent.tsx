@@ -1,21 +1,14 @@
-import { Field, FieldProps, Formik } from "formik"
+import { Field, FieldProps, Form, Formik } from "formik"
 import { FC, useMemo } from "react"
-import { Form } from "react-router-dom"
 import styles from './styles.module.scss'
 import { Button, Input, Message } from "ui-kit-cars/main"
 import { validationSignUp } from "../utils"
+import { ISignUpForm } from "@/shared/interfaces"
 
-interface IUserFormData {
-    email: string
-    password: string
-    name: string
-    surname: string
-    patronymic: string
-    birthDate: string
-}
+
 
 interface ISignUpFormComponent {
-    submit: (email: string, password: string) => void
+    submit: (email: string, password: string, name: string, surname: string, patronymic: string, birthDate: string) => void
     errorCommon: string
     buttonSubmitTitle: string
 }
@@ -27,7 +20,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
         buttonSubmitTitle
     }
 ) => {
-    const initialValues: IUserFormData = useMemo(() => {
+    const initialValues: ISignUpForm = useMemo(() => {
         return {
             email: '',
             password: '',
@@ -38,8 +31,8 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
         }
     }, [])
 
-    const handleSubmit = (values: IUserFormData) => {
-        submit(values.email, values.password)
+    const handleSubmit = (values: ISignUpForm) => {
+        submit(values.email, values.password, values.name, values.surname, values.patronymic, values.birthDate)
     }
 
     return (
@@ -64,7 +57,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                                         {...field}
                                         type='email'
                                         error={error}
-                                        placeholder="Введите логин"
+                                        placeholder="Введите почту"
                                     />
                                 );
                             }}

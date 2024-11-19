@@ -3,13 +3,15 @@ import { SignInFormComponent } from "@/features/SignInFormComponent"
 import { fetchPostSignIn } from "@/shared/api"
 import { EPaths } from "@/shared/enums"
 import { observer } from "mobx-react-lite"
-import { SetStateAction } from "react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export const SignInFormModel = observer(() => {
     const navigate = useNavigate()
 
-    const handleSubmit = async (email: string, password: string, setErrorCommon: React.Dispatch<SetStateAction<string>>) => {
+    const [errorCommon, setErrorCommon] = useState('')
+
+    const handleSubmit = async (email: string, password: string) => {
         try {
             await fetchPostSignIn({ email, password });
             if (authUserStore.isReady) {
@@ -28,6 +30,7 @@ export const SignInFormModel = observer(() => {
         <SignInFormComponent
             submit={handleSubmit}
             buttonSubmitTitle="Войти"
+            errorCommon={errorCommon}
         />
     )    
 })
