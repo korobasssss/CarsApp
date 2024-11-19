@@ -4,6 +4,5 @@ export enum EPaths {
     USERS = '/users',
     SIGN_IN = '/signin',
     SIGN_UP = '/signup',
-    FORBIDDER = '/forbidden',
-    ERROR = '*'
+    FORBIDDER = '/forbidden'
 }

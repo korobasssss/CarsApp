@@ -24,22 +24,6 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     const [errorData, setErrorData] = useState('')
     const [errorRole, setErrorRole] = useState('')
 
-    const stylesButtonNavData = useMemo(() => {
-        return cx(
-            {
-                [styles[`SNav_selected`]]: !isRoleEdit
-            }
-        )
-    }, [isRoleEdit])
-
-    const stylesButtonNavRole = useMemo(() => {
-        return cx(
-            {
-                [styles[`SNav_selected`]]: isRoleEdit
-            }
-        )
-    }, [isRoleEdit])
-
     const handleSubmitData = async (name: string, surname: string, patronymic: string, birthDate: string) => {
         try {
             await fetchPutUser({
@@ -72,6 +56,22 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
             }
         }
     }
+
+    const stylesButtonNavData = useMemo(() => {
+        return cx(
+            {
+                [styles[`SNav_selected`]]: !isRoleEdit
+            }
+        )
+    }, [isRoleEdit])
+
+    const stylesButtonNavRole = useMemo(() => {
+        return cx(
+            {
+                [styles[`SNav_selected`]]: isRoleEdit
+            }
+        )
+    }, [isRoleEdit])
 
     return (
         <div className={styles.SEditWrapper}>

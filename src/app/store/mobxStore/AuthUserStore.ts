@@ -23,25 +23,25 @@ class AuthUserStore extends BaseStore {
         return this.authUserData
     }
 
-    public setAuthUserData(role: string | null) {
-        this.authUserData.role = role
-    }
-
     public get isAuth() {
         this.getAuthUserData
         return localStorage.getItem(ELocalStorageItems.accessToken) !== undefined && this.authUserData.role !== null
-    }
-
-    public setLogout() {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('role')
-        this.authUserData.role = null
     }
 
     public get isAdmin() {
         this.getAuthUserData
         return this.isAuth && (this.authUserData.role !== ERole.User)
     }
+
+    public setAuthUserData(role: string | null) {
+        this.authUserData.role = role
+    }
+
+    public setLogout() {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('role')
+        this.authUserData.role = null
+    } 
 }
 
 export const authUserStore = new AuthUserStore()

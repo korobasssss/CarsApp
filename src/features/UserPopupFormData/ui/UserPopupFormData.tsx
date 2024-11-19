@@ -5,8 +5,6 @@ import { FC, useMemo } from 'react';
 import { formattedToForm, validationUser } from '../utils';
 import { IUserFormData } from '@/shared/interfaces';
 
-
-
 interface IUserPopupFormComponent {
     name: string
     surname: string

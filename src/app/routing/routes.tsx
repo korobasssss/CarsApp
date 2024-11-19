@@ -12,7 +12,8 @@ import { Error } from "@/entities/Error";
 export const routes = createBrowserRouter([
     {
         path: EPaths.MAIN,
-        element: <MainModel/>
+        element: <MainModel/>,
+        errorElement: <Error />
     },
     {
         path: EPaths.CARS,
@@ -20,7 +21,8 @@ export const routes = createBrowserRouter([
             <AuthProvider>
                 <CarsModel/>
             </AuthProvider>
-        )
+        ),
+        errorElement: <Error />
     },
     {
         path: EPaths.USERS,
@@ -28,22 +30,22 @@ export const routes = createBrowserRouter([
             <AuthProvider>
                 <UsersModel/>
             </AuthProvider>
-        )
+        ),
+        errorElement: <Error />
     },
     {
         path: EPaths.SIGN_IN,
-        element: <SignInModel/>
+        element: <SignInModel/>,
+        errorElement: <Error />
     },
     {
         path: EPaths.SIGN_UP,
-        element: <SignUpModel/>
+        element: <SignUpModel/>,
+        errorElement: <Error />
     },
     {
         path: EPaths.FORBIDDER,
-        element: <Forbidden/>
-    },
-    {
-        path: EPaths.ERROR,
-        element: <Error />
+        element: <Forbidden/>,
+        errorElement: <Error />
     }
 ])

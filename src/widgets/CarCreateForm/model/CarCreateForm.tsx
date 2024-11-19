@@ -1,5 +1,6 @@
 import { CarPopupFormComponent } from "@/features/CarPopup"
 import { fetchGetCars, fetchPostCar } from "@/shared/api"
+import { CPageSize } from "@/shared/constants"
 import { FC, SetStateAction, useState } from "react"
 
 interface ICarCreateForm {
@@ -22,7 +23,7 @@ export const CarCreateForm: FC<ICarCreateForm> = (
                     image: image,
                 })
                 handleClose(false)
-                await fetchGetCars(1, 12)
+                await fetchGetCars(1, CPageSize)
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorCommon(error.message)

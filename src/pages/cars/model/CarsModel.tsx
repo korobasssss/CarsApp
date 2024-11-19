@@ -5,13 +5,14 @@ import { fetchCarCategories, fetchGetCars } from "@/shared/api"
 import { notification } from 'antd';
 import { carStore } from "@/app/store/mobxStore"
 import { observer } from "mobx-react-lite";
+import { CPageSize } from "@/shared/constants";
 
 export const CarsModel = observer(() => {
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchGetCars(carStore.currentPage, 12);
+        await fetchGetCars(carStore.currentPage, CPageSize);
       } catch (error) {
         notification.open({
           message: 'Ошибка получения данных тачек'

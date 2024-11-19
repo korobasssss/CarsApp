@@ -40,7 +40,7 @@ export const User: FC<IUserFC> = (
                     {formattedBirth}
                 </span>
             </div>
-            <ButtonIcon  /* todo только админу видно*/
+            <ButtonIcon
                 alt="edit button"
                 onClick={() => setIsEditOpen(true)}
             >

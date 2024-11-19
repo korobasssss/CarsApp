@@ -1,10 +1,10 @@
 import { authUserStore } from "@/app/store/mobxStore"
-import { SignInFormComponent } from "@/features/SignInFormComponent"
 import { fetchPostSignIn } from "@/shared/api"
 import { EPaths } from "@/shared/enums"
 import { observer } from "mobx-react-lite"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { SignInFormComponent } from "../ui/SignInFormComponent"
 
 export const SignInFormModel = observer(() => {
     const navigate = useNavigate()

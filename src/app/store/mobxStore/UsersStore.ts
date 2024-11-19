@@ -12,10 +12,6 @@ class UsersStore extends BaseStore {
             label: 'Manager'
         },
         {
-            value: 'Admin',
-            label: 'Admin'
-        },
-        {
             value: 'SuperUser',
             label: 'SuperUser'
         },

@@ -2,6 +2,7 @@ import { ICar } from "@/shared/interfaces"
 import { CarPopupFormComponent } from "../../../features/CarPopup"
 import { FC, SetStateAction, useState } from "react"
 import { fetchDeleteCar, fetchGetCars, fetchPutCar } from "@/shared/api"
+import { CPageSize } from "@/shared/constants"
 
 interface ICarEditFormModel {
     car: ICar
@@ -25,7 +26,7 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
                     image
                 }, car.carId)
                 handleClose(false)
-                await fetchGetCars(1, 12)
+                await fetchGetCars(1, CPageSize)
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorCommon(error.message)
@@ -42,7 +43,7 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
         try {
             await fetchDeleteCar(car.carId)
             handleClose(false)
-            await fetchGetCars(1, 12)
+            await fetchGetCars(1, CPageSize)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorCommon(error.message)

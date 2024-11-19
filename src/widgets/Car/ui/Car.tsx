@@ -19,23 +19,21 @@ export const Car: FC<ICarFC> = observer((
         setIsEditOpen
     }
 ) => {
-    const {carId, brand, image} = car
 
     return (
         <div 
-            key={carId}
+            key={car.carId}
             className={styles.SCar}
         >
-
             <img 
-                src={image || NoCar} 
+                src={car.image || NoCar} 
                 alt='car image'
                 className={styles.SCarImage}
                 onClick={() => setIsInfoOpen(true)}
             />
             <div className={styles.SCarData}>
                 <span className={styles.SCarName}>
-                    {brand.brand} {brand.model}
+                    {car.brand.brand} {car.brand.model}
                 </span>
                 {authUserStore.isAdmin && (
                     <ButtonIcon
