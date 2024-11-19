@@ -23,13 +23,15 @@ export const UserModel: FC<IUserModel> = (
                 setIsEditOpen={setIsEditOpen}
             />
             <Popup
-                title={`Редактировать пользователя ${surname} ${name[0]}. ${patronymic[0]}`}
+                title={`Редактировать пользователя ${surname} ${name[0]}. ${patronymic[0]}.`}
                 isModalOpen={isEditOpen}
                 handleClose={setIsEditOpen}
             >
                 <UserPopupEditFormModel 
                     user={user}
-                    key={Date.now()}/>
+                    handleClose={setIsEditOpen}
+                    key={Date.now()}
+                />
             </Popup>
         </>
     )

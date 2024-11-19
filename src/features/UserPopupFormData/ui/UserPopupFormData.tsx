@@ -1,16 +1,11 @@
-import { Field, FieldProps, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
-import { Form } from 'react-router-dom';
 import { Button, Input, Message, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
-import { validationUser } from '../utils';
+import { formattedToForm, validationUser } from '../utils';
+import { IUserFormData } from '@/shared/interfaces';
 
-interface IUserFormData {
-    name: string
-    surname: string
-    patronymic: string
-    birthDate: string
-}
+
 
 interface IUserPopupFormComponent {
     name: string
@@ -38,11 +33,11 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
             name,
             surname,
             patronymic,
-            birthDate
+            birthDate: formattedToForm(birthDate)
         }
     }, [])
 
-    const handleSubmit = (values: IUserFormData) => {
+    const handleSubmit = async (values: IUserFormData) => {
         submit(values.name, values.surname, values.patronymic, values.birthDate)
     }
 
@@ -55,24 +50,9 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
             validateOnBlur={false}
             enableReinitialize
         >
-            {({ isValid, dirty}) => (
+            {({ isValid, values }) => (
                 <Form>
                     <div className={styles.SUserPopupData}>
-                        <Field
-                            name='name'
-                        >
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        error={error}
-                                        placeholder="Введите имя"
-                                    />
-                                );
-                            }}
-                        </Field>
                         <Field 
                             name="surname"
                         >
@@ -84,6 +64,21 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                         {...field}
                                         error={error}
                                         placeholder="Введите фамилию"
+                                    />
+                                );
+                            }}
+                        </Field>
+                        <Field
+                            name='name'
+                        >
+                            {({ field, form }: FieldProps) => {
+                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
+
+                                return (
+                                    <Input
+                                        {...field}
+                                        error={error}
+                                        placeholder="Введите имя"
                                     />
                                 );
                             }}
@@ -130,7 +125,7 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={!isValid || (!values.surname || !values.name || !values.patronymic || !values.birthDate)}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

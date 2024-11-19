@@ -1,18 +1,22 @@
 import { IUser } from "@/shared/interfaces"
-import { FC, useMemo, useState } from "react"
+import { FC, SetStateAction, useMemo, useState } from "react"
 import { Button } from "ui-kit-cars/main"
 import styles from './styles.module.scss'
 import cx from 'classnames'
 import { UserPopupFormData } from "@/features/UserPopupFormData"
 import { UserPopupFormRole } from "@/features/UserPopupFormRole"
+import { observer } from "mobx-react-lite"
+import { fetchGetUsers, fetchPutUser, fetchPutUserRole } from "@/shared/api"
 
 interface IUserPopupEditFormModel {
     user: IUser
+    handleClose: React.Dispatch<SetStateAction<boolean>>
 }
 
-export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = (
+export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     {
-        user
+        user,
+        handleClose
     }
 ) => {
     const [isRoleEdit, setIsRoleEdit] = useState(false)
@@ -36,12 +40,37 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = (
         )
     }, [isRoleEdit])
 
-    const handleSubmitData = () => {
-
+    const handleSubmitData = async (name: string, surname: string, patronymic: string, birthDate: string) => {
+        try {
+            await fetchPutUser({
+                name,
+                surname,
+                patronymic,
+                birthDate
+            }, user.id)
+            handleClose(false)
+            await fetchGetUsers()
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorData(error.message)
+            } else {
+                setErrorData(error as string)
+            }
+        }
     }
 
-    const handleSubmitRole = () => {
-
+    const handleSubmitRole = async (role: string) => {
+        try {
+            await fetchPutUserRole(user.id, role)
+            handleClose(false)
+            await fetchGetUsers()
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorRole(error.message)
+            } else {
+                setErrorRole(error as string)
+            }
+        }
     }
 
     return (
@@ -86,4 +115,4 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = (
             )}
         </div>
     )
-}
+})

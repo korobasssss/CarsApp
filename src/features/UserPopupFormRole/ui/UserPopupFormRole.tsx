@@ -1,9 +1,9 @@
-import { Field, FieldProps, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
-import { Form } from 'react-router-dom';
 import { Button, Message, Select, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
 import { validationRole } from '../utils/validation';
+import { usersStore } from '@/app/store/mobxStore';
 
 interface IUserFormRole {
     role: string
@@ -43,7 +43,7 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
             validateOnBlur={false}
             enableReinitialize
         >
-            {({ isValid, dirty}) => (
+            {({ isValid, values, setFieldValue}) => (
                 <Form>
                     <div className={styles.SUserPopupRole}>
                         <Field
@@ -55,6 +55,8 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
                                 return (
                                     <Select
                                         {...field}
+                                        options={usersStore.getUserRoles}
+                                        onChange={(value) => setFieldValue('role', value)}
                                         placeholder="Выберите роль"
                                         error={error}
                                     />
@@ -72,7 +74,7 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={!isValid || !values.role}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

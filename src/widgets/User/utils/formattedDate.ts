@@ -1,4 +1,4 @@
 export const formattedDate = (date: string) => {
-    const [year, month, day] = date.split('-')
+    const [month, day, year] = date.split('/')
     return `${day}.${month}.${year}`
 }

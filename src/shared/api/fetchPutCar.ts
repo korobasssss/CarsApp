@@ -27,7 +27,7 @@ export const fetchPutCar = async (newCar: ICarForm, id: number) => {
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {
-                    throw new Error(error.message)
+                    throw new Error(error.response?.data.title)
                 }
             }
         } else {

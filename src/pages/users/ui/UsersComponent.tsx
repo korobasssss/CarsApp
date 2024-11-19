@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import { UserModel } from "@/widgets/User/model/UserModel"
 
 interface IUsersComponent {
-    users: IUser[]
+    users: IUser[] | null
 }
 
 export const UsersComponent: FC<IUsersComponent> = (
@@ -12,6 +12,8 @@ export const UsersComponent: FC<IUsersComponent> = (
         users
     }
 ) => {
+    if (!users) return null
+
     return (
         <section className={styles.SUsersWrapper}>
           <ul className={styles.SUsers}>

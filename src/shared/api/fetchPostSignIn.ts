@@ -42,7 +42,7 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 401: {
-                    throw new Error(`Неверный логин или пароль`)
+                    throw new Error(error.response?.data.title)
                 }
             }
         } else {
