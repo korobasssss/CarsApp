@@ -17,6 +17,9 @@ export const fetchLogout = async () => {
         carStore.setReady()
         usersStore.setReady()
 
+        carStore.setCars(null)
+        usersStore.setUsers(null)
+
         authUserStore.setReady()
     } catch (error: unknown) {
         authUserStore.setError()
