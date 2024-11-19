@@ -3,7 +3,7 @@ import { Header } from "../ui/Header"
 import { FC } from "react"
 import { fetchLogout } from "@/shared/api"
 import { observer } from "mobx-react-lite"
-import { authUserStore, carStore, usersStore } from "@/app/store/mobxStore"
+import { authUserStore } from "@/app/store/mobxStore"
 import { useNavigate } from "react-router-dom"
 import { EPaths } from "@/shared/enums"
 import { notification } from 'antd';
@@ -24,9 +24,6 @@ export const HeaderModel: FC<IHeaderModel> = observer((
             await fetchLogout()
 
             if (authUserStore.isReady) {
-                authUserStore.setLogout()
-                carStore.setReady()
-                usersStore.setReady()
                 navigate(EPaths.MAIN)
             }
         } catch (error: unknown) {

@@ -14,7 +14,7 @@ export const CarCreateForm: FC<ICarCreateForm> = (
     const [errorCommon, setErrorCommon] = useState('')
 
     const handleSubmit = async (brandId: number, color?: string, image?: File) => {
-        if (brandId && color && image) {
+        if (brandId && image) {
             try {
                 await fetchPostCar({
                     model: brandId,
@@ -22,7 +22,7 @@ export const CarCreateForm: FC<ICarCreateForm> = (
                     image: image,
                 })
                 handleClose(false)
-                await fetchGetCars()
+                await fetchGetCars(1, 12)
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorCommon(error.message)

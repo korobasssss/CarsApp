@@ -6,20 +6,24 @@ import { IClassNames } from "@/shared/interfaces";
 interface IScrollWrapper
 extends IClassNames {
     children: ReactNode;
+    onScroll?: (e: React.UIEvent<HTMLDivElement>) => void
 }
 
 export const ScrollWrapper: FC<IScrollWrapper> = (
     {
         classnames,
-        children
+        children,
+        onScroll
     }
 ) => {
 
     return (
         <div className={cx(
-            styles.scroll_wrapper,
-            classnames
-        )}>
+                styles.scroll_wrapper,
+                classnames
+            )}
+            onScroll={onScroll}
+        >
             {children}
         </div>
     )

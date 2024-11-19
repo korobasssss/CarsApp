@@ -11,16 +11,16 @@ export const CarsModel = observer(() => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchGetCars();
+        await fetchGetCars(carStore.currentPage, 12);
       } catch (error) {
         notification.open({
           message: 'Ошибка получения данных тачек'
         });
       }
     };
-    if (carStore.cars || carStore.isError || carStore.isLoading) return
+    if (carStore.isError || carStore.isLoading || carStore.cars && carStore.currentPage === 1) return
     fetchData();
-  }, [carStore.cars]);
+  }, [carStore.currentPage]);
 
   useEffect(() => {
     const fetchData = async () => {

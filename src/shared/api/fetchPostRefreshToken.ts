@@ -1,5 +1,5 @@
-import { ERole } from "../enums";
-import { instanceToken } from "./base";
+import { ELocalStorageItems, ERole } from "../enums";
+import { instance } from "./base";
 
 interface IResponse {
     accessToken: string;
@@ -7,6 +7,10 @@ interface IResponse {
 }
 
 export const fetchPostRefreshToken = async (): Promise<IResponse> => {
-    const response = await instanceToken.post<IResponse>('Identity/token/refreshing');
+    const response = await instance.post<IResponse>('Identity/token/refreshing', {}, {
+        headers: {
+            auth: `Bearer ${localStorage.getItem(ELocalStorageItems.accessToken)}`,
+        },
+    });
     return response.data;
 }

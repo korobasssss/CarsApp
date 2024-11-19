@@ -2,10 +2,11 @@ import { ICar } from '@/shared/interfaces'
 import styles from './styles.module.scss'
 import { FC, useState } from 'react'
 import { CarModel } from '@/widgets/Car'
-import { Button, Popup } from 'ui-kit-cars/main'
+import { Button, LoaderSpin, Popup } from 'ui-kit-cars/main'
 import { CarCreateForm } from '@/widgets/CarCreateForm'
 import { observer } from 'mobx-react-lite'
-import { authUserStore } from '@/app/store/mobxStore'
+import { authUserStore, carStore } from '@/app/store/mobxStore'
+import { ERequestStatus } from '@/shared/enums'
 
 interface ICarsComponent {
   cars: ICar[] | null
@@ -17,6 +18,7 @@ export const CarsComponent: FC<ICarsComponent> = observer((
     cars
   }
 ) => {
+
   const [isCreateOpen, setIsCreateOpen] = useState(false)
 
     if (!cars) return null
@@ -42,6 +44,11 @@ export const CarsComponent: FC<ICarsComponent> = observer((
                   )
               })}
           </ul>
+          {carStore.carsStatus === ERequestStatus.Loading && (
+            <div className={styles.SLoader}>
+              <LoaderSpin/>
+            </div>
+          )}
           <Popup
                 title={`Создать тачку`}
                 isModalOpen={isCreateOpen}

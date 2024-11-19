@@ -1,21 +1,29 @@
 import { ICar, ICarBrand } from "@/shared/interfaces";
 import { BaseStore } from "../base";
 import { action, computed, makeObservable, observable } from "mobx";
+import { ERequestStatus } from "@/shared/enums";
 
 class CarStore extends BaseStore {
+    carsStatus: ERequestStatus = ERequestStatus.Ready
     cars: ICar[] | null = null
+    currentPage: number = 1
+    totalPages: number | null = null
     carCategories: ICarBrand[] | null = null
 
     constructor() {
         super()
         makeObservable(this, {
             cars: observable,
+            carsStatus: observable,
+            currentPage: observable,
+            totalPages: observable,
             carCategories: observable,
             setCars: action, 
+            setCurrentPage: action, 
+            setPages: action, 
             setCar: action,
             getCars: computed,
             setCarCategories: action,
-
         })
     }
 
@@ -24,7 +32,29 @@ class CarStore extends BaseStore {
     }
 
     setCars(data: ICar[] | null) {
-        this.cars = data
+        if (data === null) {
+            this.cars = [];
+        } else {
+            if (this.cars) {
+                this.cars = [...this.cars, ...data];
+            } else {
+                this.cars = data;
+            }
+        }
+    }
+
+    setPages(total: number) {
+        this.totalPages = total
+    }
+
+    setCurrentPage(page?: number) {
+        if (!page) {
+            if (this.currentPage && this.totalPages && (this.currentPage < this.totalPages)) {
+                this.currentPage++
+            }
+        } else {
+            this.currentPage = page
+        }
     }
 
     setCar(data: ICar) {
@@ -39,6 +69,10 @@ class CarStore extends BaseStore {
 
     setCarCategories(data: ICarBrand[] | null) {
         this.carCategories = data
+    }
+
+    setStatus(status: ERequestStatus) {
+        this.carsStatus = status
     }
 }
 

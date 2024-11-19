@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { fetchLogout, fetchPostRefreshToken } from "../";
+import { fetchPostRefreshToken } from "../";
 import { ELocalStorageItems } from "@/shared/enums";
 
 export const instance = axios.create({
@@ -57,11 +57,9 @@ const interceptors = (axiosInstance: AxiosInstance) => {
                     // })
                     return axios(originalRequest);
                 } catch (err) {
-                    await fetchLogout()
                     return Promise.reject(err);
                 }
             }
-            await fetchLogout()
             return Promise.reject(error);
         }
     );

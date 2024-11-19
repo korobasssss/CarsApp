@@ -1,4 +1,4 @@
-import { authUserStore } from "@/app/store/mobxStore"
+import { authUserStore, carStore, usersStore } from "@/app/store/mobxStore"
 import { instanceToken } from "./base"
 
 const axiosPostLogout = async (): Promise<void> => {
@@ -12,6 +12,11 @@ export const fetchLogout = async () => {
     try {
         authUserStore.setLoading()
         await axiosPostLogout()
+
+        authUserStore.setLogout()
+        carStore.setReady()
+        usersStore.setReady()
+
         authUserStore.setReady()
     } catch (error: unknown) {
         authUserStore.setError()
