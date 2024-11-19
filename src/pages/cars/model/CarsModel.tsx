@@ -19,7 +19,8 @@ export const CarsModel = observer(() => {
         });
       }
     };
-    if (carStore.isError || carStore.isLoading || (carStore.cars && carStore.cars.length > 0) && carStore.currentPage === 1) return
+    debugger
+    if (carStore.isError || carStore.isLoading || (carStore.cars && carStore.cars.length > 0 && carStore.currentPage === 1)) return
     fetchData();
   }, [carStore.currentPage]);
 

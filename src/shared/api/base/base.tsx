@@ -1,26 +1,29 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { fetchPostRefreshToken } from "../";
+import { fetchLogout, fetchPostRefreshToken } from "../";
 import { ELocalStorageItems } from "@/shared/enums";
 
 export const instance = axios.create({
     baseURL: process.env.SERVER_URL,
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true
 });
 
 export const instanceToken = axios.create({
     baseURL: process.env.SERVER_URL,
     headers: {
         'Content-Type': 'application/json',
-    }
+    },
+    withCredentials: true
 });
 
 export const instanceFile = axios.create({
     baseURL: process.env.SERVER_URL,
     headers: {
-        'Content-Type': 'multipart/form-data; boundary=8-wghwgrw',
-    }
+        'Content-Type': 'multipart/form-data; boundary=8-wghwgrw'
+    },
+    withCredentials: true
 });
 
 const interceptors = (axiosInstance: AxiosInstance) => {
@@ -47,14 +50,18 @@ const interceptors = (axiosInstance: AxiosInstance) => {
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
                 try {
-                    const response = await fetchPostRefreshToken();
-                    localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken);
-                    localStorage.setItem(ELocalStorageItems.role, response.userInfo.role);
-    
-                    // authUserStore.setAuthUserData({
-                    //     accessToken: response.accessToken,
-                    //     role: response.userInfo.role
-                    // })
+                    const token = localStorage.getItem(ELocalStorageItems.accessToken)
+
+                    if (token) {
+                        const response = await fetchPostRefreshToken(token);
+
+                        localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken);
+                        localStorage.setItem(ELocalStorageItems.role, response.userInfo.role);
+
+                        originalRequest.headers['Authorization'] = `Bearer ${response.accessToken}`;
+                    } else {
+                        await fetchLogout()
+                    }
                     return axios(originalRequest);
                 } catch (err) {
                     return Promise.reject(err);
