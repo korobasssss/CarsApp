@@ -1,6 +1,7 @@
 import { ICar } from "@/shared/interfaces"
 import { FC, useMemo } from "react"
 import styles from './styles.module.scss'
+import { NoCar } from "@/shared/assets"
 
 interface ICarPopupInformationComponent {
     car: ICar
@@ -33,7 +34,7 @@ export const CarPopupInformationComponent: FC<ICarPopupInformationComponent> = (
     return (
         <div className={styles.SCarPopup}>
             <img 
-                src={image}
+                src={image || NoCar}
                 className={styles.SCarPopupImage}
             />
             <div className={styles.SCarData}>

@@ -3,6 +3,8 @@ import { FC, SetStateAction } from "react"
 import styles from './styles.module.scss'
 import { ButtonIcon } from "ui-kit-cars/main"
 import { EditIcon, NoCar } from "@/shared/assets"
+import { authUserStore } from "@/app/store/mobxStore"
+import { observer } from "mobx-react-lite"
 
 interface ICarFC {
     car: ICar
@@ -10,7 +12,7 @@ interface ICarFC {
     setIsEditOpen: React.Dispatch<SetStateAction<boolean>>
 }
 
-export const Car: FC<ICarFC> = (
+export const Car: FC<ICarFC> = observer((
     {
         car,
         setIsInfoOpen,
@@ -35,14 +37,16 @@ export const Car: FC<ICarFC> = (
                 <span className={styles.SCarName}>
                     {brand.brand} {brand.model}
                 </span>
-                <ButtonIcon
-                    alt="edit"
-                    classNames={styles.SEdit}
-                    onClick={() => setIsEditOpen(true)}
-                >
-                    <EditIcon/>
-                </ButtonIcon>
+                {authUserStore.isAdmin && (
+                    <ButtonIcon
+                        alt="edit"
+                        classNames={styles.SEdit}
+                        onClick={() => setIsEditOpen(true)}
+                    >
+                        <EditIcon/>
+                    </ButtonIcon>
+                )}
             </div>
         </div>
     )
-}
+})

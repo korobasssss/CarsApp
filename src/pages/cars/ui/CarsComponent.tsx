@@ -4,13 +4,15 @@ import { FC, useState } from 'react'
 import { CarModel } from '@/widgets/Car'
 import { Button, Popup } from 'ui-kit-cars/main'
 import { CarCreateForm } from '@/widgets/CarCreateForm'
+import { observer } from 'mobx-react-lite'
+import { authUserStore } from '@/app/store/mobxStore'
 
 interface ICarsComponent {
   cars: ICar[] | null
 }
 
 
-export const CarsComponent: FC<ICarsComponent> = (
+export const CarsComponent: FC<ICarsComponent> = observer((
   {
     cars
   }
@@ -21,13 +23,15 @@ export const CarsComponent: FC<ICarsComponent> = (
 
     return (
         <section className={styles.SCarsWrapper}>
-          <Button 
-            theme='primary'
-            onClick={() => setIsCreateOpen(true)}
-            classNames={styles.SButton}
-          >
-            Создать тачку
-          </Button>
+          {authUserStore.isAdmin && (
+            <Button 
+              theme='primary'
+              onClick={() => setIsCreateOpen(true)}
+              classNames={styles.SButton}
+            >
+              Создать тачку
+            </Button>
+          )}
           <ul className={styles.SCars}>
             {cars.map(car => {
                   return (
@@ -52,4 +56,4 @@ export const CarsComponent: FC<ICarsComponent> = (
             </Popup>
         </section>
     )   
-}
+})
