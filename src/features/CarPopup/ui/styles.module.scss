@@ -16,6 +16,8 @@
         .SUserImage {
             width: 340px;
             height: 200px;
+
+            border-radius: variables.$RADIUS-M;
         
             object-fit: cover;
         }

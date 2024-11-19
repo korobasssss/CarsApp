@@ -40,6 +40,7 @@ export const CarModel: FC<ICarModel> = (
                     <CarEditFormModel 
                         car={car} 
                         key={Date.now()}
+                        handleClose={setIsEditOpen}
                     />
                 )}
             </Popup>

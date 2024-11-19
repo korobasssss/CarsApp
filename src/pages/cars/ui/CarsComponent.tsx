@@ -6,7 +6,7 @@ import { Button, Popup } from 'ui-kit-cars/main'
 import { CarCreateForm } from '@/widgets/CarCreateForm'
 
 interface ICarsComponent {
-  cars: ICar[]
+  cars: ICar[] | null
 }
 
 
@@ -16,6 +16,8 @@ export const CarsComponent: FC<ICarsComponent> = (
   }
 ) => {
   const [isCreateOpen, setIsCreateOpen] = useState(false)
+
+    if (!cars) return null
 
     return (
         <section className={styles.SCarsWrapper}>
@@ -29,7 +31,10 @@ export const CarsComponent: FC<ICarsComponent> = (
           <ul className={styles.SCars}>
             {cars.map(car => {
                   return (
-                      <CarModel car={car}/>
+                      <CarModel 
+                        key={car.carId}
+                        car={car}
+                      />
                   )
               })}
           </ul>
@@ -39,7 +44,10 @@ export const CarsComponent: FC<ICarsComponent> = (
                 handleClose={setIsCreateOpen}
             >
                 {isCreateOpen && (
-                    <CarCreateForm key={Date.now()} />
+                    <CarCreateForm 
+                      key={Date.now()} 
+                      handleClose={setIsCreateOpen}
+                    />
                 )}
             </Popup>
         </section>

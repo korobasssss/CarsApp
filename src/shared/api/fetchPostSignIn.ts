@@ -16,9 +16,9 @@ const axiosPostSignIn = async (data: ISignInForm): Promise<IResponse> => {
 
 export const fetchPostSignIn = async (data: ISignInForm) => {
     authUserStore.setPending();
-    authUserStore.setLoading();
 
     try {
+        authUserStore.setLoading();
         const response = await axiosPostSignIn(data);
         if (
             response && 

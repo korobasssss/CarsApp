@@ -2,7 +2,7 @@ import { ICar } from "@/shared/interfaces"
 import { FC, SetStateAction } from "react"
 import styles from './styles.module.scss'
 import { ButtonIcon } from "ui-kit-cars/main"
-import { EditIcon } from "@/shared/assets"
+import { EditIcon, NoCar } from "@/shared/assets"
 
 interface ICarFC {
     car: ICar
@@ -24,8 +24,9 @@ export const Car: FC<ICarFC> = (
             key={carId}
             className={styles.SCar}
         >
+
             <img 
-                src={image} 
+                src={image || NoCar} 
                 alt='car image'
                 className={styles.SCarImage}
                 onClick={() => setIsInfoOpen(true)}

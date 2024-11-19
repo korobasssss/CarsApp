@@ -1,17 +1,13 @@
-import { Field, FieldProps, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import styles from './styles.module.scss'
-import { Form } from 'react-router-dom';
-import { Button, ButtonIcon, FileLoader, Input, Message, Select } from 'ui-kit-cars/main';
+import { Button, ButtonIcon, FileLoader, Input, ISelectOptions, Message, Select } from 'ui-kit-cars/main';
 import { validationCarCreate, validationCarEdit } from '../utils';
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
 import cx from 'classnames'
-
-interface ICarForm {
-    model: number | undefined
-    color: string
-    image: File | null
-}
+import { observer } from 'mobx-react-lite';
+import { carStore } from '@/app/store/mobxStore';
+import { ICarForm } from '@/shared/interfaces';
 
 interface ICarPopupFormComponent {
     brandId: number | undefined
@@ -23,7 +19,7 @@ interface ICarPopupFormComponent {
     handleDelete?: () => void
 }
 
-export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
+export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
     {
         brandId,
         color,
@@ -36,17 +32,36 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
 ) => {
     const [canShowImage, setCanShoeImage] = useState(true)
 
+    const carCategoriesOptions: ISelectOptions<number, string>[] | undefined = useMemo(() => {
+        if (!carStore.getCarCategories) return undefined
+        return carStore.getCarCategories.map(oneCategory => {
+            return {
+                value: oneCategory.carModelId,
+                label: `${oneCategory.brand} ${oneCategory.model}`
+            }
+        })
+    }, [carStore.carCategories])
+
     const initialValues: ICarForm = useMemo(() => {
         return {
             model: brandId,
             color,
-            image: null
+            image: undefined
         }
     }, [])
 
-    const handleSubmit = (values: ICarForm) => {
-        if (values.image && values.model) {
-            submit(values.model, values.color, values.image)
+    const handleSubmit = async (values: ICarForm, { setErrors, setStatus }: FormikHelpers<ICarForm>) => {
+        console.log((!values.model || !values.image))
+        setErrors({})
+        setStatus(undefined)
+        if (handleDelete) {
+            if (values.model) {
+                submit(values.model, values.color, values.image)
+            }
+        } else {
+            if (values.image && values.model) {
+                submit(values.model, values.color, values.image)
+            }
         }
     }
 
@@ -60,16 +75,24 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
         )
     }, [handleDelete])
 
+    const isValues = useCallback((values: ICarForm) => {
+        if (handleDelete) {
+            return !values.model
+        } else {
+            return !values.model || !values.image
+        }
+    }, [handleDelete])
+
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={handleDelete ? validationCarEdit : validationCarCreate}
             onSubmit={handleSubmit}
-            validateOnChange={false}
             validateOnBlur={false}
             enableReinitialize
         >
-            {({ values, isValid, dirty, setFieldValue }) => (
+            {({ values, isValid, setFieldValue }) => (
+                
                 <Form>
                     <div className={styles.SCarPopup}>
                         <Field
@@ -81,6 +104,8 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
                                 return (
                                     <Select
                                         {...field}
+                                        options={carCategoriesOptions}
+                                        onChange={(value) => setFieldValue('model', value)}
                                         placeholder="Выберите модель"
                                         error={error}
                                     />
@@ -107,12 +132,15 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
                         >
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-                                
                                 if (image && !values.image && canShowImage) {
                                     return (
                                         <div className={styles.SUserImageWrapper}>
-                                            <img src={image}/>
+                                            <img 
+                                                src={image}
+                                                className={styles.SUserImage}
+                                            />
                                             <ButtonIcon
+                                                type='button'
                                                 alt='delete icon'
                                                 onClick={() => setCanShoeImage(false)}
                                             >
@@ -142,7 +170,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={!isValid || (isValues(values))}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>
@@ -162,4 +190,4 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = (
             )}
         </Formik>
     )
-}
+})

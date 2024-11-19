@@ -1,97 +1,46 @@
 import { MainLayout } from "@/entities/MainLayout"
 import { CarsComponent } from "../ui/CarsComponent"
-import {TempIcon} from '@/shared/assets'
-import { ICar } from "@/shared/interfaces"
+import { useEffect } from "react"
+import { fetchCarCategories, fetchGetCars } from "@/shared/api"
+import { notification } from 'antd';
+import { carStore } from "@/app/store/mobxStore"
+import { observer } from "mobx-react-lite";
 
-const cars: ICar[] = [
-    {
-        carId: 0,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },
-    {
-        carId: 1,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },    
-    {
-        carId: 2,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },    
-    {
-        carId: 3,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },    
-    {
-        carId: 4,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },    
-    {
-        carId: 5,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },    
-    {
-        carId: 6,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },   
-    {
-        carId: 7,
-        brand: {
-          carModelId: 0,
-          brand: "Какойто бренд",
-          model: "Какаято модель"
-        },
-        color: "Какойто цвет",
-        image: TempIcon
-    },
-]
+export const CarsModel = observer(() => {
 
-export const CarsModel = () => {
-    return (
-        <MainLayout>
-            <CarsComponent
-                cars={cars}
-            />
-        </MainLayout>
-    )
-}
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchGetCars();
+      } catch (error) {
+        notification.open({
+          message: 'Ошибка получения данных тачек'
+        });
+      }
+    };
+    if (carStore.cars || carStore.isError || carStore.isLoading) return
+    fetchData();
+  }, [carStore.cars]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await fetchCarCategories();
+      } catch (error) {
+        notification.open({
+          message: 'Ошибка получения данных категорий тачек'
+        });
+      }
+    };
+    if (carStore.carCategories || carStore.isError || carStore.isLoading) return 
+    fetchData();
+  }, [carStore.carCategories, carStore.cars]);
+
+  return (
+    <MainLayout>
+        <CarsComponent
+            cars={carStore.cars}
+        />
+    </MainLayout>
+  )
+})

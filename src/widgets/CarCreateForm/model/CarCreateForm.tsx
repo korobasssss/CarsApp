@@ -1,11 +1,38 @@
 import { CarPopupFormComponent } from "@/features/CarPopup"
-import { useState } from "react"
+import { fetchGetCars, fetchPostCar } from "@/shared/api"
+import { FC, SetStateAction, useState } from "react"
 
-export const CarCreateForm = () => {
+interface ICarCreateForm {
+    handleClose: React.Dispatch<SetStateAction<boolean>>
+}
+
+export const CarCreateForm: FC<ICarCreateForm> = (
+    {
+        handleClose
+    }
+) => {
     const [errorCommon, setErrorCommon] = useState('')
 
-    const handleSubmit = (brandId: number, color?: string, image?: File) => {
-        console.log(brandId, color, image)
+    const handleSubmit = async (brandId: number, color?: string, image?: File) => {
+        if (brandId && color && image) {
+            try {
+                await fetchPostCar({
+                    model: brandId,
+                    color: color,
+                    image: image,
+                })
+                handleClose(false)
+                await fetchGetCars()
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setErrorCommon(error.message)
+                } else {
+                    setErrorCommon(error as string)
+                }
+            }
+        } else {
+            setErrorCommon('Заполните все поля')
+        }
     }
 
     return (

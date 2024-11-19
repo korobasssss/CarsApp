@@ -3,8 +3,9 @@
 
 .SUser {
     width: 524px;
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+    column-gap: 20px;
 
     .SUserImg {
         width: 119px;
@@ -14,11 +15,9 @@
     }
 
     .SUserData {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        justify-content: end;
-        align-items: end;
+        display: grid;
+        grid-template-rows: auto max-content;
+        row-gap: 30px;
 
         .SUserName {
             @include mixins.font-montserrat-m-bold;
@@ -28,6 +27,7 @@
         .SUserDate {
             color: variables.$SECONDARY_DATA;
             @include mixins.font-montserrat-m-medium;
+            text-align: end;
         }
     }
 
