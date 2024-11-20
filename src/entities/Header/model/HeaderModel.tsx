@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite"
 import { authUserStore } from "@/app/store/mobxStore"
 import { useNavigate } from "react-router-dom"
 import { EPaths } from "@/shared/enums"
-import { notification } from 'antd';
+import { Notification } from "ui-kit-cars/main"
 
 interface IHeaderModel {
     paths: IPaths[]
@@ -27,11 +27,10 @@ export const HeaderModel: FC<IHeaderModel> = observer((
                 navigate(EPaths.MAIN)
             }
         } catch (error: unknown) {
-            notification.open({
+            Notification({
                 message: 'Ошибка выхода из аккаунта',
-                description:
-                    'Произошла ошибка при выходе из аккаунта'
-            });
+                description: 'Произошла ошибка при выходе из аккаунта'
+            })
         }
     }
 

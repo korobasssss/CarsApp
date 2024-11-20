@@ -2,10 +2,10 @@ import { MainLayout } from "@/entities/MainLayout"
 import { CarsComponent } from "../ui/CarsComponent"
 import { useEffect } from "react"
 import { fetchCarCategories, fetchGetCars } from "@/shared/api"
-import { notification } from 'antd';
 import { carStore } from "@/app/store/mobxStore"
 import { observer } from "mobx-react-lite";
 import { CPageSize } from "@/shared/constants";
+import { Notification } from "ui-kit-cars/main";
 
 export const CarsModel = observer(() => {
 
@@ -18,9 +18,10 @@ export const CarsModel = observer(() => {
       try {
         await fetchGetCars(carStore.currentPage, CPageSize);
       } catch (error) {
-        notification.open({
-          message: 'Ошибка получения данных тачек'
-        });
+        Notification({
+          message: 'Ошибка получения данных тачек',
+          description: 'Произошла ошибка при выходе из аккаунта'
+        })
       }
     };
     
@@ -33,9 +34,10 @@ export const CarsModel = observer(() => {
       try {
         await fetchCarCategories();
       } catch (error) {
-        notification.open({
-          message: 'Ошибка получения данных категорий тачек'
-        });
+        Notification({
+          message: 'Ошибка получения данных категорий тачек',
+          description: 'Произошла ошибка при выходе из аккаунта'
+        })
       }
     };
     
