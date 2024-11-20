@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { LoginIcon, LogoIcon, LogoutIcon, MenuIcon } from '@/shared/assets'
 import { FC, useMemo, useState } from 'react'
 import { ButtonIcon, DrawerPopup, Link } from 'ui-kit-cars/main'
-import { EPaths } from '@/shared/enums'
+import { EPaths, ERole } from '@/shared/enums'
 import { observer } from 'mobx-react-lite'
 import { authUserStore } from '@/app/store/mobxStore'
 
@@ -27,15 +27,15 @@ export const Header: FC<IHeader> = observer((
         }
     
         return paths.map((path, index) => {
-            const isAdminPath = path.url === EPaths.USERS && authUserStore.isAdmin;
-    
-            return isAdminPath || path.url !== EPaths.USERS ? (
-                <Link key={index} url={path.url}>
-                    {path.title}
-                </Link>
-            ) : null;
+            if (path.availableRoles.includes(authUserStore.authUserData.role as ERole)) {
+                return (
+                    <Link key={index} url={path.url}>
+                        {path.title}
+                    </Link>
+                )
+            }
         });
-    }, [paths, authUserStore.isAuth, authUserStore.isAdmin]);
+    }, [paths, authUserStore.authUserData]);
 
     return (
         <header className={styles.SHeader}>
