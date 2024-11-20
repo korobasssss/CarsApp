@@ -3,7 +3,7 @@ import { action, computed, makeObservable, observable } from "mobx";
 import { ELocalStorageItems, ERole } from "@/shared/enums";
 
 class AuthUserStore extends BaseStore {
-    authUserData: {role: string| null} = {
+    authUserData: {role: string | null} = {
         role: null
     }
 
@@ -14,6 +14,7 @@ class AuthUserStore extends BaseStore {
             getAuthUserData: computed,
             isAuth: computed,
             setLogout: action,
+            setAuthUserData: action,
             isAdmin: computed
         })
     }
@@ -30,7 +31,7 @@ class AuthUserStore extends BaseStore {
 
     public get isAdmin() {
         this.getAuthUserData
-        return this.isAuth && (this.authUserData.role !== ERole.User)
+        return this.isAuth && (this.authUserData.role !== ERole.User && this.authUserData.role !== ERole.Manager)
     }
 
     public setAuthUserData(role: string | null) {

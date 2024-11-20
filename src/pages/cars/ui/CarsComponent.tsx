@@ -50,17 +50,17 @@ export const CarsComponent: FC<ICarsComponent> = observer((
             </div>
           )}
           <Popup
-                title={`Создать тачку`}
-                isModalOpen={isCreateOpen}
-                handleClose={setIsCreateOpen}
-            >
-                {isCreateOpen && (
-                    <CarCreateForm 
-                      key={Date.now()} 
-                      handleClose={setIsCreateOpen}
-                    />
-                )}
-            </Popup>
+              title={`Создать тачку`}
+              isModalOpen={isCreateOpen}
+              handleClose={setIsCreateOpen}
+              isForceRender
+          >
+              {isCreateOpen && (
+                  <CarCreateForm 
+                    handleClose={setIsCreateOpen}
+                  />
+              )}
+          </Popup>
         </section>
     )   
 })

@@ -1,4 +1,4 @@
-import { Field, FieldProps, Formik, Form, FormikHelpers } from "formik"
+import { Field, FieldProps, Formik, Form, FormikHelpers, ErrorMessage } from "formik"
 import { FC, useMemo } from "react"
 import styles from './styles.module.scss'
 import { Button, Input, Message } from "ui-kit-cars/main"
@@ -39,7 +39,6 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationSignIn}
             onSubmit={handleSubmit}
-            enableReinitialize
             validateOnBlur={false}
         >
             {({ isValid, values}) => (
@@ -57,10 +56,14 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                                         type='email'
                                         error={error}
                                         placeholder="Введите логин"
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="email">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         <Field 
                             name="password"
                         >
@@ -73,10 +76,14 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                                         type='password'
                                         error={error}
                                         placeholder="Введите пароль"
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="password">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

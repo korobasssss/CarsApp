@@ -1,4 +1,4 @@
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
 import { Button, Message, Select, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
@@ -39,9 +39,7 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationRole}
             onSubmit={handleSubmit}
-            validateOnChange={false}
             validateOnBlur={false}
-            enableReinitialize
         >
             {({ isValid, values, setFieldValue}) => (
                 <Form>
@@ -59,10 +57,14 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
                                         onChange={(value) => setFieldValue('role', value)}
                                         placeholder="Выберите роль"
                                         error={error}
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="role">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

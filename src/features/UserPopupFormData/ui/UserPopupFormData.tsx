@@ -1,4 +1,4 @@
-import { Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
 import { Button, Input, Message, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
@@ -44,7 +44,6 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationUser}
             onSubmit={handleSubmit}
-            validateOnChange={false}
             validateOnBlur={false}
             enableReinitialize
         >
@@ -62,10 +61,14 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                         {...field}
                                         error={error}
                                         placeholder="Введите фамилию"
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="surname">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         <Field
                             name='name'
                         >
@@ -77,10 +80,14 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                         {...field}
                                         error={error}
                                         placeholder="Введите имя"
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="name">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         <Field
                             name='patronymic'
                         >
@@ -92,10 +99,14 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                         {...field}
                                         error={error}
                                         placeholder="Введите отчество"
+                                        errorTextShow={false}
                                     />
                                 )
                             }}
                         </Field>
+                        <ErrorMessage name="patronymic">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         <Field
                             name='birthDate'
                         >
@@ -108,10 +119,14 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                         type='date'
                                         error={error}
                                         placeholder="Введите дату рождения"
+                                        errorTextShow={false}
                                     />
                                 )
                             }}
                         </Field>
+                        <ErrorMessage name="birthDate">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

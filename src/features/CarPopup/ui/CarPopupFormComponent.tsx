@@ -1,4 +1,4 @@
-import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
 import styles from './styles.module.scss'
 import { Button, ButtonIcon, FileLoader, Input, ISelectOptions, Message, Select } from 'ui-kit-cars/main';
 import { validationCarCreate, validationCarEdit } from '../utils';
@@ -45,13 +45,12 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
     const initialValues: ICarForm = useMemo(() => {
         return {
             model: brandId,
-            color,
+            color: color || '',
             image: undefined
         }
     }, [])
 
     const handleSubmit = async (values: ICarForm, { setErrors, setStatus }: FormikHelpers<ICarForm>) => {
-        console.log((!values.model || !values.image))
         setErrors({})
         setStatus(undefined)
         if (handleDelete) {
@@ -89,29 +88,36 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
             validationSchema={handleDelete ? validationCarEdit : validationCarCreate}
             onSubmit={handleSubmit}
             validateOnBlur={false}
-            enableReinitialize
         >
-            {({ values, isValid, setFieldValue }) => (
+            {({ values, isValid, setFieldValue, errors }) => (
                 
                 <Form>
                     <div className={styles.SCarPopup}>
-                        <Field
-                            name='model'
+                        <Field 
+                            name="model"
                         >
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
                                 return (
-                                    <Select
-                                        {...field}
-                                        options={carCategoriesOptions}
-                                        onChange={(value) => setFieldValue('model', value)}
-                                        placeholder="Выберите модель"
-                                        error={error}
-                                    />
+                                    <div>
+                                        <Select
+                                            {...field}
+                                            options={carCategoriesOptions}
+                                            onChange={(value) => setFieldValue('model', value)}
+                                            placeholder="Выберите модель"
+                                            error={error}
+                                            errorTextShow={false}
+                                        />
+                                    </div>
                                 );
                             }}
                         </Field>
+                        {errors.model && (
+                            <Message message={errors.model} type='error' />
+                        )}
+                        {/* <ErrorMessage name="model">
+                            {errors => <Message message={errors} type='error' />}
+                        </ErrorMessage> */}
                         <Field 
                             name="color"
                         >
@@ -123,10 +129,14 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                                         {...field}
                                         error={error}
                                         placeholder="Введите цвет"
+                                        errorTextShow={false}
                                     />
                                 );
                             }}
                         </Field>
+                        <ErrorMessage name="color">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage>
                         <Field
                             name='image'
                         >
@@ -155,10 +165,17 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                                         {...field}
                                         handleChange={(value) => setFieldValue('image', value)}
                                         error={error}
+                                        errorTextShow={false}
                                     />
                                 )
                             }}
                         </Field>
+                        {errors.image && (
+                            <Message message={errors.image} type='error' />
+                        )}
+                        {/* <ErrorMessage name="image">
+                            {msg => <Message message={msg} type='error' />}
+                        </ErrorMessage> */}
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

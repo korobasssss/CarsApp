@@ -35,11 +35,11 @@ export const CarModel: FC<ICarModel> = (
                 title={`Редактировать тачку ${car.brand.brand} ${car.brand.model}`}
                 isModalOpen={isEditOpen}
                 handleClose={setIsEditOpen}
+                isForceRender
             >
                 {isEditOpen && (
                     <CarEditFormModel 
-                        car={car} 
-                        key={Date.now()}
+                        car={car}
                         handleClose={setIsEditOpen}
                     />
                 )}

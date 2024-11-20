@@ -37,7 +37,12 @@ export const fetchPostSignUp = async (data: ISignUpForm) => {
     } catch (error: unknown) {
         authUserStore.setError();
         if (axios.isAxiosError(error)) {
-            throw new Error(error.response?.data)
+            if (Array.isArray(error.response?.data)) {
+                throw new Error(error.response?.data[0])
+            } else {
+                throw new Error(error.response?.data.title)
+            }
+            
         } else {
             throw new Error(`Произошла ошибка, попробуйте еще раз`)
         }

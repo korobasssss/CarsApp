@@ -19,9 +19,9 @@ export const UsersModel = observer(() => {
               });
             }
           };
-          if (usersStore.users || usersStore.isError || usersStore.isLoading) return
+          if (usersStore.isError || usersStore.isLoading) return
           fetchData();
-    }, [usersStore.users])
+    }, [])
     return (
         <MainLayout>
             <UsersComponent

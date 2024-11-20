@@ -14,10 +14,10 @@ export const AuthProvider: FC<IAuthProvider> = observer((
     }
 ) => {
     const navigate = useNavigate()
-    const pathname = useLocation().pathname
+    const pathname = useLocation()
 
     if (authUserStore.isAuth) {
-        if (pathname === EPaths.USERS) {
+        if (pathname.pathname === EPaths.USERS) {
             if (authUserStore.isAdmin) {
                 return children
             } else {

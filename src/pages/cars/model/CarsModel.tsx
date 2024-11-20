@@ -10,6 +10,10 @@ import { CPageSize } from "@/shared/constants";
 export const CarsModel = observer(() => {
 
   useEffect(() => {
+    carStore.setCurrentPage(1)
+  }, [])
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         await fetchGetCars(carStore.currentPage, CPageSize);
@@ -19,8 +23,8 @@ export const CarsModel = observer(() => {
         });
       }
     };
-    debugger
-    if (carStore.isError || carStore.isLoading || (carStore.cars && carStore.cars.length > 0 && carStore.currentPage === 1)) return
+    
+    if (carStore.isError || carStore.isLoading) return
     fetchData();
   }, [carStore.currentPage]);
 

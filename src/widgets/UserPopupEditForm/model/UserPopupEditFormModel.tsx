@@ -33,7 +33,6 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
                 birthDate
             }, user.id)
             handleClose(false)
-            await fetchGetUsers()
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorData(error.message)
