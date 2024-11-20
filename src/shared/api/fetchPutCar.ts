@@ -18,6 +18,7 @@ export const fetchPutCar = async (newCar: ICarForm, id: number) => {
         
         carStore.setReady()
     } catch (error: unknown) {
+        carStore.setError()
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

@@ -17,6 +17,7 @@ export const fetchPutUser = async (newData: IUserFormData, id: string) => {
         usersStore.setUser(newData, id)
         usersStore.setReady()
     } catch (error: unknown) {
+        usersStore.setError()
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

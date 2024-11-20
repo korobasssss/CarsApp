@@ -17,6 +17,7 @@ export const fetchGetUsers = async () => {
         usersStore.setUsers(result)
         usersStore.setReady()
     } catch (error: unknown) {
+        usersStore.setError()
         throw new Error(`Произошла ошибка, попробуйте еще раз`)
     }
 }
