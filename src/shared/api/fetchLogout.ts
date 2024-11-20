@@ -1,5 +1,6 @@
 import { authUserStore, carStore, usersStore } from "@/app/store/mobxStore"
 import { instanceToken } from "./base"
+import { Notification } from "ui-kit-cars/main";
 
 const axiosPostLogout = async (): Promise<void> => {
     const response = await instanceToken.post<void>('Identity/logout')
@@ -19,6 +20,10 @@ export const fetchLogout = async () => {
 
         carStore.setCars(null)
         usersStore.setUsers(null)
+
+        Notification({
+            message: 'Вы вышли из аккаунта'
+        })
 
         authUserStore.setReady()
     } catch (error: unknown) {

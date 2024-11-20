@@ -19,8 +19,7 @@ export const CarsModel = observer(() => {
         await fetchGetCars(carStore.currentPage, CPageSize);
       } catch (error) {
         Notification({
-          message: 'Ошибка получения данных тачек',
-          description: 'Произошла ошибка при выходе из аккаунта'
+          message: 'Ошибка получения данных тачек'
         })
       }
     };
@@ -35,8 +34,7 @@ export const CarsModel = observer(() => {
         await fetchCarCategories();
       } catch (error) {
         Notification({
-          message: 'Ошибка получения данных категорий тачек',
-          description: 'Произошла ошибка при выходе из аккаунта'
+          message: 'Ошибка получения данных категорий тачек'
         })
       }
     };

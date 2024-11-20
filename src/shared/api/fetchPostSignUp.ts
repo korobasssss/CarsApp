@@ -21,7 +21,7 @@ export const fetchPostSignUp = async (data: ISignUpForm) => {
         authUserStore.setLoading();
         const response = await axiosPostSignUp(data);
         
-        authUserStore.setAuthUserData(response.userInfo.role);
+        authUserStore.setAuthUserData(response.accessToken, response.userInfo.role);
         authUserStore.setReady();
     } catch (error: unknown) {
         if (axios.isAxiosError(error)) {

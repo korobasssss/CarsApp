@@ -34,7 +34,12 @@ class AuthUserStore extends BaseStore {
         return this.isAuth && (this.authUserData.role !== ERole.User && this.authUserData.role !== ERole.Manager)
     }
 
-    public setAuthUserData(role: string | null) {
+    public setAuthUserData(accessToken: string | null, role: string | null) {
+        if (!accessToken || !role) return
+        
+        localStorage.setItem(ELocalStorageItems.accessToken, accessToken)
+        localStorage.setItem(ELocalStorageItems.role, role)
+
         this.authUserData.role = role
     }
 
