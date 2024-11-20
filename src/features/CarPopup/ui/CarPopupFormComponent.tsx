@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers } from 'fo
 import styles from './styles.module.scss'
 import { Button, ButtonIcon, FileLoader, Input, ISelectOptions, Message, Select } from 'ui-kit-cars/main';
 import { validationCarCreate, validationCarEdit } from '../utils';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
 import cx from 'classnames'
 import { observer } from 'mobx-react-lite';
@@ -75,13 +75,13 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
         )
     }, [handleDelete])
 
-    const isValues = useCallback((values: ICarForm) => {
+    const isValues = (values: ICarForm) => {
         if (handleDelete) {
-            return !values.model
+            return !values.model || (!values.image && !canShowImage)
         } else {
             return !values.model || !values.image
         }
-    }, [handleDelete])
+    }
 
     return (
         <Formik
@@ -133,7 +133,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                         </ErrorMessage>
                         <Field name='image'>
                             {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
+                                let error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
                                 if (image && !values.image && canShowImage) {
                                     return (
                                         <div className={styles.SUserImageWrapper}>
