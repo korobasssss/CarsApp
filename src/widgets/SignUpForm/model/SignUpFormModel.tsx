@@ -5,21 +5,15 @@ import { observer } from "mobx-react-lite"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { SignUpFormComponent } from "../ui/SignUpFormComponent"
+import { ISignUpForm } from "@/shared/interfaces"
 
 export const SignUpFormModel = observer(() => {
     const navigate = useNavigate()
     const [errorCommon, setErrorCommon] = useState('')
 
-    const handleSubmit = async (email: string, password: string, name: string, surname: string, patronymic: string, birthDate: string) => {
+    const handleSubmit = async (values: ISignUpForm) => {
         try {
-            await fetchPostSignUp({ 
-                email, 
-                password,
-                name,
-                surname,
-                patronymic,
-                birthDate
-            });
+            await fetchPostSignUp(values);
             if (authUserStore.isReady) {
                 navigate(EPaths.MAIN)
             }

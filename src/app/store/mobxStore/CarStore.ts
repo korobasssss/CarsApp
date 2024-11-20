@@ -1,6 +1,6 @@
 import { ICar, ICarBrand } from "@/shared/interfaces";
 import { BaseStore } from "../base";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { ERequestStatus } from "@/shared/enums";
 
 class CarStore extends BaseStore {
@@ -21,7 +21,6 @@ class CarStore extends BaseStore {
             carsStatus: observable,
             currentPage: observable,
             totalPages: observable,
-            getCars: computed,
             setCars: action, 
             setCurrentPage: action, 
             setPages: action,
@@ -29,17 +28,9 @@ class CarStore extends BaseStore {
         })
     }
 
-    public get getCars() {
-        return this.cars
-    }
-
-    public get getCarCategories() {
-        return this.carCategories
-    }
-
     setCars(data: ICar[] | null) {
         if (!data) {
-            this.cars = [];
+            this.clearCars()
             return
         } 
         
@@ -48,6 +39,10 @@ class CarStore extends BaseStore {
         } else {
             this.cars = data;
         }
+    }
+
+    clearCars() {
+        this.cars = [];
     }
 
     setCarCategories(data: ICarBrand[] | null) {

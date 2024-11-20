@@ -1,4 +1,4 @@
-import { IUser } from "@/shared/interfaces"
+import { IUser, IUserFormData } from "@/shared/interfaces"
 import { FC, SetStateAction, useMemo, useState } from "react"
 import { Button } from "ui-kit-cars/main"
 import styles from './styles.module.scss'
@@ -7,6 +7,7 @@ import { UserPopupFormData } from "@/features/UserPopupFormData"
 import { UserPopupFormRole } from "@/features/UserPopupFormRole"
 import { observer } from "mobx-react-lite"
 import { fetchGetUsers, fetchPutUser, fetchPutUserRole } from "@/shared/api"
+import { ERole } from "@/shared/enums"
 
 interface IUserPopupEditFormModel {
     user: IUser
@@ -24,14 +25,9 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     const [errorData, setErrorData] = useState('')
     const [errorRole, setErrorRole] = useState('')
 
-    const handleSubmitData = async (name: string, surname: string, patronymic: string, birthDate: string) => {
+    const handleSubmitData = async (values: IUserFormData) => {
         try {
-            await fetchPutUser({
-                name,
-                surname,
-                patronymic,
-                birthDate
-            }, user.id)
+            await fetchPutUser(values, user.id)
             handleClose(false)
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -42,7 +38,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
         }
     }
 
-    const handleSubmitRole = async (role: string) => {
+    const handleSubmitRole = async (role: ERole) => {
         try {
             await fetchPutUserRole(user.id, role)
             handleClose(false)

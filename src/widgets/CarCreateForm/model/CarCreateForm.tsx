@@ -1,6 +1,7 @@
 import { CarPopupFormComponent } from "@/features/CarPopup"
 import { fetchGetCars, fetchPostCar } from "@/shared/api"
 import { CPageSize } from "@/shared/constants"
+import { ICarForm } from "@/shared/interfaces"
 import { FC, SetStateAction, useState } from "react"
 
 interface ICarCreateForm {
@@ -14,14 +15,10 @@ export const CarCreateForm: FC<ICarCreateForm> = (
 ) => {
     const [errorCommon, setErrorCommon] = useState('')
 
-    const handleSubmit = async (brandId: number, color?: string, image?: File) => {
-        if (brandId && image) {
+    const handleSubmit = async (values: ICarForm) => {
+        if (values.model && values.image) {
             try {
-                await fetchPostCar({
-                    model: brandId,
-                    color: color,
-                    image: image,
-                })
+                await fetchPostCar(values)
                 handleClose(false)
                 await fetchGetCars(1, CPageSize)
             } catch (error: unknown) {

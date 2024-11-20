@@ -1,23 +1,24 @@
 import { IUser, IUserFormData } from "@/shared/interfaces";
 import { BaseStore } from "../base";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { ISelectOptions } from "ui-kit-cars/main";
 import { formattedToApiDate } from "@/shared/utils";
+import { ERole } from "@/shared/enums";
 
 class UsersStore extends BaseStore {
     users: IUser[] | null = null
-    userRoles: ISelectOptions<string, string>[] = [
+    userRoles: ISelectOptions<ERole, string>[] = [
         {
-            value: 'Manager',
-            label: 'Manager'
+            value: ERole.Manager,
+            label: ERole.Manager
         },
         {
-            value: 'SuperUser',
-            label: 'SuperUser'
+            value: ERole.SuperUser,
+            label: ERole.SuperUser
         },
         {
-            value: 'User',
-            label: 'User'
+            value: ERole.User,
+            label: ERole.User
         },
     ]
 
@@ -26,19 +27,9 @@ class UsersStore extends BaseStore {
         makeObservable(this, {
             users: observable,
             userRoles: observable,
-            getUsers: computed,
-            getUserRoles: computed,
             setUsers: action,
             setUser: action
         })
-    }
-
-    public get getUsers() {
-        return this.users
-    }
-
-    public get getUserRoles() {
-        return this.userRoles
     }
 
     setUsers(data: IUser[] | null) {
@@ -47,18 +38,19 @@ class UsersStore extends BaseStore {
 
     setUser(data: IUserFormData, id: string) {
         if (!this.users) return;
-        const index = this.users.findIndex(user => user.id === id);
-        if (index !== -1) {
-            this.users = [
-                ...this.users.slice(0, index),
-                { ...data, 
+
+        this.users = this.users.map(user => {
+            if (user.id === id) {
+                return { 
+                    ...data, 
                     birthDate: formattedToApiDate(data.birthDate), 
-                    email: this.users[index].email, 
-                    role: this.users[index].role, 
-                    id },
-                ...this.users.slice(index + 1)
-            ];
-        }
+                    email: user.email, 
+                    role: user.role, 
+                    id 
+                }
+            }
+            return user
+        })
     }
 }
 

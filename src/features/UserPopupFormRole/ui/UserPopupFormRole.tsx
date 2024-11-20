@@ -4,14 +4,15 @@ import { Button, Message, Select, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
 import { validationRole } from '../utils/validation';
 import { usersStore } from '@/app/store/mobxStore';
+import { ERole } from '@/shared/enums';
 
 interface IUserFormRole {
-    role: string
+    role: ERole
 }
 
 interface IUserPopupFormComponent {
-    role: string
-    submit: (role: string) => void
+    role: ERole
+    submit: (role: ERole) => void
     errorCommon: string
     buttonSubmitTitle: string
 }
@@ -51,7 +52,7 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
                                 return (
                                     <Select
                                         {...field}
-                                        options={usersStore.getUserRoles}
+                                        options={usersStore.userRoles}
                                         onChange={(value) => setFieldValue('role', value)}
                                         placeholder="Выберите роль"
                                         error={error}

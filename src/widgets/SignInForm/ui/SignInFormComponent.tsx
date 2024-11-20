@@ -1,4 +1,4 @@
-import { Field, FieldProps, Formik, Form, FormikHelpers, ErrorMessage } from "formik"
+import { Field, FieldProps, Formik, Form, ErrorMessage } from "formik"
 import { FC, useMemo } from "react"
 import styles from './styles.module.scss'
 import { Button, Input, Message } from "ui-kit-cars/main"
@@ -6,7 +6,7 @@ import { validationSignIn } from "../utils"
 import { ISignInForm } from "@/shared/interfaces"
 
 interface ISignInFormComponent {
-    submit: (email: string, password: string) => void
+    submit: (values: ISignInForm) => void
     buttonSubmitTitle: string
     errorCommon: string
 }
@@ -27,11 +27,8 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
         }
     }, [])
 
-    const handleSubmit = async (values: ISignInForm, { setErrors, setStatus }: FormikHelpers<ISignInForm>) => {
-        setErrors({})
-        setStatus(undefined)
-
-        submit(values.email, values.password)
+    const handleSubmit = async (values: ISignInForm) => {
+        submit(values)
     }
 
     return (

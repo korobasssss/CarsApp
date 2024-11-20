@@ -10,7 +10,7 @@ interface IUserPopupFormComponent {
     surname: string
     patronymic: string
     birthDate: string
-    submit: (name: string, surname: string, patronymic: string, birthDate: string) => void
+    submit: (values: IUserFormData) => void
     errorCommon: string
     buttonSubmitTitle: string
 }
@@ -36,7 +36,7 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
     }, [])
 
     const handleSubmit = async (values: IUserFormData) => {
-        submit(values.name, values.surname, values.patronymic, values.birthDate)
+        submit(values)
     }
 
     return (

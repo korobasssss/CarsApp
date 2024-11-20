@@ -13,7 +13,7 @@ interface ICarPopupFormComponent {
     brandId?: number
     color: string
     image: string | null
-    submit: (brandId: number, color?: string, image?: File) => void
+    submit: (values: ICarForm) => void
     errorCommon: string
     buttonSubmitTitle: string
     handleDelete?: () => void
@@ -33,8 +33,8 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
     const [canShowImage, setCanShowImage] = useState(true)
 
     const carCategoriesOptions: ISelectOptions<number, string>[] | undefined = useMemo(() => {
-        if (!carStore.getCarCategories) return undefined
-        return carStore.getCarCategories.map(oneCategory => {
+        if (!carStore.carCategories) return undefined
+        return carStore.carCategories.map(oneCategory => {
             return {
                 value: oneCategory.carModelId,
                 label: `${oneCategory.brand} ${oneCategory.model}`
@@ -54,33 +54,22 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
         setErrors({})
         setStatus(undefined)
 
-        if (handleDelete) {
-            if (values.model) {
-                submit(values.model, values.color, values.image)
-            }
-        } else {
-            if (values.image && values.model) {
-                submit(values.model, values.color, values.image)
-            }
+        if (!values.model) return
+
+        if (handleDelete || values.image) {
+            submit(values)
         }
     }
 
     const stylesFooter = useMemo(() => {
         return cx(
-            {
-                [styles['SPFooter1Action']]: !handleDelete,
-                [styles['SPFooter2Actions']]: handleDelete
-
-            }
+            styles.SPFooter,
+            {[styles['SPFooter_action']]: handleDelete}
         )
     }, [handleDelete])
 
     const isValues = (values: ICarForm) => {
-        if (handleDelete) {
-            return !values.model || (!values.image && !canShowImage)
-        } else {
-            return !values.model || !values.image
-        }
+        return (!values.model || !values.image && (handleDelete ? (!canShowImage) : true))
     }
 
     return (
@@ -133,7 +122,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                         </ErrorMessage>
                         <Field name='image'>
                             {({ field, form }: FieldProps) => {
-                                let error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
+                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
                                 if (image && !values.image && canShowImage) {
                                     return (
                                         <div className={styles.SUserImageWrapper}>

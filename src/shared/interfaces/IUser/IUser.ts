@@ -1,3 +1,5 @@
+import { ERole } from "@/shared/enums";
+
 export interface IUser {
     id: string,
     name: string,
@@ -5,5 +7,5 @@ export interface IUser {
     patronymic: string,
     email: string,
     birthDate: string,
-    role: string
+    role: ERole
 }

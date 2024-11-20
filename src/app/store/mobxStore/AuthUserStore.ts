@@ -1,9 +1,10 @@
 import { BaseStore } from "../base";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ELocalStorageItems, ERole } from "@/shared/enums";
+import { CAdminRoles } from "@/shared/constants";
 
 class AuthUserStore extends BaseStore {
-    authUserData: {role: string | null} = {
+    authUserData: {role: ERole | null} = {
         role: null
     }
 
@@ -26,15 +27,18 @@ class AuthUserStore extends BaseStore {
 
     public get isAuth() {
         this.getAuthUserData
-        return localStorage.getItem(ELocalStorageItems.accessToken) !== undefined && this.authUserData.role !== null
+        return localStorage.getItem(ELocalStorageItems.accessToken) !== undefined && 
+                this.authUserData.role && 
+                Object.values(ERole).includes(this.authUserData.role)
     }
 
     public get isAdmin() {
         this.getAuthUserData
-        return this.isAuth && (this.authUserData.role !== ERole.User && this.authUserData.role !== ERole.Manager)
+
+        return this.isAuth && (CAdminRoles.includes(this.authUserData.role as ERole))
     }
 
-    public setAuthUserData(accessToken: string | null, role: string | null) {
+    public setAuthUserData(accessToken: string | null, role: ERole | null) {
         if (!accessToken || !role) return
         
         localStorage.setItem(ELocalStorageItems.accessToken, accessToken)

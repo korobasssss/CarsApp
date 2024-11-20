@@ -1,4 +1,4 @@
-import { ICar } from "@/shared/interfaces"
+import { ICar, ICarForm } from "@/shared/interfaces"
 import { CarPopupFormComponent } from "../../../features/CarPopup"
 import { FC, SetStateAction, useState } from "react"
 import { fetchDeleteCar, fetchGetCars, fetchPutCar } from "@/shared/api"
@@ -15,33 +15,27 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
         handleClose
     }
 ) => {
+    const {carId, brand, color, image} = car
+
     const [errorCommon, setErrorCommon] = useState('')
 
-    const handleSubmit = async (brandId: number, color?: string, image?: File) => {
-        if (brandId) {
-            try {
-                await fetchPutCar({
-                    model: brandId,
-                    color,
-                    image
-                }, car.carId)
-                handleClose(false)
-                await fetchGetCars(1, CPageSize)
-            } catch (error: unknown) {
-                if (error instanceof Error) {
-                    setErrorCommon(error.message)
-                } else {
-                    setErrorCommon(error as string)
-                }
+    const handleSubmit = async (values: ICarForm) => {
+        try {
+            await fetchPutCar(values, carId)
+            handleClose(false)
+            await fetchGetCars(1, CPageSize)
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorCommon(error.message)
+            } else {
+                setErrorCommon(error as string)
             }
-        } else {
-            setErrorCommon('Выберите модель тачки ')
         }
     }
 
     const handleDelete = async () => {
         try {
-            await fetchDeleteCar(car.carId)
+            await fetchDeleteCar(carId)
             handleClose(false)
             await fetchGetCars(1, CPageSize)
         } catch (error: unknown) {
@@ -54,9 +48,9 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
     }
     return (
         <CarPopupFormComponent
-            brandId={car.brand.carModelId}
-            color={car.color}
-            image={car.image}
+            brandId={brand.carModelId}
+            color={color}
+            image={image}
             submit={handleSubmit}
             buttonSubmitTitle="Сохранить"
             handleDelete={handleDelete}

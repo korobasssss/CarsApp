@@ -6,7 +6,7 @@ import { validationSignUp } from "../utils"
 import { ISignUpForm } from "@/shared/interfaces"
 
 interface ISignUpFormComponent {
-    submit: (email: string, password: string, name: string, surname: string, patronymic: string, birthDate: string) => void
+    submit: (values: ISignUpForm) => void
     errorCommon: string
     buttonSubmitTitle: string
 }
@@ -29,8 +29,9 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
         }
     }, [])
 
-    const handleSubmit = (values: ISignUpForm) => {
-        submit(values.email, values.password, values.name, values.surname, values.patronymic, values.birthDate)
+    const handleSubmit = async (values: ISignUpForm) => {
+
+        submit(values)
     }
 
     return (
