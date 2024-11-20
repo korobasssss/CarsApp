@@ -28,10 +28,6 @@ export class BaseStore {
         this.status = ERequestStatus.Ready
     }
 
-    setError() {
-        this.status = ERequestStatus.Error
-    }
-
     public get isPending() {
         return this.status === ERequestStatus.Pending
     }

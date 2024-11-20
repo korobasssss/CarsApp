@@ -15,7 +15,6 @@ export const fetchPutUserRole = async (id: string, role: string) => {
         
         usersStore.setReady()
     } catch (error: unknown) {
-        usersStore.setError();
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

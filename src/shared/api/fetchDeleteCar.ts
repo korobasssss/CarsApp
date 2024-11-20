@@ -15,7 +15,6 @@ export const fetchDeleteCar = async (id: number) => {
         
         carStore.setReady()
     } catch (error: unknown) {
-        carStore.setError();
         throw new Error(`Произошла ошибка, попробуйте еще раз`)
     }
 }

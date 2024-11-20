@@ -16,7 +16,6 @@ export const fetchCarCategories = async () => {
         carStore.setCarCategories(result)
         carStore.setReady()
     } catch (error: unknown) {
-        carStore.setError();
         throw new Error(`Произошла ошибка, попробуйте еще раз`)
     }
 }
