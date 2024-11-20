@@ -2,7 +2,7 @@ import { ICar } from "@/shared/interfaces"
 import { FC, useState } from "react"
 import { Car } from "../ui/Car"
 import { Popup } from "ui-kit-cars/main"
-import { CarPopupInformationModel } from "@/widgets/CarPopupInformation"
+import { CarPopupInformationModel } from "@/features/CarPopupInformation"
 import { CarEditFormModel } from "@/widgets/CarEditForm"
 
 interface ICarModel {

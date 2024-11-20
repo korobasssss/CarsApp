@@ -13,6 +13,10 @@
 
         object-fit: cover;
         border-radius: variables.$RADIUS-S;
+
+        @media screen and (max-width: variables.$medium) {
+            margin: 0 auto;
+        }
     }
 
     .SCarData {
@@ -22,7 +26,13 @@
 
         .SCarOneData {
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
+
+            @media screen and (max-width: variables.$medium) {
+                justify-content: start;
+                gap: 20px;
+            }
 
             .SDataTitle {
                 @include mixins.font-montserrat-s-bold;
@@ -34,5 +44,11 @@
                 color: variables.$TEXT_MAIN;
             }
         }
+    }
+
+    @media screen and (max-width: variables.$medium) {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
     }
 }

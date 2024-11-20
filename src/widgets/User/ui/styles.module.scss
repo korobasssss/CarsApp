@@ -12,6 +12,10 @@
         height: 116px;
 
         object-fit: cover;
+
+        @media screen and (max-width: variables.$small) {
+            margin: 0 auto;
+        }
     }
 
     .SUserData {
@@ -22,6 +26,10 @@
         .SUserName {
             @include mixins.font-montserrat-m-bold;
             text-align: end;
+
+            @media screen and (max-width: variables.$small) {
+                text-align: center;
+            }
         }
 
         .SUserDate {
@@ -32,7 +40,16 @@
     }
 
     @media screen and (max-width: variables.$small) {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         padding: 0 10px;
         width: 100%;
+    }
+}
+
+.SButton {
+    @media screen and (max-width: variables.$small) {
+        margin: 0 0 0 auto;
     }
 }

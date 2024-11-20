@@ -43,6 +43,7 @@ export const User: FC<IUserFC> = (
             <ButtonIcon
                 alt="edit button"
                 onClick={() => setIsEditOpen(true)}
+                classNames={styles.SButton}
             >
                 <EditIcon/>
             </ButtonIcon>
