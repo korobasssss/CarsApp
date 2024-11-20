@@ -24,7 +24,7 @@ export const CarsModel = observer(() => {
       }
     };
     
-    if (carStore.isError || carStore.isLoading) return
+    if (carStore.isLoading) return
     fetchData();
   }, [carStore.currentPage]);
 
@@ -38,7 +38,8 @@ export const CarsModel = observer(() => {
         });
       }
     };
-    if (carStore.carCategories || carStore.isError || carStore.isLoading) return 
+    
+    if (carStore.carCategories || carStore.isLoading) return 
     fetchData();
   }, [carStore.carCategories, carStore.cars]);
 

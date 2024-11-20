@@ -13,9 +13,9 @@ class AuthUserStore extends BaseStore {
             authUserData: observable,
             getAuthUserData: computed,
             isAuth: computed,
+            isAdmin: computed,
             setLogout: action,
             setAuthUserData: action,
-            isAdmin: computed
         })
     }
 

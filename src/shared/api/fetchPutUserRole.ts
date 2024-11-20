@@ -12,6 +12,7 @@ export const fetchPutUserRole = async (id: string, role: string) => {
     try {
         usersStore.setLoading()
         await axiosPutUserRole(id, role)
+        
         usersStore.setReady()
     } catch (error: unknown) {
         usersStore.setError();

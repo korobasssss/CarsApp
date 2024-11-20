@@ -20,22 +20,12 @@ export const fetchPostSignIn = async (data: ISignInForm) => {
     try {
         authUserStore.setLoading();
         const response = await axiosPostSignIn(data);
-        if (
-            response && 
-            typeof response.accessToken === 'string' &&
-            typeof response.userInfo === 'object' && 
-            response.userInfo &&
-            typeof response.userInfo.role === 'string'
-        ) {
-            authUserStore.setReady();
-            localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken)
-            localStorage.setItem(ELocalStorageItems.role, response.userInfo.role)
-            authUserStore.setAuthUserData(response.userInfo.role);
-            
-            
-        } else {
-            throw new Error('Неверный формат ответа');
-        }
+
+        localStorage.setItem(ELocalStorageItems.accessToken, response.accessToken)
+        localStorage.setItem(ELocalStorageItems.role, response.userInfo.role)
+        
+        authUserStore.setAuthUserData(response.userInfo.role);
+        authUserStore.setReady();
     } catch (error: unknown) {
         authUserStore.setError();
         if (axios.isAxiosError(error)) {

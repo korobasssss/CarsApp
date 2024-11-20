@@ -12,10 +12,9 @@ export const fetchCarCategories = async () => {
     try {
         carStore.setLoading()
         const result = await axiosGetCarCategories()
-        if (result) {
-            carStore.setCarCategories(result)
-            carStore.setReady()
-        }
+
+        carStore.setCarCategories(result)
+        carStore.setReady()
     } catch (error: unknown) {
         carStore.setError();
         throw new Error(`Произошла ошибка, попробуйте еще раз`)

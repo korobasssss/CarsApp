@@ -6,7 +6,6 @@ import { formattedToApiDate } from "@/shared/utils";
 
 class UsersStore extends BaseStore {
     users: IUser[] | null = null
-
     userRoles: ISelectOptions<string, string>[] = [
         {
             value: 'Manager',
@@ -27,14 +26,14 @@ class UsersStore extends BaseStore {
         makeObservable(this, {
             users: observable,
             userRoles: observable,
-            getCars: computed,
+            getUsers: computed,
             getUserRoles: computed,
             setUsers: action,
             setUser: action
         })
     }
 
-    public get getCars() {
+    public get getUsers() {
         return this.users
     }
 

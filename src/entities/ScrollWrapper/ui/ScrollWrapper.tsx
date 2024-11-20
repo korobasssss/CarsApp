@@ -18,7 +18,8 @@ export const ScrollWrapper: FC<IScrollWrapper> = (
 ) => {
 
     return (
-        <div className={cx(
+        <div 
+            className={cx(
                 styles.scroll_wrapper,
                 classnames
             )}

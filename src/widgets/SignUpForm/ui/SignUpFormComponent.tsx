@@ -5,8 +5,6 @@ import { Button, Input, Message } from "ui-kit-cars/main"
 import { validationSignUp } from "../utils"
 import { ISignUpForm } from "@/shared/interfaces"
 
-
-
 interface ISignUpFormComponent {
     submit: (email: string, password: string, name: string, surname: string, patronymic: string, birthDate: string) => void
     errorCommon: string
@@ -43,12 +41,10 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
             enableReinitialize
             validateOnBlur={false}
         >
-            {({ isValid, dirty}) => (
+            {({ isValid, values }) => (
                 <Form>
                     <div className={styles.SSignUp}>
-                        <Field
-                            name='email'
-                        >
+                        <Field name='email'>
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -66,9 +62,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                         <ErrorMessage name="email">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="password"
-                        >
+                        <Field name="password">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -86,9 +80,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                         <ErrorMessage name="password">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="name"
-                        >
+                        <Field name="name">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -105,9 +97,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                         <ErrorMessage name="name">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="surname"
-                        >
+                        <Field name="surname">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -124,9 +114,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                         <ErrorMessage name="surname">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="patronymic"
-                        >
+                        <Field name="patronymic">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -143,9 +131,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                         <ErrorMessage name="patronymic">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="birthDate"
-                        >
+                        <Field name="birthDate">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -174,7 +160,11 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={
+                                        !isValid || 
+                                        ( !values.email || !values.password || 
+                                        !values.surname || !values.name || !values.patronymic || !values.birthDate)
+                                    }
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

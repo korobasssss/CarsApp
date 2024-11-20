@@ -8,7 +8,6 @@ import { usersStore } from "@/app/store/mobxStore";
 
 
 export const UsersModel = observer(() => {
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -19,9 +18,11 @@ export const UsersModel = observer(() => {
               });
             }
           };
-          if (usersStore.isError || usersStore.isLoading) return
+
+          if (usersStore.isLoading) return
           fetchData();
     }, [])
+
     return (
         <MainLayout>
             <UsersComponent

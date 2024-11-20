@@ -13,10 +13,9 @@ export const fetchGetUsers = async () => {
     try {
         usersStore.setLoading()
         const result = await axiosGetUsers()
-        if (result) {
-            usersStore.setUsers(result)
-            usersStore.setReady()
-        }
+
+        usersStore.setUsers(result)
+        usersStore.setReady()
     } catch (error: unknown) {
         usersStore.setError();
         throw new Error(`Произошла ошибка, попробуйте еще раз`)

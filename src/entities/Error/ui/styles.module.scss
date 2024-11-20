@@ -13,6 +13,7 @@
 
     .STitle {
         @include mixins.font-montserrat-xl-bold;
+        
         color: variables.$TEXT_MAIN;
     }
 

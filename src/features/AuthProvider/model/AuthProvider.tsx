@@ -1,32 +1,24 @@
 import { authUserStore } from "@/app/store/mobxStore"
 import { EPaths } from "@/shared/enums"
 import { observer } from "mobx-react-lite"
-import { FC, ReactNode } from "react"
+import { FC, ReactNode, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 interface IAuthProvider {
     children: ReactNode
 }
 
-export const AuthProvider: FC<IAuthProvider> = observer((
-    {
-        children
-    }
-) => {
-    const navigate = useNavigate()
-    const pathname = useLocation()
+export const AuthProvider: FC<IAuthProvider> = observer(({ children }) => {
+    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
-    if (authUserStore.isAuth) {
-        if (pathname.pathname === EPaths.USERS) {
-            if (authUserStore.isAdmin) {
-                return children
-            } else {
-                navigate(EPaths.FORBIDDER)
-            }
-        } else {
-            return children
+    useEffect(() => {
+        if (!authUserStore.isAuth) {
+            navigate(EPaths.SIGN_IN);
+        } else if (pathname === EPaths.USERS && !authUserStore.isAdmin) {
+            navigate(EPaths.FORBIDDER);
         }
-    } else {
-        navigate(EPaths.SIGN_IN)
-    }
-})
+    }, [authUserStore.isAuth, authUserStore.isAdmin, pathname, navigate]);
+
+    return authUserStore.isAuth ? children : null;
+});

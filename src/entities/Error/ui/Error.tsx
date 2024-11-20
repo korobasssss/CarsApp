@@ -9,24 +9,18 @@ export const Error = () => {
 
     return (
         <MainLayout>
-            <div
-                className={styles.SError}
-            >
-                <h1
-                    className={styles.STitle}
-                >
+            <div className={styles.SError}>
+                <h1 className={styles.STitle}>
                     Произошла ошибка :(
                 </h1>
-                <p
-                    className={styles.SMessage}
-                >
+                <p className={styles.SMessage}>
                     Перейдите на 
-                        <Button
-                            theme='none'
-                            onClick={() => navigate(EPaths.MAIN)}
-                        >
-                            главную
-                        </Button>
+                    <Button
+                        theme='none'
+                        onClick={() => navigate(EPaths.MAIN)}
+                    >
+                        главную
+                    </Button>
                 </p>
             </div>
         </MainLayout>

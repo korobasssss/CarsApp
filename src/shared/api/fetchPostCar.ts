@@ -4,7 +4,7 @@ import { ICarForm } from "../interfaces";
 import axios from "axios";
 
 const axiosPostCar = async (newCar: ICarForm): Promise<number> => {
-    const response = await instanceFile.post<number>(`Cars?CarModelId=${newCar.model}&Color=${newCar.color}`, {
+    const response = await instanceFile.post<number>(`Cars?CarModelId=${newCar.model}${newCar.color ? `&Color=${newCar.color}` : ''}`, {
         Image : newCar.image
     })
     return response.data;
@@ -14,10 +14,9 @@ export const fetchPostCar = async (newCar: ICarForm) => {
     carStore.setPending()
     try {
         carStore.setLoading()
-        const result = await axiosPostCar(newCar)
-        if (result) {
-            carStore.setReady()
-        }
+        await axiosPostCar(newCar)
+        
+        carStore.setReady()
     } catch (error: unknown) {
         carStore.setError();
         if (axios.isAxiosError(error)) {

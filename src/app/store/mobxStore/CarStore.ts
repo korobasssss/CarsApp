@@ -5,24 +5,26 @@ import { ERequestStatus } from "@/shared/enums";
 
 class CarStore extends BaseStore {
     carsStatus: ERequestStatus = ERequestStatus.Ready
+
     cars: ICar[] | null = null
+    carCategories: ICarBrand[] | null = null
+
     currentPage: number = 1
     totalPages: number | null = null
-    carCategories: ICarBrand[] | null = null
+    
 
     constructor() {
         super()
         makeObservable(this, {
             cars: observable,
+            carCategories: observable,
             carsStatus: observable,
             currentPage: observable,
             totalPages: observable,
-            carCategories: observable,
+            getCars: computed,
             setCars: action, 
             setCurrentPage: action, 
-            setPages: action, 
-            setCar: action,
-            getCars: computed,
+            setPages: action,
             setCarCategories: action,
         })
     }
@@ -31,16 +33,25 @@ class CarStore extends BaseStore {
         return this.cars
     }
 
+    public get getCarCategories() {
+        return this.carCategories
+    }
+
     setCars(data: ICar[] | null) {
-        if (data === null) {
+        if (!data) {
             this.cars = [];
+            return
+        } 
+        
+        if (this.cars) {
+            this.cars = [...this.cars, ...data];
         } else {
-            if (this.cars) {
-                this.cars = [...this.cars, ...data];
-            } else {
-                this.cars = data;
-            }
+            this.cars = data;
         }
+    }
+
+    setCarCategories(data: ICarBrand[] | null) {
+        this.carCategories = data
     }
 
     setPages(total: number) {
@@ -55,20 +66,6 @@ class CarStore extends BaseStore {
         } else {
             this.currentPage = page
         }
-    }
-
-    setCar(data: ICar) {
-        if (this.cars) {
-            this.cars.push(data)
-        }
-    }
-
-    public get getCarCategories() {
-        return this.carCategories
-    }
-
-    setCarCategories(data: ICarBrand[] | null) {
-        this.carCategories = data
     }
 
     setStatus(status: ERequestStatus) {

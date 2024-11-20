@@ -14,10 +14,9 @@ export const fetchPutCar = async (newCar: ICarForm, id: number) => {
     carStore.setPending()
     try {
         carStore.setLoading()
-        const result = await axiosPutCar(newCar, id)
-        if (result) {
-            carStore.setReady()
-        }
+        await axiosPutCar(newCar, id)
+        
+        carStore.setReady()
     } catch (error: unknown) {
         carStore.setError();
         if (axios.isAxiosError(error)) {

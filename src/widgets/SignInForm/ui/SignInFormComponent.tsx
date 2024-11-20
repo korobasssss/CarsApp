@@ -44,9 +44,7 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
             {({ isValid, values}) => (
                 <Form>
                     <div className={styles.SSignIn}>
-                        <Field
-                            name='email'
-                        >
+                        <Field name='email'>
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -64,9 +62,7 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                         <ErrorMessage name="email">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field 
-                            name="password"
-                        >
+                        <Field  name="password">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 

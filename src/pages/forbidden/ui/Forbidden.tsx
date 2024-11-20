@@ -9,24 +9,18 @@ export const Forbidden = () => {
 
     return (
         <MainLayout>
-            <div
-                className={styles.SForbidden}
-            >
-                <h1
-                    className={styles.STitle}
-                >
+            <div className={styles.SForbidden}>
+                <h1 className={styles.STitle}>
                     Доступ запрещен :(
                 </h1>
-                <p
-                    className={styles.SMessage}
-                >
+                <p className={styles.SMessage}>
                     Перейдите на 
-                        <Button
-                            theme='none'
-                            onClick={() => navigate(EPaths.MAIN)}
-                        >
-                            главную
-                        </Button>
+                    <Button
+                        theme='none'
+                        onClick={() => navigate(EPaths.MAIN)}
+                    >
+                        главную
+                    </Button>
                 </p>
             </div>
         </MainLayout>

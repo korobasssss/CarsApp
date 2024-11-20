@@ -5,6 +5,7 @@ export const validationCarEdit = Yup.object().shape({
       .required('Выберите модель'),
     color: Yup.string()
       .nullable()
+      .max(100, 'Максимальное значение 100 символов')
       .trim(),
     image: Yup.mixed()
         .nullable()
@@ -26,6 +27,7 @@ export const validationCarCreate = Yup.object().shape({
     model: Yup.number()
       .required('Выберите модель'),
     color: Yup.string()
+      .max(100, 'Максимальное значение 100 символов')
       .trim(),
     image: Yup.mixed()
         .required('Выберите файл')

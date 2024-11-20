@@ -1,6 +1,5 @@
 export enum ERequestStatus {
     Pending = 'Pending',
     Loading = 'Loading',
-    Ready = 'Ready',
-    Error = 'Error'
+    Ready = 'Ready'
 }

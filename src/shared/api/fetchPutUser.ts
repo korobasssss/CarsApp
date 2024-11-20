@@ -13,6 +13,7 @@ export const fetchPutUser = async (newData: IUserFormData, id: string) => {
     try {
         usersStore.setLoading()
         await axiosPutUser(newData, id)
+        
         usersStore.setUser(newData, id)
         usersStore.setReady()
     } catch (error: unknown) {

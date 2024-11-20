@@ -20,20 +20,9 @@ export const fetchPostSignUp = async (data: ISignUpForm) => {
     try {
         authUserStore.setLoading();
         const response = await axiosPostSignUp(data);
-        if (
-            response && 
-            typeof response.accessToken === 'string' &&
-            typeof response.userInfo === 'object' && 
-            response.userInfo &&
-            typeof response.userInfo.role === 'string'
-        ) {
-            authUserStore.setReady();
-            authUserStore.setAuthUserData(response.userInfo.role);
-            
-            
-        } else {
-            throw new Error('Неверный формат ответа');
-        }
+        
+        authUserStore.setAuthUserData(response.userInfo.role);
+        authUserStore.setReady();
     } catch (error: unknown) {
         authUserStore.setError();
         if (axios.isAxiosError(error)) {

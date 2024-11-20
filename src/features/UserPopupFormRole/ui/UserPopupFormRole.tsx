@@ -44,9 +44,7 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
             {({ isValid, values, setFieldValue}) => (
                 <Form>
                     <div className={styles.SUserPopupRole}>
-                        <Field
-                            name='role'
-                        >
+                        <Field name='role'>
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 

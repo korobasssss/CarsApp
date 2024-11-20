@@ -24,20 +24,19 @@ export const fetchGetCars = async (pageNumber: number | null, pageSize: number) 
         }
         
         const result = await axiosGetCars(pageNumber || 1, pageSize)
-        if (result) {
-            if (pageNumber === 1 || !pageNumber) {
-                carStore.setCars(null)
-                carStore.setCurrentPage(1)
-            }
-            const {TotalPages} = JSON.parse(result.headers.pagination)
-            carStore.setPages(TotalPages)
-            carStore.setCars(result.data)
+        
+        if (pageNumber === 1 || !pageNumber) {
+            carStore.setCars(null)
+            carStore.setCurrentPage(1)
+        }
+        const {TotalPages} = JSON.parse(result.headers.pagination)
+        carStore.setPages(TotalPages)
+        carStore.setCars(result.data)
 
-            if (pageNumber && pageNumber > 1) {
-                carStore.setStatus(ERequestStatus.Ready)
-            } else {
-                carStore.setReady()
-            }
+        if (pageNumber && pageNumber > 1) {
+            carStore.setStatus(ERequestStatus.Ready)
+        } else {
+            carStore.setReady()
         }
     } catch (error: unknown) {
         carStore.setError();

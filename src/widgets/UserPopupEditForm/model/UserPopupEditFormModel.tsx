@@ -74,10 +74,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
 
     return (
         <div className={styles.SEditWrapper}>
-            <nav className={cx(
-                styles.SNav,
-                
-            )}>
+            <nav className={styles.SNav}>
                 <Button
                     theme='none'
                     onClick={() => setIsRoleEdit(false)}

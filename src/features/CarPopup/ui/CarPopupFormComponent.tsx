@@ -10,7 +10,7 @@ import { carStore } from '@/app/store/mobxStore';
 import { ICarForm } from '@/shared/interfaces';
 
 interface ICarPopupFormComponent {
-    brandId: number | undefined
+    brandId?: number
     color: string
     image: string | null
     submit: (brandId: number, color?: string, image?: File) => void
@@ -30,7 +30,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
         handleDelete
     }
 ) => {
-    const [canShowImage, setCanShoeImage] = useState(true)
+    const [canShowImage, setCanShowImage] = useState(true)
 
     const carCategoriesOptions: ISelectOptions<number, string>[] | undefined = useMemo(() => {
         if (!carStore.getCarCategories) return undefined
@@ -53,6 +53,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
     const handleSubmit = async (values: ICarForm, { setErrors, setStatus }: FormikHelpers<ICarForm>) => {
         setErrors({})
         setStatus(undefined)
+
         if (handleDelete) {
             if (values.model) {
                 submit(values.model, values.color, values.image)
@@ -93,9 +94,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                 
                 <Form>
                     <div className={styles.SCarPopup}>
-                        <Field 
-                            name="model"
-                        >
+                        <Field name="model">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
                                 return (
@@ -115,12 +114,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                         {errors.model && (
                             <Message message={errors.model} type='error' />
                         )}
-                        {/* <ErrorMessage name="model">
-                            {errors => <Message message={errors} type='error' />}
-                        </ErrorMessage> */}
-                        <Field 
-                            name="color"
-                        >
+                        <Field name="color">
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
 
@@ -137,9 +131,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                         <ErrorMessage name="color">
                             {msg => <Message message={msg} type='error' />}
                         </ErrorMessage>
-                        <Field
-                            name='image'
-                        >
+                        <Field name='image'>
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
                                 if (image && !values.image && canShowImage) {
@@ -152,7 +144,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                                             <ButtonIcon
                                                 type='button'
                                                 alt='delete icon'
-                                                onClick={() => setCanShoeImage(false)}
+                                                onClick={() => setCanShowImage(false)}
                                             >
                                                 <DeleteIcon/>
                                             </ButtonIcon>
@@ -173,9 +165,6 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                         {errors.image && (
                             <Message message={errors.image} type='error' />
                         )}
-                        {/* <ErrorMessage name="image">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage> */}
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

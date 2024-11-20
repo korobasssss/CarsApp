@@ -22,44 +22,25 @@ export const Header: FC<IHeader> = observer((
     const [isMenuClick, setMenuClick] = useState(false)
 
     const visiblePaths = useMemo(() => {
-        if (authUserStore.isAuth) {
-            return paths.map((path, index) => {
-                if (path.url === EPaths.USERS) {
-                    if (authUserStore.isAdmin) {
-                        return (
-                            <Link 
-                                key={index}
-                                url={path.url}
-                            >
-                                {path.title}
-                            </Link>
-                        )
-                    }
-                } else {
-                    return (
-                        <Link 
-                            key={index}
-                            url={path.url}
-                        >
-                            {path.title}
-                        </Link>
-                    )
-                }
-            })
-        } else {
-            return null
+        if (!authUserStore.isAuth) {
+            return [];
         }
-        
-    }, [paths, authUserStore.isAuth, authUserStore.isAdmin])
+    
+        return paths.map((path, index) => {
+            const isAdminPath = path.url === EPaths.USERS && authUserStore.isAdmin;
+    
+            return isAdminPath || path.url !== EPaths.USERS ? (
+                <Link key={index} url={path.url}>
+                    {path.title}
+                </Link>
+            ) : null;
+        });
+    }, [paths, authUserStore.isAuth, authUserStore.isAdmin]);
 
     return (
         <header className={styles.SHeader}>
-            <ButtonIcon
-                alt='logo'
-            >
-                <Link 
-                    url={EPaths.MAIN}
-                >
+            <ButtonIcon alt='logo'>
+                <Link url={EPaths.MAIN}>
                     <LogoIcon/>
                 </Link>
             </ButtonIcon>
@@ -85,9 +66,7 @@ export const Header: FC<IHeader> = observer((
             </DrawerPopup>
             <div className={styles.SAuthWrapper}>
                 {!authUserStore.isAuth ? (
-                <Link 
-                    url={EPaths.SIGN_IN}
-                >
+                <Link  url={EPaths.SIGN_IN}>
                     <LoginIcon/>
                 </Link>   
                 ) : (

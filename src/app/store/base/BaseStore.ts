@@ -13,7 +13,6 @@ export class BaseStore {
             isPending: computed,
             isLoading: computed,
             isReady: computed,
-            isError: computed,
         })
     }
 
@@ -43,9 +42,5 @@ export class BaseStore {
 
     public get isReady() {
         return this.status === ERequestStatus.Ready
-    }
-
-    public get isError() {
-        return this.status === ERequestStatus.Error
     }
 }

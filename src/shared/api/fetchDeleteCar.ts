@@ -12,6 +12,7 @@ export const fetchDeleteCar = async (id: number) => {
     try {
         carStore.setLoading()
         await axiosDeleteCar(id)
+        
         carStore.setReady()
     } catch (error: unknown) {
         carStore.setError();
