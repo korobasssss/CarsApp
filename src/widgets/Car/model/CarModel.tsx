@@ -7,11 +7,13 @@ import { CarEditFormModel } from "@/widgets/CarEditForm"
 
 interface ICarModel {
     car: ICar
+    isAdmin: boolean
 }
 
 export const CarModel: FC<ICarModel> = (
     {
-        car
+        car,
+        isAdmin
     }
 ) => {
     const [isInfoOpen, setIsInfoOpen] = useState(false)
@@ -23,6 +25,7 @@ export const CarModel: FC<ICarModel> = (
                 car={car}
                 setIsInfoOpen={setIsInfoOpen}
                 setIsEditOpen={setIsEditOpen}
+                isAdmin={isAdmin}
             />
             <Popup
                 title="Информация"

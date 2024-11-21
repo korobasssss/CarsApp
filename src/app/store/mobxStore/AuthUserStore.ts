@@ -14,7 +14,7 @@ class AuthUserStore extends BaseStore {
             authUserData: observable,
             getAuthUserData: computed,
             isAuth: action,
-            isAdmin: computed,
+            isAdmin: action,
             setLogout: action,
             setAuthUserData: action,
         })
@@ -27,14 +27,15 @@ class AuthUserStore extends BaseStore {
 
     public isAuth() {
         this.getAuthUserData;
-        
-        return localStorage.getItem(ELocalStorageItems.accessToken) &&
-               this.authUserData &&
-               this.authUserData.role && 
+        if (!this.authUserData.role) return false
+
+        return Boolean(localStorage.getItem(ELocalStorageItems.accessToken)) &&
+               Boolean(this.authUserData) &&
+               Boolean(this.authUserData.role) && 
                Object.values(ERole).includes(this.authUserData.role);
     }
 
-    public get isAdmin() {
+    public isAdmin() {
         this.getAuthUserData
 
         return this.isAuth() && (CAdminRoles.includes(this.authUserData.role as ERole))

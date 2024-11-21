@@ -1,6 +1,6 @@
 import { ICar } from '@/shared/interfaces'
 import styles from './styles.module.scss'
-import { FC, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { CarModel } from '@/widgets/Car'
 import { Button, LoaderSpin, Message, Popup } from 'ui-kit-cars/main'
 import { CarCreateForm } from '@/widgets/CarCreateForm'
@@ -21,11 +21,15 @@ export const CarsComponent: FC<ICarsComponent> = observer((
 
   const [isCreateOpen, setIsCreateOpen] = useState(false)
 
+  const isAdmin = useMemo(() => {
+    return authUserStore.isAdmin();
+  }, [authUserStore]);
+
     if (!cars) return <Message type='base' message='Нет данных'/>
 
     return (
         <section className={styles.SCarsWrapper}>
-          {authUserStore.isAdmin && (
+          {isAdmin && (
             <Button 
               theme='primary'
               onClick={() => setIsCreateOpen(true)}
@@ -40,6 +44,7 @@ export const CarsComponent: FC<ICarsComponent> = observer((
                       <CarModel 
                         key={car.carId}
                         car={car}
+                        isAdmin={isAdmin}
                       />
                   )
               })}
