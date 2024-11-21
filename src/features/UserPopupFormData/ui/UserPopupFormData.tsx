@@ -1,9 +1,11 @@
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import styles from './styles.module.scss'
-import { Button, Input, Message, } from 'ui-kit-cars/main';
+import { Button, Message, } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
 import { formattedToForm, validationUser } from '../utils';
 import { IUserFormData } from '@/shared/interfaces';
+import { observer } from 'mobx-react-lite';
+import { InputFieldForm } from '@/entities/InputFieldForm';
 
 interface IUserPopupFormComponent {
     name: string
@@ -13,9 +15,10 @@ interface IUserPopupFormComponent {
     submit: (values: IUserFormData) => void
     errorCommon: string
     buttonSubmitTitle: string
+    isLoading: boolean
 }
 
-export const UserPopupFormData: FC<IUserPopupFormComponent> = (
+export const UserPopupFormData: FC<IUserPopupFormComponent> = observer((
     {
         name,
         surname,
@@ -23,7 +26,8 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
         birthDate,
         submit,
         errorCommon,
-        buttonSubmitTitle
+        buttonSubmitTitle,
+        isLoading
     }
 ) => {
     const initialValues: IUserFormData = useMemo(() => {
@@ -50,75 +54,23 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
             {({ isValid, values }) => (
                 <Form>
                     <div className={styles.SUserPopupData}>
-                        <Field name="surname">
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        error={error}
-                                        placeholder="Введите фамилию"
-                                        errorTextShow={false}
-                                    />
-                                );
-                            }}
-                        </Field>
-                        <ErrorMessage name="surname">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
-                        <Field name='name'>
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        error={error}
-                                        placeholder="Введите имя"
-                                        errorTextShow={false}
-                                    />
-                                );
-                            }}
-                        </Field>
-                        <ErrorMessage name="name">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
-                        <Field name='patronymic'>
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-                                
-                                return (
-                                    <Input
-                                        {...field}
-                                        error={error}
-                                        placeholder="Введите отчество"
-                                        errorTextShow={false}
-                                    />
-                                )
-                            }}
-                        </Field>
-                        <ErrorMessage name="patronymic">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
-                        <Field name='birthDate'>
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-                                
-                                return (
-                                    <Input
-                                        {...field}
-                                        type='date'
-                                        error={error}
-                                        placeholder="Введите дату рождения"
-                                        errorTextShow={false}
-                                    />
-                                )
-                            }}
-                        </Field>
-                        <ErrorMessage name="birthDate">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
+                        <InputFieldForm
+                            name='surname'
+                            input_placeholder='Введите фамилию'
+                        />
+                        <InputFieldForm
+                            name='name'
+                            input_placeholder='Введите имя'
+                        />
+                        <InputFieldForm
+                            name='patronymic'
+                            input_placeholder='Введите отчество'
+                        />
+                        <InputFieldForm
+                            name='birthDate'
+                            input_placeholder='Введите дату рождения'
+                            input_type='date'
+                        />
                         {errorCommon && (
                             <Message
                                 message={errorCommon}
@@ -130,7 +82,8 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !Object.values(values).every(one => one)}
+                                    disabled={!isValid || !Object.values(values).every(one => one) || isLoading}
+                                    isLoading={isLoading}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>
@@ -141,4 +94,4 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
             )}
         </Formik>
     )
-}
+})

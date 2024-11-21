@@ -1,6 +1,6 @@
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
-import { Button, ButtonIcon, FileLoader, Input, ISelectOptions, Message, Select } from 'ui-kit-cars/main';
+import { Button, ButtonIcon, FileLoader, ISelectOptions, Message } from 'ui-kit-cars/main';
 import { validationCarCreate, validationCarEdit } from '../utils';
 import { FC, useMemo, useState } from 'react';
 import { DeleteIcon } from '@/shared/assets';
@@ -8,6 +8,8 @@ import cx from 'classnames'
 import { observer } from 'mobx-react-lite';
 import { carStore } from '@/app/store/mobxStore';
 import { ICarForm } from '@/shared/interfaces';
+import { InputFieldForm } from '@/entities/InputFieldForm';
+import { SelectFieldForm } from '@/entities/SelectFieldForm';
 
 interface ICarPopupFormComponent {
     brandId?: number
@@ -17,6 +19,8 @@ interface ICarPopupFormComponent {
     errorCommon: string
     buttonSubmitTitle: string
     handleDelete?: () => void
+    isLoading: boolean
+    isLoadingDelete?: boolean
 }
 
 export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
@@ -27,7 +31,9 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
         submit,
         errorCommon,
         buttonSubmitTitle,
-        handleDelete
+        handleDelete,
+        isLoading,
+        isLoadingDelete
     }
 ) => {
     const [canShowImage, setCanShowImage] = useState(true)
@@ -80,43 +86,17 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                 
                 <Form>
                     <div className={styles.SCarPopup}>
-                        <Field name="model">
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-                                return (
-                                    <div>
-                                        <Select
-                                            {...field}
-                                            options={carCategoriesOptions}
-                                            onChange={(value) => setFieldValue('model', value)}
-                                            placeholder="Выберите модель"
-                                            error={error}
-                                            errorTextShow={false}
-                                        />
-                                    </div>
-                                );
-                            }}
-                        </Field>
-                        {errors.model && (
-                            <Message message={errors.model} type='error' />
-                        )}
-                        <Field name="color">
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        error={error}
-                                        placeholder="Введите цвет"
-                                        errorTextShow={false}
-                                    />
-                                );
-                            }}
-                        </Field>
-                        <ErrorMessage name="color">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
+                        <SelectFieldForm
+                            name='model'
+                            select_placeholder="Выберите модель"
+                            select_error={errors.model}
+                            options={carCategoriesOptions}
+                            setFieldValue={setFieldValue}
+                        />
+                        <InputFieldForm
+                            name='color'
+                            input_placeholder='Введите цвет'
+                        />
                         <Field name='image'>
                             {({ field, form }: FieldProps) => {
                                 const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
@@ -162,7 +142,8 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || (isValues(values))}
+                                    disabled={!isValid || (isValues(values)) || isLoading}
+                                    isLoading={isLoading}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>
@@ -172,6 +153,8 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
                                     type="button"
                                     theme='danger'
                                     onClick={handleDelete}
+                                    disabled={isLoadingDelete}
+                                    isLoading={isLoadingDelete}
                                 >
                                     Удалить
                                 </Button>

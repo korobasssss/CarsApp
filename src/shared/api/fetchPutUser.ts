@@ -9,15 +9,11 @@ const axiosPutUser = async (newData: IUserFormData, id: string): Promise<void> =
 }
 
 export const fetchPutUser = async (newData: IUserFormData, id: string) => {
-    usersStore.setPending()
     try {
-        usersStore.setLoading()
         await axiosPutUser(newData, id)
         
         usersStore.setUser(newData, id)
-        usersStore.setReady()
     } catch (error: unknown) {
-        usersStore.setError()
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

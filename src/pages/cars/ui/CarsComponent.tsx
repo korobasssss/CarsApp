@@ -25,47 +25,52 @@ export const CarsComponent: FC<ICarsComponent> = observer((
     return authUserStore.isAdmin();
   }, [authUserStore]);
 
-    if (!cars) return <Message type='base' message='Нет данных'/>
+  return (
+      <section className={styles.SCarsWrapper}>
+        {carStore.isLoading && (
+          <div className={styles.SSPinner}>
+            <LoaderSpin size='s'/>
+          </div>
+        )}
+        {!cars && !carStore.isLoading && <Message type='base' message='Нет данных'/>}
 
-    return (
-        <section className={styles.SCarsWrapper}>
-          {isAdmin && (
-            <Button 
-              theme='primary'
-              onClick={() => setIsCreateOpen(true)}
-              classNames={styles.SButton}
-            >
-              Создать тачку
-            </Button>
-          )}
-          <ul className={styles.SCars}>
-            {cars.map(car => {
-                  return (
-                      <CarModel 
-                        key={car.carId}
-                        car={car}
-                        isAdmin={isAdmin}
-                      />
-                  )
-              })}
-          </ul>
-          {carStore.carsStatus === ERequestStatus.Loading && (
-            <div className={styles.SLoader}>
-              <LoaderSpin/>
-            </div>
-          )}
-          <Popup
-              title={`Создать тачку`}
-              isModalOpen={isCreateOpen}
-              handleClose={setIsCreateOpen}
-              isForceRender
+        { isAdmin && (
+          <Button 
+            theme='primary'
+            onClick={() => setIsCreateOpen(true)}
+            classNames={styles.SButton}
           >
-              {isCreateOpen && (
-                  <CarCreateForm 
-                    handleClose={setIsCreateOpen}
-                  />
-              )}
-          </Popup>
-        </section>
-    )   
+            Создать тачку
+          </Button>
+        )}
+        <ul className={styles.SCars}>
+          {cars && cars.map(car => {
+                return (
+                    <CarModel 
+                      key={car.carId}
+                      car={car}
+                      isAdmin={isAdmin}
+                    />
+                )
+            })}
+        </ul>
+        {carStore.carsStatus === ERequestStatus.Loading && (
+          <div className={styles.SLoader}>
+            <LoaderSpin/>
+          </div>
+        )}
+        <Popup
+            title={`Создать тачку`}
+            isModalOpen={isCreateOpen}
+            handleClose={setIsCreateOpen}
+            isForceRender
+        >
+            {isCreateOpen && (
+                <CarCreateForm 
+                  handleClose={setIsCreateOpen}
+                />
+            )}
+        </Popup>
+      </section>
+  )   
 })

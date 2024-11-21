@@ -1,9 +1,10 @@
-import { Field, FieldProps, Formik, Form, ErrorMessage } from "formik"
+import { Formik, Form } from "formik"
 import { FC, useMemo } from "react"
 import styles from './styles.module.scss'
-import { Button, Input, Message } from "ui-kit-cars/main"
+import { Button, Message } from "ui-kit-cars/main"
 import { validationSignIn } from "../utils"
 import { ISignInForm } from "@/shared/interfaces"
+import { InputFieldForm } from "@/entities/InputFieldForm"
 
 interface ISignInFormComponent {
     submit: (values: ISignInForm) => void
@@ -41,42 +42,16 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
             {({ isValid, values}) => (
                 <Form>
                     <div className={styles.SSignIn}>
-                        <Field name='email'>
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        type='email'
-                                        error={error}
-                                        placeholder="Введите логин"
-                                        errorTextShow={false}
-                                    />
-                                );
-                            }}
-                        </Field>
-                        <ErrorMessage name="email">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
-                        <Field  name="password">
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Input
-                                        {...field}
-                                        type='password'
-                                        error={error}
-                                        placeholder="Введите пароль"
-                                        errorTextShow={false}
-                                    />
-                                );
-                            }}
-                        </Field>
-                        <ErrorMessage name="password">
-                            {msg => <Message message={msg} type='error' />}
-                        </ErrorMessage>
+                        <InputFieldForm
+                            name='email'
+                            input_placeholder='Введите логин'
+                            input_type='email'
+                        />
+                        <InputFieldForm
+                            name='password'
+                            input_placeholder='Введите пароль'
+                            input_type='password'
+                        />
                         {errorCommon && (
                             <Message
                                 message={errorCommon}

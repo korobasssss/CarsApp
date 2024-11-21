@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react"
 import styles from './styles.module.scss'
 import { HeaderModel } from "@/entities/Header"
 import { observer } from "mobx-react-lite"
-import { authUserStore, carStore, usersStore } from "@/app/store/mobxStore"
+import { authUserStore } from "@/app/store/mobxStore"
 import { Loader } from "ui-kit-cars/main"
 import { ScrollWrapperModel } from "@/entities/ScrollWrapper/model/ScrollWrapperModel"
 
@@ -26,7 +26,7 @@ export const MainLayout: FC<IMainLayout> = observer((
                     {children}
                 </section>
             </main>
-            {(authUserStore.isLoading || usersStore.isLoading || carStore.isLoading) && (
+            {(authUserStore.isLoading) && (
                 <Loader/>
             )}
         </ScrollWrapperModel>

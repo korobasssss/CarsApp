@@ -18,7 +18,6 @@ export const UsersModel = observer(() => {
               })
             }
           };
-
           if (usersStore.isLoading) return
           fetchData();
     }, [])

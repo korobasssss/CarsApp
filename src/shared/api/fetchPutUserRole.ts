@@ -1,7 +1,7 @@
-import { usersStore } from "@/app/store/mobxStore";
 import { instanceToken } from "./base";
 import axios from "axios";
 import { ERole } from "../enums";
+import { usersStore } from "@/app/store/mobxStore";
 
 const axiosPutUserRole = async (id: string, role: ERole): Promise<void> => {
     const response = await instanceToken.patch<void>(`Users/${id}/role`, role)
@@ -9,14 +9,11 @@ const axiosPutUserRole = async (id: string, role: ERole): Promise<void> => {
 }
 
 export const fetchPutUserRole = async (id: string, role: ERole) => {
-    usersStore.setPending()
     try {
-        usersStore.setLoading()
         await axiosPutUserRole(id, role)
-        
-        usersStore.setReady()
+
+        usersStore.setUserRole(id, role)
     } catch (error: unknown) {
-        usersStore.setError()
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

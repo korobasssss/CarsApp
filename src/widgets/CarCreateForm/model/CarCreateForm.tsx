@@ -14,11 +14,14 @@ export const CarCreateForm: FC<ICarCreateForm> = (
     }
 ) => {
     const [errorCommon, setErrorCommon] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleSubmit = async (values: ICarForm) => {
         if (values.model && values.image) {
             try {
+                setIsLoading(true)
                 await fetchPostCar(values)
+                setIsLoading(false)
                 handleClose(false)
                 await fetchGetCars(1, CPageSize)
             } catch (error: unknown) {
@@ -41,6 +44,7 @@ export const CarCreateForm: FC<ICarCreateForm> = (
             submit={handleSubmit}
             buttonSubmitTitle="Создать"
             errorCommon={errorCommon}
+            isLoading={isLoading}
         />
     )    
 }

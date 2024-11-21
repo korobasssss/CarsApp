@@ -1,4 +1,3 @@
-import { carStore } from "@/app/store/mobxStore";
 import { instanceFile } from "./base";
 import { ICarForm } from "../interfaces";
 import axios from "axios";
@@ -11,14 +10,9 @@ const axiosPostCar = async (newCar: ICarForm): Promise<number> => {
 }
 
 export const fetchPostCar = async (newCar: ICarForm) => {
-    carStore.setPending()
     try {
-        carStore.setLoading()
         await axiosPostCar(newCar)
-        
-        carStore.setReady()
     } catch (error: unknown) {
-        carStore.setError()
         if (axios.isAxiosError(error)) {
             switch (error.status) {
                 case 400: {

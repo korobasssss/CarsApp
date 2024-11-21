@@ -6,7 +6,7 @@ import cx from 'classnames'
 import { UserPopupFormData } from "@/features/UserPopupFormData"
 import { UserPopupFormRole } from "@/features/UserPopupFormRole"
 import { observer } from "mobx-react-lite"
-import { fetchGetUsers, fetchPutUser, fetchPutUserRole } from "@/shared/api"
+import { fetchPutUser, fetchPutUserRole } from "@/shared/api"
 import { ERole } from "@/shared/enums"
 
 interface IUserPopupEditFormModel {
@@ -25,9 +25,14 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     const [errorData, setErrorData] = useState('')
     const [errorRole, setErrorRole] = useState('')
 
+    const [isDataLoading, setIsDataLoading] = useState(false)
+    const [isRoleLoading, setIsRoleLoading] = useState(false)
+
     const handleSubmitData = async (values: IUserFormData) => {
         try {
+            setIsDataLoading(true)
             await fetchPutUser(values, user.id)
+            setIsDataLoading(false)
             handleClose(false)
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -40,9 +45,10 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
 
     const handleSubmitRole = async (role: ERole) => {
         try {
+            setIsRoleLoading(true)
             await fetchPutUserRole(user.id, role)
+            setIsRoleLoading(false)
             handleClose(false)
-            await fetchGetUsers()
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorRole(error.message)
@@ -95,6 +101,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
                     submit={handleSubmitData}
                     buttonSubmitTitle='Сохранить'
                     errorCommon={errorData}
+                    isLoading={isDataLoading}
                 />
             )}
             {isRoleEdit && (
@@ -103,6 +110,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
                     submit={handleSubmitRole}
                     buttonSubmitTitle='Сохранить'
                     errorCommon={errorRole}
+                    isLoading={isRoleLoading}
                 />
             )}
         </div>

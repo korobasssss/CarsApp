@@ -28,7 +28,8 @@ class UsersStore extends BaseStore {
             users: observable,
             userRoles: observable,
             setUsers: action,
-            setUser: action
+            setUser: action,
+            setUserRole: action
         })
     }
 
@@ -47,6 +48,20 @@ class UsersStore extends BaseStore {
                     email: user.email, 
                     role: user.role, 
                     id 
+                }
+            }
+            return user
+        })
+    }
+
+    setUserRole(id: string, role: ERole) {
+        if (!this.users) return;
+
+        this.users = this.users.map(user => {
+            if (user.id === id) {
+                return { 
+                    ...user, 
+                    role 
                 }
             }
             return user
