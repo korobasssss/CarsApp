@@ -6,7 +6,6 @@ import { Button, LoaderSpin, Message, Popup } from 'ui-kit-cars/main'
 import { CarCreateForm } from '@/widgets/CarCreateForm'
 import { observer } from 'mobx-react-lite'
 import { authUserStore, carStore } from '@/app/store/mobxStore'
-import { ERequestStatus } from '@/shared/enums'
 import { CarEditFormModel } from '@/widgets/CarEditForm'
 
 interface ICarsComponent {
@@ -30,13 +29,12 @@ export const CarsComponent: FC<ICarsComponent> = observer((
 
   return (
       <section className={styles.SCarsWrapper}>
-        {carStore.isLoading && (
+        {!cars && !carStore.isLoading && <Message type='base' message='Нет данных'/>}
+        {carStore.isLoading && carStore.currentPage === 1 && (
           <div className={styles.SSPinner}>
             <LoaderSpin size='s'/>
           </div>
         )}
-        {!cars && !carStore.isLoading && <Message type='base' message='Нет данных'/>}
-
         { isAdmin && carStore.isReady && (
           <Button 
             theme='primary'
@@ -59,9 +57,9 @@ export const CarsComponent: FC<ICarsComponent> = observer((
                 )
             })}
         </ul>
-        {carStore.carsStatus === ERequestStatus.Loading && (
-          <div className={styles.SLoader}>
-            <LoaderSpin/>
+        {carStore.isLoading && carStore.currentPage > 1 && (
+          <div className={styles.SSPinner}>
+            <LoaderSpin size='s'/>
           </div>
         )}
         <Popup

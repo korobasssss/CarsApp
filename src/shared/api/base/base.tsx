@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import { fetchLogout, fetchPostRefreshToken } from "../";
+import { fetchPostRefreshToken } from "../";
 import { ELocalStorageItems } from "@/shared/enums";
+import { authUserStore } from "@/app/store/mobxStore";
 
 export const instance = axios.create({
     baseURL: process.env.SERVER_URL,
@@ -60,7 +61,7 @@ const interceptors = (axiosInstance: AxiosInstance) => {
 
                         originalRequest.headers['Authorization'] = `Bearer ${response.accessToken}`;
                     } else {
-                        await fetchLogout()
+                        await authUserStore.setLogout()
                     }
                     return axios(originalRequest);
                 } catch (err) {

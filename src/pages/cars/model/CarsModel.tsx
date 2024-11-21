@@ -1,10 +1,8 @@
 import { MainLayout } from "@/entities/MainLayout"
 import { CarsComponent } from "../ui/CarsComponent"
 import { useEffect } from "react"
-import { fetchCarCategories, fetchGetCars } from "@/shared/api"
 import { carStore } from "@/app/store/mobxStore"
 import { observer } from "mobx-react-lite";
-import { CPageSize } from "@/shared/constants";
 import { Notification } from "ui-kit-cars/main";
 
 export const CarsModel = observer(() => {
@@ -16,7 +14,7 @@ export const CarsModel = observer(() => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchGetCars(carStore.currentPage, CPageSize);
+        await carStore.setCars()
       } catch (error) {
         Notification({
           message: 'Ошибка получения данных тачек'
@@ -31,7 +29,7 @@ export const CarsModel = observer(() => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchCarCategories();
+        await carStore.setCarCategories();
       } catch (error) {
         Notification({
           message: 'Ошибка получения данных категорий тачек'

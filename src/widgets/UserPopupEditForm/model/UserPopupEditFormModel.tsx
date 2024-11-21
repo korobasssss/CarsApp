@@ -6,8 +6,8 @@ import cx from 'classnames'
 import { UserPopupFormData } from "@/features/UserPopupFormData"
 import { UserPopupFormRole } from "@/features/UserPopupFormRole"
 import { observer } from "mobx-react-lite"
-import { fetchPutUser, fetchPutUserRole } from "@/shared/api"
 import { ERole } from "@/shared/enums"
+import { usersStore } from "@/app/store/mobxStore"
 
 interface IUserPopupEditFormModel {
     user: IUser
@@ -31,7 +31,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     const handleSubmitData = async (values: IUserFormData) => {
         try {
             setIsDataLoading(true)
-            await fetchPutUser(values, user.id)
+            await usersStore.setUser(values, user.id)
             setIsDataLoading(false)
             handleClose(false)
         } catch (error: unknown) {
@@ -46,7 +46,7 @@ export const UserPopupEditFormModel: FC<IUserPopupEditFormModel> = observer((
     const handleSubmitRole = async (role: ERole) => {
         try {
             setIsRoleLoading(true)
-            await fetchPutUserRole(user.id, role)
+            await usersStore.setUserRole(user.id, role)
             setIsRoleLoading(false)
             handleClose(false)
         } catch (error: unknown) {

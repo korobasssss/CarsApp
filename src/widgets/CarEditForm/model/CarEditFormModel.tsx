@@ -1,15 +1,15 @@
 import { ICar, ICarForm } from "@/shared/interfaces"
 import { CarPopupFormComponent } from "../../../features/CarPopup"
 import { FC, SetStateAction, useState } from "react"
-import { fetchDeleteCar, fetchGetCars, fetchPutCar } from "@/shared/api"
-import { CPageSize } from "@/shared/constants"
+import { carStore } from "@/app/store/mobxStore"
+import { observer } from "mobx-react-lite"
 
 interface ICarEditFormModel {
     car: ICar
     handleClose: React.Dispatch<SetStateAction<boolean>>
 }
 
-export const CarEditFormModel: FC<ICarEditFormModel> = (
+export const CarEditFormModel: FC<ICarEditFormModel> = observer((
     {
         car,
         handleClose
@@ -25,10 +25,9 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
     const handleSubmit = async (values: ICarForm) => {
         setIsLoading(true)
         try {
-            await fetchPutCar(values, carId)
+            await carStore.editCar(values, carId)
             handleClose(false)
             setIsLoading(false)
-            await fetchGetCars(1, CPageSize)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorCommon(error.message)
@@ -41,10 +40,9 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
     const handleDelete = async () => {
         setIsLoadingDelete(true)
         try {
-            await fetchDeleteCar(carId)
+            await carStore.deleteCar(carId)
             setIsLoadingDelete(false)
             handleClose(false)
-            await fetchGetCars(1, CPageSize)
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setErrorCommon(error.message)
@@ -66,4 +64,4 @@ export const CarEditFormModel: FC<ICarEditFormModel> = (
             isLoadingDelete={isLoadingDelete}
         />
     )    
-}
+})

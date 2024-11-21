@@ -1,5 +1,4 @@
 import { authUserStore } from "@/app/store/mobxStore"
-import { fetchPostSignUp } from "@/shared/api"
 import { EPaths } from "@/shared/enums"
 import { observer } from "mobx-react-lite"
 import { useState } from "react"
@@ -13,7 +12,7 @@ export const SignUpFormModel = observer(() => {
 
     const handleSubmit = async (values: ISignUpForm) => {
         try {
-            await fetchPostSignUp(values);
+            authUserStore.signUp(values);
             if (authUserStore.isReady) {
                 navigate(EPaths.MAIN)
             }

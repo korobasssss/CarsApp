@@ -1,14 +1,14 @@
+import { carStore } from "@/app/store/mobxStore"
 import { CarPopupFormComponent } from "@/features/CarPopup"
-import { fetchGetCars, fetchPostCar } from "@/shared/api"
-import { CPageSize } from "@/shared/constants"
 import { ICarForm } from "@/shared/interfaces"
+import { observer } from "mobx-react-lite"
 import { FC, SetStateAction, useState } from "react"
 
 interface ICarCreateForm {
     handleClose: React.Dispatch<SetStateAction<boolean>>
 }
 
-export const CarCreateForm: FC<ICarCreateForm> = (
+export const CarCreateForm: FC<ICarCreateForm> = observer((
     {
         handleClose
     }
@@ -20,10 +20,9 @@ export const CarCreateForm: FC<ICarCreateForm> = (
         if (values.model && values.image) {
             try {
                 setIsLoading(true)
-                await fetchPostCar(values)
+                await carStore.createCar(values)
                 setIsLoading(false)
                 handleClose(false)
-                await fetchGetCars(1, CPageSize)
             } catch (error: unknown) {
                 if (error instanceof Error) {
                     setErrorCommon(error.message)
@@ -47,4 +46,4 @@ export const CarCreateForm: FC<ICarCreateForm> = (
             isLoading={isLoading}
         />
     )    
-}
+})

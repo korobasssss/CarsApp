@@ -1,9 +1,11 @@
 import { IUser, IUserFormData } from "@/shared/interfaces";
 import { BaseStore } from "../base";
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 import { ISelectOptions } from "ui-kit-cars/main";
 import { formattedToApiDate } from "@/shared/utils";
 import { ERole } from "@/shared/enums";
+import { axiosGetUsers, axiosPutUser, axiosPutUserRole } from "@/shared/api";
+import axios from "axios";
 
 class UsersStore extends BaseStore {
     users: IUser[] | null = null
@@ -28,44 +30,92 @@ class UsersStore extends BaseStore {
             users: observable,
             userRoles: observable,
             setUsers: action,
+            clearUsers: action,
             setUser: action,
             setUserRole: action
         })
     }
 
-    setUsers(data: IUser[] | null) {
-        this.users = data
+    async setUsers() {
+        this.setPending()
+        try {
+            this.setLoading()
+            const result = await axiosGetUsers()
+            runInAction(() => {
+                this.users = result
+            });
+            this.setReady()
+        } catch (error: unknown) {
+            this.setError()
+            throw new Error(`Произошла ошибка, попробуйте еще раз`)
+        }
     }
 
-    setUser(data: IUserFormData, id: string) {
-        if (!this.users) return;
-
-        this.users = this.users.map(user => {
-            if (user.id === id) {
-                return { 
-                    ...data, 
-                    birthDate: formattedToApiDate(data.birthDate), 
-                    email: user.email, 
-                    role: user.role, 
-                    id 
-                }
-            }
-            return user
-        })
+    clearUsers() {
+        this.users = []
     }
 
-    setUserRole(id: string, role: ERole) {
-        if (!this.users) return;
-
-        this.users = this.users.map(user => {
-            if (user.id === id) {
-                return { 
-                    ...user, 
-                    role 
+    async setUser(newData: IUserFormData, id: string) {
+        try {
+            await axiosPutUser(newData, id)
+            
+            runInAction(() => {
+                if (!this.users) return;
+                this.users = this.users.map(user => {
+                    if (user.id === id) {
+                        return { 
+                            ...newData, 
+                            birthDate: formattedToApiDate(newData.birthDate), 
+                            email: user.email, 
+                            role: user.role, 
+                            id 
+                        }
+                    }
+                    return user
+                })
+            });
+            
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                switch (error.status) {
+                    case 400: {
+                        throw new Error(error.response?.data.title)
+                    }
                 }
+            } else {
+                throw new Error(`Произошла ошибка, попробуйте еще раз`)
             }
-            return user
-        })
+        }
+    }
+
+    async setUserRole(id: string, role: ERole) {
+        try {
+            await axiosPutUserRole(id, role)
+
+            runInAction(() => {
+                if (!this.users) return;
+                this.users = this.users.map(user => {
+                    if (user.id === id) {
+                        return { 
+                            ...user, 
+                            role 
+                        }
+                    }
+                    return user
+                })
+            });
+            
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                switch (error.status) {
+                    case 400: {
+                        throw new Error(error.response?.data.title)
+                    }
+                }
+            } else {
+                throw new Error(`Произошла ошибка, попробуйте еще раз`)
+            }
+        }
     }
 }
 
