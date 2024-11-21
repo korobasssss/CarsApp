@@ -10,6 +10,7 @@ export class BaseStore {
             setPending: action,
             setLoading: action,
             setReady: action,
+            setError: action,
             isPending: computed,
             isLoading: computed,
             isReady: computed,
