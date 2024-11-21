@@ -7,6 +7,7 @@ import { CarCreateForm } from '@/widgets/CarCreateForm'
 import { observer } from 'mobx-react-lite'
 import { authUserStore, carStore } from '@/app/store/mobxStore'
 import { ERequestStatus } from '@/shared/enums'
+import { CarEditFormModel } from '@/widgets/CarEditForm'
 
 interface ICarsComponent {
   cars: ICar[] | null
@@ -20,6 +21,8 @@ export const CarsComponent: FC<ICarsComponent> = observer((
 ) => {
 
   const [isCreateOpen, setIsCreateOpen] = useState(false)
+  const [isEditOpen, setIsEditOpen] = useState(false)
+  const [currentCar, setCurrentCar] = useState<ICar | null>(null)
 
   const isAdmin = useMemo(() => {
     return authUserStore.isAdmin();
@@ -34,7 +37,7 @@ export const CarsComponent: FC<ICarsComponent> = observer((
         )}
         {!cars && !carStore.isLoading && <Message type='base' message='Нет данных'/>}
 
-        { isAdmin && (
+        { isAdmin && carStore.isReady && (
           <Button 
             theme='primary'
             onClick={() => setIsCreateOpen(true)}
@@ -50,6 +53,8 @@ export const CarsComponent: FC<ICarsComponent> = observer((
                       key={car.carId}
                       car={car}
                       isAdmin={isAdmin}
+                      setIsEditOpen={setIsEditOpen}
+                      setCurrentCar={setCurrentCar}
                     />
                 )
             })}
@@ -68,6 +73,19 @@ export const CarsComponent: FC<ICarsComponent> = observer((
             {isCreateOpen && (
                 <CarCreateForm 
                   handleClose={setIsCreateOpen}
+                />
+            )}
+        </Popup>
+        <Popup
+            title={`Редактировать тачку ${currentCar?.brand.brand} ${currentCar?.brand.model}`}
+            isModalOpen={isEditOpen}
+            handleClose={setIsEditOpen}
+            destroyOnClose
+        >
+            {isEditOpen && currentCar && (
+                <CarEditFormModel 
+                    car={currentCar}
+                    handleClose={setIsEditOpen}
                 />
             )}
         </Popup>

@@ -1,30 +1,37 @@
 import { ICar } from "@/shared/interfaces"
-import { FC, useState } from "react"
+import { FC, SetStateAction, useState } from "react"
 import { Car } from "../ui/Car"
 import { Popup } from "ui-kit-cars/main"
 import { CarPopupInformationModel } from "@/features/CarPopupInformation"
-import { CarEditFormModel } from "@/widgets/CarEditForm"
 
 interface ICarModel {
     car: ICar
     isAdmin: boolean
+    setIsEditOpen: React.Dispatch<SetStateAction<boolean>>
+    setCurrentCar: React.Dispatch<SetStateAction<ICar | null>>
 }
 
 export const CarModel: FC<ICarModel> = (
     {
         car,
-        isAdmin
+        isAdmin,
+        setIsEditOpen,
+        setCurrentCar
     }
 ) => {
     const [isInfoOpen, setIsInfoOpen] = useState(false)
-    const [isEditOpen, setIsEditOpen] = useState(false)
+
+    const setOpenEditor = () => {
+        setCurrentCar(car)
+        setIsEditOpen(true)
+    }
 
     return (
         <>
             <Car 
                 car={car}
                 setIsInfoOpen={setIsInfoOpen}
-                setIsEditOpen={setIsEditOpen}
+                setIsEditOpen={setOpenEditor}
                 isAdmin={isAdmin}
             />
             <Popup
@@ -34,19 +41,6 @@ export const CarModel: FC<ICarModel> = (
                 destroyOnClose
             >
                 <CarPopupInformationModel car={car}/>
-            </Popup>
-            <Popup
-                title={`Редактировать тачку ${car.brand.brand} ${car.brand.model}`}
-                isModalOpen={isEditOpen}
-                handleClose={setIsEditOpen}
-                destroyOnClose
-            >
-                {isEditOpen && (
-                    <CarEditFormModel 
-                        car={car}
-                        handleClose={setIsEditOpen}
-                    />
-                )}
             </Popup>
         </>
     )

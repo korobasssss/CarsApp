@@ -1,5 +1,5 @@
 import { BaseStore } from "../base";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { ELocalStorageItems, ERole } from "@/shared/enums";
 import { CAdminRoles } from "@/shared/constants";
 
@@ -12,7 +12,7 @@ class AuthUserStore extends BaseStore {
         super()
         makeObservable(this, {
             authUserData: observable,
-            getAuthUserData: computed,
+            getAuthUserData: action,
             isAuth: action,
             isAdmin: action,
             setLogout: action,
@@ -20,13 +20,13 @@ class AuthUserStore extends BaseStore {
         })
     }
 
-    public get getAuthUserData() {
+    public getAuthUserData() {
         this.authUserData.role = localStorage.getItem('role') as ERole
         return this.authUserData
     }
 
     public isAuth() {
-        this.getAuthUserData;
+        this.getAuthUserData();
         if (!this.authUserData.role) return false
 
         return Boolean(localStorage.getItem(ELocalStorageItems.accessToken)) &&
@@ -36,7 +36,7 @@ class AuthUserStore extends BaseStore {
     }
 
     public isAdmin() {
-        this.getAuthUserData
+        this.getAuthUserData()
 
         return this.isAuth() && (CAdminRoles.includes(this.authUserData.role as ERole))
     }

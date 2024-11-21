@@ -7,7 +7,7 @@ import { EditIcon, NoCar } from "@/shared/assets"
 interface ICarFC {
     car: ICar
     setIsInfoOpen: React.Dispatch<SetStateAction<boolean>>
-    setIsEditOpen: React.Dispatch<SetStateAction<boolean>>
+    setIsEditOpen: () => void
     isAdmin: boolean
 }
 
@@ -39,7 +39,7 @@ export const Car: FC<ICarFC> = (
                     <ButtonIcon
                         alt="edit"
                         classNames={styles.SEdit}
-                        onClick={() => setIsEditOpen(true)}
+                        onClick={setIsEditOpen}
                     >
                         <EditIcon/>
                     </ButtonIcon>

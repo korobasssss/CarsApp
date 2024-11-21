@@ -25,6 +25,7 @@ class CarStore extends BaseStore {
             setCurrentPage: action, 
             setPages: action,
             setCarCategories: action,
+            setStatus: action,
         })
     }
 
