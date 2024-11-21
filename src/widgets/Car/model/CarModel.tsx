@@ -31,6 +31,7 @@ export const CarModel: FC<ICarModel> = (
                 title="Информация"
                 isModalOpen={isInfoOpen}
                 handleClose={setIsInfoOpen}
+                destroyOnClose
             >
                 <CarPopupInformationModel car={car}/>
             </Popup>
@@ -38,7 +39,7 @@ export const CarModel: FC<ICarModel> = (
                 title={`Редактировать тачку ${car.brand.brand} ${car.brand.model}`}
                 isModalOpen={isEditOpen}
                 handleClose={setIsEditOpen}
-                isForceRender
+                destroyOnClose
             >
                 {isEditOpen && (
                     <CarEditFormModel 

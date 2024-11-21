@@ -27,7 +27,7 @@ export const UserModel: FC<IUserModel> = (
                 title={`Редактировать пользователя ${surname} ${name[0]}. ${patronymic[0]}.`}
                 isModalOpen={isEditOpen}
                 handleClose={setIsEditOpen}
-                isForceRender
+                destroyOnClose
             >
                 {isEditOpen && (
                     <UserPopupEditFormModel 

@@ -63,7 +63,7 @@ export const CarsComponent: FC<ICarsComponent> = observer((
             title={`Создать тачку`}
             isModalOpen={isCreateOpen}
             handleClose={setIsCreateOpen}
-            isForceRender
+            destroyOnClose
         >
             {isCreateOpen && (
                 <CarCreateForm 
