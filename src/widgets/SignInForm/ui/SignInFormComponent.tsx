@@ -88,7 +88,7 @@ export const SignInFormComponent: FC<ISignInFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || (!values.email || !values.password)}
+                                    disabled={!isValid || !Object.values(values).every(one => one)}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

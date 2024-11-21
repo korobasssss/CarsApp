@@ -17,17 +17,14 @@ export const User: FC<IUserFC> = (
     }
 ) => {
 
-    const {id, name, surname, patronymic, birthDate} = user
+    const {name, surname, patronymic, birthDate} = user
 
     const formattedBirth = useMemo(() => {
         return formattedDate(birthDate)
     }, [birthDate])
 
     return (
-        <div
-            key={id}
-            className={styles.SUser}
-        >
+        <div className={styles.SUser}>
             <img 
                 src={UserImg}
                 className={styles.SUserImg}

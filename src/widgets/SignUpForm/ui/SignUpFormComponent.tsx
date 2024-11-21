@@ -162,10 +162,7 @@ export const SignUpFormComponent: FC<ISignUpFormComponent> = (
                                     theme='primary'
                                     type='submit'
                                     disabled={
-                                        !isValid || 
-                                        ( !values.email || !values.password || 
-                                        !values.surname || !values.name || !values.patronymic || !values.birthDate)
-                                    }
+                                        !isValid || !Object.values(values).every(one => one)}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

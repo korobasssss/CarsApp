@@ -22,7 +22,7 @@ export const Header: FC<IHeader> = observer((
     const [isMenuClick, setMenuClick] = useState(false)
 
     const visiblePaths = useMemo(() => {
-        if (!authUserStore.isAuth) {
+        if (!authUserStore.isAuth()) {
             return [];
         }
     
@@ -35,7 +35,7 @@ export const Header: FC<IHeader> = observer((
                 )
             }
         });
-    }, [paths, authUserStore.authUserData]);
+    }, [paths, authUserStore.authUserData, authUserStore.isAuth()]);
 
     return (
         <header className={styles.SHeader}>
@@ -65,7 +65,7 @@ export const Header: FC<IHeader> = observer((
                 </div>
             </DrawerPopup>
             <div className={styles.SAuthWrapper}>
-                {!authUserStore.isAuth ? (
+                {!authUserStore.isAuth() ? (
                 <Link  url={EPaths.SIGN_IN}>
                     <LoginIcon/>
                 </Link>   

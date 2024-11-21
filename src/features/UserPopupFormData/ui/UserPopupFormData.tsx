@@ -130,7 +130,7 @@ export const UserPopupFormData: FC<IUserPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || (!values.surname || !values.name || !values.patronymic || !values.birthDate)}
+                                    disabled={!isValid || !Object.values(values).every(one => one)}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>

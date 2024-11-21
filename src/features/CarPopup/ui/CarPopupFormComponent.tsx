@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import styles from './styles.module.scss'
 import { Button, ButtonIcon, FileLoader, Input, ISelectOptions, Message, Select } from 'ui-kit-cars/main';
 import { validationCarCreate, validationCarEdit } from '../utils';
@@ -50,10 +50,7 @@ export const CarPopupFormComponent: FC<ICarPopupFormComponent> = observer((
         }
     }, [])
 
-    const handleSubmit = async (values: ICarForm, { setErrors, setStatus }: FormikHelpers<ICarForm>) => {
-        setErrors({})
-        setStatus(undefined)
-
+    const handleSubmit = async (values: ICarForm) => {
         if (!values.model) return
 
         if (handleDelete || values.image) {

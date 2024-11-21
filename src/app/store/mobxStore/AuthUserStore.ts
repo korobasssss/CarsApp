@@ -13,7 +13,7 @@ class AuthUserStore extends BaseStore {
         makeObservable(this, {
             authUserData: observable,
             getAuthUserData: computed,
-            isAuth: computed,
+            isAuth: action,
             isAdmin: computed,
             setLogout: action,
             setAuthUserData: action,
@@ -25,17 +25,19 @@ class AuthUserStore extends BaseStore {
         return this.authUserData
     }
 
-    public get isAuth() {
-        this.getAuthUserData
-        return localStorage.getItem(ELocalStorageItems.accessToken) !== undefined && 
-                this.authUserData.role && 
-                Object.values(ERole).includes(this.authUserData.role)
+    public isAuth() {
+        this.getAuthUserData;
+        
+        return localStorage.getItem(ELocalStorageItems.accessToken) &&
+               this.authUserData &&
+               this.authUserData.role && 
+               Object.values(ERole).includes(this.authUserData.role);
     }
 
     public get isAdmin() {
         this.getAuthUserData
 
-        return this.isAuth && (CAdminRoles.includes(this.authUserData.role as ERole))
+        return this.isAuth() && (CAdminRoles.includes(this.authUserData.role as ERole))
     }
 
     public setAuthUserData(accessToken: string | null, role: ERole | null) {

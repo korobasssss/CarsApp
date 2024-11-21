@@ -14,12 +14,12 @@ export const ScrollWrapperModel: FC<IScrollWrapperModel> = observer((
         children
     }
 ) => {
-    const pathname = useLocation()
+    const { pathname } = useLocation()
 
     const onScroll = (e: React.UIEvent<HTMLDivElement>) => {
         const target = e.currentTarget;
         const bottom = target.scrollHeight === target.scrollTop + target.clientHeight;
-        if (bottom && pathname.pathname === EPaths.CARS) {
+        if (bottom && pathname === EPaths.CARS) {
             carStore.setCurrentPage()
         }
     };

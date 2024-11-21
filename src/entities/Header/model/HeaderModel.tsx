@@ -28,8 +28,7 @@ export const HeaderModel: FC<IHeaderModel> = observer((
             }
         } catch (error: unknown) {
             Notification({
-                message: 'Ошибка выхода из аккаунта',
-                description: 'Произошла ошибка при выходе из аккаунта'
+                message: 'Ошибка выхода из аккаунта'
             })
         }
     }

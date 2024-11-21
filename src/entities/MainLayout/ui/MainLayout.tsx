@@ -19,9 +19,9 @@ export const MainLayout: FC<IMainLayout> = observer((
     return (
         <ScrollWrapperModel>
             <main className={styles.SMainLayout}>
-            <HeaderModel
-                paths={CPaths}
-            />
+                <HeaderModel
+                    paths={CPaths}
+                />
                 <section className={styles.SChildren}>
                     {children}
                 </section>
