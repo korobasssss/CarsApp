@@ -98,7 +98,7 @@ class CarStore extends BaseStore {
         try {
             const id = await axiosPostCar(newCar)
 
-            if (this.currentPage === 1 || this.currentPage === this.totalPages) {
+            if (this.currentPage === this.totalPages) {
                 const editCar: ICar | undefined = await this.findCar(Math.ceil( id / CPageSize ), id)
                 if (!editCar) {
                     return;
