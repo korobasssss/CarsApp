@@ -1,11 +1,3 @@
-import { ERole } from "@/shared/enums";
+import { IUserBase } from "../IUserBase";
 
-export interface IUser {
-    id: string,
-    name: string,
-    surname: string,
-    patronymic: string,
-    email: string,
-    birthDate: string,
-    role: ERole
-}
+export interface IUser extends IUserBase {}

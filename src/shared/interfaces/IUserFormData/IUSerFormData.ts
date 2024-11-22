@@ -1,6 +1,3 @@
-export interface IUserFormData {
-    name: string
-    surname: string
-    patronymic: string
-    birthDate: string
-}
+import { IUserBase } from "../IUserBase";
+
+export type IUserFormData = Omit<IUserBase, 'id' | 'email' | 'role'>;

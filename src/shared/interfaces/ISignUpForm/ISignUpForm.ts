@@ -1,8 +1,5 @@
-export interface ISignUpForm {
-    email: string
-    password: string
-    name: string
-    surname: string
-    patronymic: string
-    birthDate: string
-}
+import { IUserBase } from "../IUserBase";
+
+export type ISignUpForm = Omit<IUserBase, 'id' | 'role'> & {
+    password: string;
+};
