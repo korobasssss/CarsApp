@@ -1,11 +1,17 @@
 @use '@/shared/styles/mixins' as mixins;
 @use '@/shared/styles/variables' as variables;
 
+.SSPinner {
+    width: max-content;
+    margin: 0 auto;
+}
+
 .SCarsWrapper {
     margin: 0 auto;
     display: grid;
     justify-items: center;
     row-gap: 20px;
+    padding-bottom: 50px;
 
     .SCars {
         width: 100%;
@@ -32,4 +38,10 @@
     .SButton {
         width: max-content;
     }
+}
+
+.SLoader { 
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

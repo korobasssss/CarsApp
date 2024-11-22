@@ -3,36 +3,53 @@
 
 .SUser {
     width: 524px;
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: max-content auto max-content;
+    column-gap: 20px;
 
     .SUserImg {
         width: 119px;
         height: 116px;
 
         object-fit: cover;
+
+        @media screen and (max-width: variables.$small) {
+            margin: 0 auto;
+        }
     }
 
     .SUserData {
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        justify-content: end;
-        align-items: end;
+        display: grid;
+        grid-template-rows: auto max-content;
+        row-gap: 30px;
 
         .SUserName {
             @include mixins.font-montserrat-m-bold;
             text-align: end;
+
+            @media screen and (max-width: variables.$small) {
+                text-align: center;
+            }
         }
 
         .SUserDate {
             color: variables.$SECONDARY_DATA;
             @include mixins.font-montserrat-m-medium;
+            text-align: end;
         }
     }
 
     @media screen and (max-width: variables.$small) {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
         padding: 0 10px;
         width: 100%;
+    }
+}
+
+.SButton {
+    @media screen and (max-width: variables.$small) {
+        margin: 0 0 0 auto;
     }
 }

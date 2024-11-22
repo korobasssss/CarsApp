@@ -4,6 +4,7 @@ export { ReactComponent as LogoutIcon } from './Logout.svg';
 export { ReactComponent as EditIcon } from './Edit.svg';
 export { ReactComponent as MenuIcon } from './Menu.svg';
 export { ReactComponent as DeleteIcon } from './Delete.svg';
+export { default as NoCar } from './NoCar.svg';
 export { default as TempIcon } from './temp.svg';
 export { default as UserImg } from './UserImg.svg';
 export { default as Start1Img } from './start1.svg';

@@ -1,79 +1,31 @@
 import { MainLayout } from "@/entities/MainLayout"
 import { UsersComponent } from "../ui/UsersComponent"
-import { IUser } from "@/shared/interfaces"
+import { useEffect } from "react"
+import { observer } from "mobx-react-lite"
+import { usersStore } from "@/app/store/mobxStore";
+import { Notification } from "ui-kit-cars/main";
 
-const users: IUser[] = [
-    {
-        id: '0',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '1',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '2',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '3',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '4',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '5',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-    {
-        id: '6',
-        name: 'Танчик',
-        surname: 'Тачковый',
-        patronymic: 'Танчиковист',
-        email: 'tanchik@gmaim.com',
-        birthDate: '2004-02-13',
-        role: 'user'
-    },
-]
 
-export const UsersModel = () => {
+export const UsersModel = observer(() => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              await usersStore.setUsers();
+            } catch (error) {
+              Notification({
+                message: 'Ошибка получения данных пользователей'
+              })
+            }
+          };
+          if (usersStore.isLoading) return
+          fetchData();
+    }, [])
+
     return (
         <MainLayout>
             <UsersComponent
-                users={users}
+                users={usersStore.users}
             />
         </MainLayout>
     )
-}
+})

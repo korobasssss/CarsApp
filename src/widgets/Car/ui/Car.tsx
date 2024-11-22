@@ -2,45 +2,48 @@ import { ICar } from "@/shared/interfaces"
 import { FC, SetStateAction } from "react"
 import styles from './styles.module.scss'
 import { ButtonIcon } from "ui-kit-cars/main"
-import { EditIcon } from "@/shared/assets"
+import { EditIcon, NoCar } from "@/shared/assets"
 
 interface ICarFC {
     car: ICar
     setIsInfoOpen: React.Dispatch<SetStateAction<boolean>>
-    setIsEditOpen: React.Dispatch<SetStateAction<boolean>>
+    setIsEditOpen: () => void
+    isAdmin: boolean
 }
 
 export const Car: FC<ICarFC> = (
     {
         car,
         setIsInfoOpen,
-        setIsEditOpen
+        setIsEditOpen,
+        isAdmin
     }
 ) => {
-    const {carId, brand, image} = car
 
     return (
         <div 
-            key={carId}
+            key={car.carId}
             className={styles.SCar}
         >
             <img 
-                src={image} 
+                src={car.image || NoCar} 
                 alt='car image'
                 className={styles.SCarImage}
                 onClick={() => setIsInfoOpen(true)}
             />
             <div className={styles.SCarData}>
                 <span className={styles.SCarName}>
-                    {brand.brand} {brand.model}
+                    {car.brand.brand} {car.brand.model}
                 </span>
-                <ButtonIcon
-                    alt="edit"
-                    classNames={styles.SEdit}
-                    onClick={() => setIsEditOpen(true)}
-                >
-                    <EditIcon/>
-                </ButtonIcon>
+                {isAdmin && (
+                    <ButtonIcon
+                        alt="edit"
+                        classNames={styles.SEdit}
+                        onClick={setIsEditOpen}
+                    >
+                        <EditIcon/>
+                    </ButtonIcon>
+                )}
             </div>
         </div>
     )

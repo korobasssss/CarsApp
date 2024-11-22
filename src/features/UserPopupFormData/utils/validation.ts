@@ -2,15 +2,15 @@ import * as Yup from 'yup'
 
 export const validationUser = Yup.object().shape({
     name: Yup.string()
-      .max(100)
-      .required('Введите имя'),
+      .required('Введите имя')
+      .max(100, 'Максимальное значение 100 символов'),
     surname: Yup.string()
-      .max(100)
-      .required('Введите фамилию'),
+      .required('Введите фамилию')
+      .max(100, 'Максимальное значение 100 символов'),
     patronymic: Yup.string()
-      .max(100)
-      .required('Введите отчество'),
+      .required('Введите отчество')
+      .max(100, 'Максимальное значение 100 символов'),
     birthDate: Yup.string()
-      .max(100)
-      .required('Введите дату рождения'),
+      .required('Введите дату рождения')
+      .max(100, 'Максимальное значение 100 символов'),
 });

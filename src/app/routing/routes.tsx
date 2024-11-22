@@ -5,26 +5,47 @@ import { CarsModel } from "@/pages/cars";
 import { UsersModel } from "@/pages/users";
 import { SignInModel } from "@/pages/signin";
 import { SignUpModel } from "@/pages/signup";
+import { AuthProvider } from "@/features/AuthProvider";
+import { Forbidden } from "@/pages/forbidden";
+import { Error } from "@/entities/Error";
 
 export const routes = createBrowserRouter([
     {
         path: EPaths.MAIN,
-        element: <MainModel/>
+        element: <MainModel/>,
+        errorElement: <Error />
     },
     {
         path: EPaths.CARS,
-        element: <CarsModel/>
+        element: (
+            <AuthProvider>
+                <CarsModel/>
+            </AuthProvider>
+        ),
+        errorElement: <Error />
     },
     {
         path: EPaths.USERS,
-        element: <UsersModel/>
+        element: (
+            <AuthProvider>
+                <UsersModel/>
+            </AuthProvider>
+        ),
+        errorElement: <Error />
     },
     {
         path: EPaths.SIGN_IN,
-        element: <SignInModel/>
+        element: <SignInModel/>,
+        errorElement: <Error />
     },
     {
         path: EPaths.SIGN_UP,
-        element: <SignUpModel/>
+        element: <SignUpModel/>,
+        errorElement: <Error />
+    },
+    {
+        path: EPaths.FORBIDDER,
+        element: <Forbidden/>,
+        errorElement: <Error />
     }
 ])

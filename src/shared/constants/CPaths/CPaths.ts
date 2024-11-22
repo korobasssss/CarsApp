@@ -1,25 +1,17 @@
 import { EPaths } from "@/shared/enums";
 import { IPaths } from "@/shared/interfaces";
+import { CRoles } from "../CRoles";
+import { CAdminRoles } from "../CAdminRoles";
 
 export const CPaths: IPaths[] = [
     {
-        url: EPaths.MAIN,
-        title: 'Главная'
-    },
-    {
         url: EPaths.CARS,
-        title: 'Тачки'
+        title: 'Тачки',
+        availableRoles: CRoles
     },
     {
         url: EPaths.USERS,
-        title: 'Пользователи'
-    },
-    {
-        url: EPaths.SIGN_IN,
-        title: 'Вход'
-    },
-    {
-        url: EPaths.SIGN_UP,
-        title: 'Регистрация'
-    },
+        title: 'Пользователи',
+        availableRoles: CAdminRoles
+    }
 ]

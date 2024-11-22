@@ -1,1 +1,0 @@
-export {SignUpFormComponent} from './ui/SignUpFormComponent'

@@ -1,27 +1,32 @@
-import { Field, FieldProps, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import styles from './styles.module.scss'
-import { Form } from 'react-router-dom';
-import { Button, Message, Select, } from 'ui-kit-cars/main';
+import { Button, Message } from 'ui-kit-cars/main';
 import { FC, useMemo } from 'react';
 import { validationRole } from '../utils/validation';
+import { usersStore } from '@/app/store/mobxStore';
+import { ERole } from '@/shared/enums';
+import { observer } from 'mobx-react-lite';
+import { SelectFieldForm } from '@/entities/SelectFieldForm';
 
 interface IUserFormRole {
-    role: string
+    role: ERole
 }
 
 interface IUserPopupFormComponent {
-    role: string
-    submit: (role: string) => void
+    role: ERole
+    submit: (role: ERole) => void
     errorCommon: string
     buttonSubmitTitle: string
+    isLoading: boolean
 }
 
-export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
+export const UserPopupFormRole: FC<IUserPopupFormComponent> = observer((
     {
         role,
         submit,
         errorCommon,
-        buttonSubmitTitle
+        buttonSubmitTitle,
+        isLoading
     }
 ) => {
     const initialValues: IUserFormRole = useMemo(() => {
@@ -39,28 +44,18 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
             initialValues={initialValues}
             validationSchema={validationRole}
             onSubmit={handleSubmit}
-            validateOnChange={false}
             validateOnBlur={false}
-            enableReinitialize
         >
-            {({ isValid, dirty}) => (
+            {({ isValid, values, setFieldValue, errors}) => (
                 <Form>
                     <div className={styles.SUserPopupRole}>
-                        <Field
+                        <SelectFieldForm
                             name='role'
-                        >
-                            {({ field, form }: FieldProps) => {
-                                const error = form.errors[field.name] ? form.errors[field.name]?.toString() : '';
-
-                                return (
-                                    <Select
-                                        {...field}
-                                        placeholder="Выберите роль"
-                                        error={error}
-                                    />
-                                );
-                            }}
-                        </Field>
+                            select_placeholder="Выберите роль"
+                            select_error={errors.role}
+                            options={usersStore.userRoles}
+                            setFieldValue={setFieldValue}
+                        />
                         {errorCommon && (
                             <Message
                                 message={errorCommon}
@@ -72,7 +67,8 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
                                 <Button
                                     theme='primary'
                                     type='submit'
-                                    disabled={!isValid || !dirty}
+                                    disabled={!isValid || !values.role || isLoading}
+                                    isLoading={isLoading}
                                 >
                                     {buttonSubmitTitle}
                                 </Button>
@@ -83,4 +79,4 @@ export const UserPopupFormRole: FC<IUserPopupFormComponent> = (
             )}
         </Formik>
     )
-}
+})

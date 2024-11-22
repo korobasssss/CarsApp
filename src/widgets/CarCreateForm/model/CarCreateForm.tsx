@@ -1,11 +1,38 @@
+import { carStore } from "@/app/store/mobxStore"
 import { CarPopupFormComponent } from "@/features/CarPopup"
-import { useState } from "react"
+import { ICarForm } from "@/shared/interfaces"
+import { observer } from "mobx-react-lite"
+import { FC, SetStateAction, useState } from "react"
 
-export const CarCreateForm = () => {
+interface ICarCreateForm {
+    handleClose: React.Dispatch<SetStateAction<boolean>>
+}
+
+export const CarCreateForm: FC<ICarCreateForm> = observer((
+    {
+        handleClose
+    }
+) => {
     const [errorCommon, setErrorCommon] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleSubmit = (brandId: number, color?: string, image?: File) => {
-        console.log(brandId, color, image)
+    const handleSubmit = async (values: ICarForm) => {
+        if (values.model && values.image) {
+            try {
+                setIsLoading(true)
+                await carStore.createCar(values)
+                setIsLoading(false)
+                handleClose(false)
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    setErrorCommon(error.message)
+                } else {
+                    setErrorCommon(error as string)
+                }
+            }
+        } else {
+            setErrorCommon('Заполните все поля')
+        }
     }
 
     return (
@@ -16,6 +43,7 @@ export const CarCreateForm = () => {
             submit={handleSubmit}
             buttonSubmitTitle="Создать"
             errorCommon={errorCommon}
+            isLoading={isLoading}
         />
     )    
-}
+})

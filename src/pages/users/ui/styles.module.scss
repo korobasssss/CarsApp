@@ -1,6 +1,11 @@
 @use '@/shared/styles/mixins' as mixins;
 @use '@/shared/styles/variables' as variables;
 
+.SSPinner {
+    width: max-content;
+    margin: 0 auto;
+}
+
 .SUsersWrapper {
     width: 100%;
 
