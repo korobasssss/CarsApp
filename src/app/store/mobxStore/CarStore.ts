@@ -7,7 +7,7 @@ import axios from "axios";
 
 class CarStore extends BaseStore {
 
-    cars: ICar[] | null = null
+    cars: ICar[] = []
     carCategories: ICarBrand[] | null = null
 
     currentPage: number = 1
@@ -38,7 +38,7 @@ class CarStore extends BaseStore {
         try {
             this.setLoading();
 
-            const result = await axiosGetCars(this.currentPage, CPageSize);
+            const result = await this.getCarsApi(this.currentPage);
             const { TotalPages } = JSON.parse(result.headers.pagination);
             
             this.setPages(TotalPages);
@@ -63,6 +63,21 @@ class CarStore extends BaseStore {
         }
     }
 
+    async getCarsApi(currPage: number) {
+        try {
+            const result = await axiosGetCars(currPage, CPageSize);
+            return result
+
+        } catch (error) {
+            this.setError();
+            throw new Error("Произошла ошибка, попробуйте еще раз");
+        }
+    }
+
+    async findCar(currPage: number, id: number) {
+        return (await this.getCarsApi(currPage)).data.find(car => car.carId === id)
+    }
+
     public clearCars() {
         this.cars = [];
     }
@@ -81,10 +96,15 @@ class CarStore extends BaseStore {
 
     public async createCar(newCar: ICarForm) {
         try {
-            await axiosPostCar(newCar)
+            const id = await axiosPostCar(newCar)
 
-            this.setCurrentPage(1)
-            await this.setCars()
+            if (this.currentPage === 1 || this.currentPage === this.totalPages) {
+                const editCar: ICar | undefined = await this.findCar(Math.ceil( id / CPageSize ), id)
+                if (!editCar) {
+                    return;
+                }
+                this.cars.push(editCar)
+            }
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 switch (error.status) {
@@ -102,8 +122,12 @@ class CarStore extends BaseStore {
         try {
             await axiosPutCar(newCar, id)
 
-            this.setCurrentPage(1)
-            await this.setCars()
+            const editCar: ICar | undefined = await this.findCar(Math.ceil( id / CPageSize ), id)
+            if (!editCar) {
+                return;
+            }
+            const arr = this.cars.map(existingCar => existingCar.carId === id ? editCar : existingCar)
+            this.cars = arr;
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 switch (error.status) {
@@ -122,9 +146,7 @@ class CarStore extends BaseStore {
             await axiosDeleteCar(id)
 
             runInAction(() => {
-                if (this.cars) {
-                    this.cars = this.cars.filter(car => car.carId !== id)
-                }
+                this.cars = this.cars.filter(car => car.carId !== id)
             });
             
             
@@ -139,7 +161,7 @@ class CarStore extends BaseStore {
 
     public setCurrentPage(page?: number) {
         if (!page) {
-            if (this.currentPage && this.totalPages && (this.currentPage < this.totalPages) && this.cars && this.cars.length > 0) {
+            if (this.currentPage && this.totalPages && (this.currentPage < this.totalPages) && this.cars.length > 0) {
                 this.currentPage++
             }
         } else {
