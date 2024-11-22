@@ -32,7 +32,7 @@ class CarStore extends BaseStore {
         })
     }
 
-    async setCars() {
+    public async setCars() {
         this.setPending();
 
         try {
@@ -63,11 +63,11 @@ class CarStore extends BaseStore {
         }
     }
 
-    clearCars() {
+    public clearCars() {
         this.cars = [];
     }
 
-    async setCarCategories() {
+    public async setCarCategories() {
         try {
             const result = await axiosGetCarCategories()
     
@@ -79,12 +79,12 @@ class CarStore extends BaseStore {
         }
     }
 
-    async createCar(newCar: ICarForm) {
+    public async createCar(newCar: ICarForm) {
         try {
             await axiosPostCar(newCar)
 
             this.setCurrentPage(1)
-            this.setCars()
+            await this.setCars()
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 switch (error.status) {
@@ -98,12 +98,12 @@ class CarStore extends BaseStore {
         }
     }
 
-    async editCar(newCar: ICarForm, id: number) {
+    public async editCar(newCar: ICarForm, id: number) {
         try {
             await axiosPutCar(newCar, id)
 
             this.setCurrentPage(1)
-            this.setCars()
+            await this.setCars()
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
                 switch (error.status) {
@@ -117,7 +117,7 @@ class CarStore extends BaseStore {
         }
     }
 
-    async deleteCar(id: number) {
+    public async deleteCar(id: number) {
         try {
             await axiosDeleteCar(id)
 
@@ -137,7 +137,7 @@ class CarStore extends BaseStore {
         this.totalPages = total
     }
 
-    setCurrentPage(page?: number) {
+    public setCurrentPage(page?: number) {
         if (!page) {
             if (this.currentPage && this.totalPages && (this.currentPage < this.totalPages) && this.cars && this.cars.length > 0) {
                 this.currentPage++

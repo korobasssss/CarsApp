@@ -36,7 +36,7 @@ class UsersStore extends BaseStore {
         })
     }
 
-    async setUsers() {
+    public async setUsers() {
         this.setPending()
         try {
             this.setLoading()
@@ -51,11 +51,11 @@ class UsersStore extends BaseStore {
         }
     }
 
-    clearUsers() {
+    public clearUsers() {
         this.users = []
     }
 
-    async setUser(newData: IUserFormData, id: string) {
+    public async setUser(newData: IUserFormData, id: string) {
         try {
             await axiosPutUser(newData, id)
             
@@ -88,7 +88,7 @@ class UsersStore extends BaseStore {
         }
     }
 
-    async setUserRole(id: string, role: ERole) {
+    public async setUserRole(id: string, role: ERole) {
         try {
             await axiosPutUserRole(id, role)
 

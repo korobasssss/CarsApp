@@ -59,7 +59,7 @@ class AuthUserStore extends BaseStore {
         this.authUserData.role = role
     }
 
-    async signIn(data: ISignInForm) {
+    public async signIn(data: ISignInForm) {
         this.setPending();
 
         try {
@@ -78,7 +78,7 @@ class AuthUserStore extends BaseStore {
         }
     }
 
-    async signUp(data: ISignUpForm) {
+    public async signUp(data: ISignUpForm) {
         this.setPending();
 
         try {
@@ -102,7 +102,7 @@ class AuthUserStore extends BaseStore {
         }
     }
 
-    async setLogout() {
+    public async setLogout() {
         this.setPending()
         
         try {
