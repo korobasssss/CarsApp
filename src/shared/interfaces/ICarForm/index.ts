@@ -1,0 +1,1 @@
+export type {ICarForm} from './ICarForm'

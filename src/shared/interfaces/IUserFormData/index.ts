@@ -1,0 +1,1 @@
+export type {IUserFormData} from './IUSerFormData'

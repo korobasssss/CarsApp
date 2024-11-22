@@ -1,0 +1,1 @@
+export {validationSignUp} from './validation'

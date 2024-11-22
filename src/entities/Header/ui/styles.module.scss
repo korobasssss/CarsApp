@@ -1,0 +1,51 @@
+@use '@/shared/styles/mixins' as mixins;
+@use '@/shared/styles/variables' as variables;
+
+.SHeader {
+    z-index: 5;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 72px;
+
+    display: grid;
+    grid-template-columns: min-content auto max-content;
+    column-gap: 10px;
+    align-items: center;
+    justify-self: center;
+
+    background-color: variables.$BGC_MAIN;
+
+    .SNav {
+        display: flex;
+        justify-content: space-around;
+
+        @media screen and (max-width: variables.$small) {
+            display: none;
+        }
+    }
+
+    .SNavIconMobile {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+
+        @media screen and (min-width: (variables.$small + 1)) {
+            display: none;
+        }
+    }
+
+    .SAuthWrapper {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+
+        @include mixins.font-montserrat-s-medium;
+    }
+}
+
+.SNavMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

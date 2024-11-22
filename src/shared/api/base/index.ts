@@ -1,0 +1,1 @@
+export { instance, instanceToken, instanceFile} from './base'

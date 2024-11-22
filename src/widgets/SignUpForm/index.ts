@@ -1,0 +1,1 @@
+export {SignUpFormModel} from './model/SignUpFormModel'
