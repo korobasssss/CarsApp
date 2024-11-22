@@ -12,7 +12,7 @@ export const SignUpFormModel = observer(() => {
 
     const handleSubmit = async (values: ISignUpForm) => {
         try {
-            authUserStore.signUp(values);
+            await authUserStore.signUp(values);
             if (authUserStore.isReady) {
                 navigate(EPaths.MAIN)
             }
